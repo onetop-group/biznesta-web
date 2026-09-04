@@ -39,32 +39,39 @@ export function Footer() {
     contact.consultHours,
   ].filter(Boolean) as string[];
 
+  /**
+   * ⚠️ 푸터는 정보 영역입니다.
+   *    페이지 하단의 상담 유도는 BandCta 가 담당합니다. 둘 다 골드 CTA 를 두면
+   *    같은 버튼이 두 번 반복되어 시안의 마무리 리듬이 무너집니다.
+   *    그래서 여기서는 배경을 한 단계 더 어둡게(navy-deep) 두어 층을 분리하고,
+   *    CTA 는 보조(outline)로만 남겼습니다.
+   */
   return (
-    <footer className="on-navy bg-navy text-white">
-      {/* 상단 CTA 밴드 */}
+    <footer className="on-navy bg-navy-deep text-white">
+      {/* 상단 — 브랜드 · 철학 */}
       <Container>
-        <div className="flex flex-col gap-8 border-b border-navy-line py-10 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:py-12">
+        <div className="flex flex-col gap-7 border-b border-navy-line/60 py-10 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:py-11">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-10">
-            <Logo variant="white" width={168} />
-            <p className="border-navy-line text-[15px] leading-[1.7] text-white/80 lg:border-l lg:pl-10 lg:text-base">
-              {brandMessage.adminPhilosophy.map((line) => (
-                <span key={line} className="block">
+            <Logo variant="white" width={158} />
+            <p className="border-navy-line/70 text-[14px] leading-[1.7] text-white/70 lg:border-l lg:pl-10 lg:text-[15px]">
+              {brandMessage.adminPhilosophy.map((line, index) => (
+                <span key={line} className={index === 1 ? 'block text-gold' : 'block'}>
                   {line}
                 </span>
               ))}
             </p>
           </div>
 
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
-            <ul className="flex items-center gap-6 lg:gap-8">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-7">
+            <ul className="flex items-center gap-5 lg:gap-7">
               {trustPoints.map((point) => (
-                <li key={point.key} className="flex items-center gap-2 text-[13px] text-white/70">
-                  <Icon name={TRUST_ICONS[point.key]} size={20} className="text-gold" />
+                <li key={point.key} className="flex items-center gap-2 text-[12px] text-white/50">
+                  <Icon name={TRUST_ICONS[point.key]} size={18} className="text-gold/70" />
                   {point.label}
                 </li>
               ))}
             </ul>
-            <Button href={mainCta.href} arrow size="lg" className="shrink-0">
+            <Button href={mainCta.href} arrow size="md" variant="outline" className="shrink-0">
               {mainCta.label}
             </Button>
           </div>
