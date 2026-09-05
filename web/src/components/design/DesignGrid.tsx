@@ -16,13 +16,13 @@ import { cx } from '@/lib/utils';
 export function DesignGrid({
   designs,
   columns = 4,
-  size = 'md',
+  variant = 'plate',
   showTags = false,
   startIndex = 1,
 }: {
   designs: DesignSummary[];
   columns?: 2 | 3 | 4;
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'plate' | 'device' | 'wide';
   showTags?: boolean;
   startIndex?: number;
 }) {
@@ -47,7 +47,7 @@ export function DesignGrid({
     <ul className={cx('grid gap-x-6 gap-y-10 lg:gap-x-7 lg:gap-y-12', gridClass)}>
       {designs.map((design, i) => (
         <li key={design.id}>
-          <DesignCard design={design} size={size} index={startIndex + i} showTags={showTags} />
+          <DesignCard design={design} variant={variant} index={startIndex + i} showTags={showTags} />
         </li>
       ))}
     </ul>

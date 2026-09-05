@@ -96,6 +96,10 @@ export interface DesignSummary {
   palette: Palette;
   /** 시안 미리보기의 레이아웃 종류 — 실제 이미지 등록 전까지 사용 */
   previewLayout: PreviewLayout;
+  /** BIZNESTA 자체 샘플 디자인 명세 — 화면 안에 실제로 렌더됩니다 */
+  sample: SampleSpec;
+  /** CONCEPT · SAMPLE(자체 제작) / CLIENT(실제 고객 프로젝트) */
+  origin: DesignOrigin;
   isNew: boolean;
   isFeatured: boolean;
   /**
@@ -118,11 +122,80 @@ export interface DesignDetail extends DesignSummary {
 }
 
 /**
- * Placeholder 미리보기의 레이아웃 종류.
- * 실제 이미지가 없을 때 DeviceMockup 안에 그릴 추상 와이어프레임을 고릅니다.
- * 사진이나 가짜 브랜드명을 쓰지 않고 구조만 표현합니다.
+ * 와이어프레임 종류.
+ *
+ * ⚠️ 역할이 바뀌었습니다 (Premium Visual Rebuild).
+ *    이제 화면에 보이는 주 비주얼이 아니라
+ *    · 샘플 시안이 아직 없을 때의 폴백
+ *    · 로딩 · 빈 상태
+ *    · 개발 검증
+ *    용도로만 씁니다. 최종 사용자에게 보이는 영역은 SampleSpec 을 씁니다.
  */
 export type PreviewLayout = 'corporate' | 'store' | 'gallery' | 'landing' | 'commerce' | 'dashboard';
+
+/* ------------------------------------------------------------------ */
+/* BIZNESTA 샘플 디자인                                                 */
+/* ------------------------------------------------------------------ */
+
+/**
+ * 샘플 화면의 히어로 구조.
+ * 12개 디자인이 서로 다른 구조를 갖도록 강제하기 위한 축입니다.
+ */
+export type SampleHero =
+  | 'split'
+  | 'fullbleed'
+  | 'overlay'
+  | 'centered'
+  | 'asymmetric'
+  | 'editorial'
+  | 'masonry'
+  | 'console';
+
+/** 샘플 화면의 서체 성격 */
+export type SampleType = 'serif' | 'sans' | 'condensed';
+
+/** 아트워크 모티프 — 사진 대신 쓰는 추상 조형 */
+export type ArtMotif = 'arc' | 'bars' | 'orb' | 'grid' | 'wave' | 'diagonal' | 'tower' | 'bloom';
+
+export interface Artwork {
+  from: string;
+  via: string;
+  to: string;
+  motif: ArtMotif;
+  /** 모티프 선/면의 색 */
+  ink: string;
+}
+
+/**
+ * BIZNESTA 샘플 디자인 명세.
+ *
+ * ⚠️ 이것은 가짜 고객 사례가 아닙니다.
+ *    BIZNESTA 가 직접 만든 CONCEPT / SAMPLE 디자인이며,
+ *    화면에도 그렇게 표기합니다. 실제 고객 프로젝트가 생기면
+ *    origin 을 'CLIENT' 로 두어 구분합니다.
+ */
+export interface SampleSpec {
+  hero: SampleHero;
+  type: SampleType;
+  /** 화면 안에 실제로 렌더될 문구 */
+  copy: {
+    mark: string;
+    nav: string[];
+    eyebrow: string;
+    title: string[];
+    sub: string;
+    cta: string;
+    sections: string[];
+  };
+  art: Artwork;
+  /** 화면 전체 배경 (palette.sub 보다 더 정교한 값이 필요할 때) */
+  canvas: string;
+  /** 어두운 배경 기반 디자인인지 — 화면 안 글자색을 뒤집습니다 */
+  dark?: boolean;
+}
+
+/** 디자인의 출처 — 고객 사례와 자체 샘플을 명확히 구분합니다 */
+export type DesignOrigin = 'CONCEPT' | 'SAMPLE' | 'CLIENT';
 
 /** 디자인 갤러리 필터 (BN_PC_07 의 속성 칩) */
 export interface FilterOption {

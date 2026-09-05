@@ -108,18 +108,8 @@ export default async function CategoryDetailPage({
                 size="sm"
                 className="mb-5 lg:mb-6 lg:text-right"
               />
-              {heroPreview ? (
-                <DeviceMockup
-                  source={{ palette: heroPreview.palette, layout: heroPreview.previewLayout }}
-                  variant="duo"
-                  className="w-full"
-                />
-              ) : (
-                <DeviceMockup
-                  source={{ palette: category.palette, layout: 'corporate' }}
-                  variant="duo"
-                  className="w-full"
-                />
+              {heroPreview && (
+                <DeviceMockup source={{ design: heroPreview }} variant="duo" className="w-full" />
               )}
             </div>
           </div>
@@ -159,7 +149,7 @@ export default async function CategoryDetailPage({
               <ul className="mt-8 grid gap-x-5 gap-y-9 sm:grid-cols-2 xl:grid-cols-3">
                 {recommended.items.map((design, index) => (
                   <li key={design.id}>
-                    <DesignCard design={design} size="sm" index={index + 1} />
+                    <DesignCard design={design} variant="plate" index={index + 1} />
                   </li>
                 ))}
               </ul>

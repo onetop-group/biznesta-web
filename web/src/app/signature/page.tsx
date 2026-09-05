@@ -6,8 +6,8 @@ import { CheckList } from '@/components/design/DesignFacts';
 import { DeviceMockup } from '@/components/ui/DeviceMockup';
 import { Icon } from '@/components/ui/Icon';
 import { ScriptAccent } from '@/components/ui/ScriptAccent';
-import { WireframePreview } from '@/components/ui/WireframePreview';
-import { designs } from '@/data/designs';
+
+import { designs, getDesign } from '@/data/designs';
 import { signatureIntro, signatureReasons, signatureSteps } from '@/data/signature';
 
 /**
@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   description:
     '전략부터 디자인, 시스템 구축, 운영 지원까지. 비즈네스타가 홈페이지를 만드는 방식과 차별점을 소개합니다.',
 };
+
+/** 각 단계가 만들어내는 결과물을 대표할 샘플 디자인 */
+const STEP_DESIGNS = ['corporate-001', 'store-001', 'admin-001', 'booking-001', 'education-001'];
 
 export default function SignaturePage() {
   const heroDesign = designs.find((design) => design.level === 'SIGNATURE') ?? designs[0];
@@ -93,11 +96,7 @@ export default function SignaturePage() {
                 size="sm"
                 className="mb-5 lg:mb-6"
               />
-              <DeviceMockup
-                source={{ palette: heroDesign.palette, layout: heroDesign.previewLayout }}
-                variant="duo"
-                className="w-full"
-              />
+              <DeviceMockup source={{ design: heroDesign }} variant="duo" className="w-full" />
             </div>
           </div>
         </Container>
@@ -138,21 +137,19 @@ export default function SignaturePage() {
                 </p>
               </div>
               {/*
-                각 단계의 결과물을 구조로 암시합니다 (사진 대신).
-                남는 세로 공간을 이 영역이 채워 카드 높이가 서로 달라도 빈 공간이 생기지 않습니다.
+                각 단계의 결과물을 실제 BIZNESTA 샘플 화면으로 보여줍니다.
+                (와이어프레임은 이제 폴백 전용입니다 — 지시서 3항)
+                남는 세로 공간을 이 영역이 채워 카드 높이가 달라도 빈 공간이 생기지 않습니다.
               */}
-              <div
-                className="min-h-[110px] flex-1 overflow-hidden border-t border-line"
-                style={{ backgroundColor: '#F6F2EB' }}
-              >
-                <WireframePreview
-                  palette={{ main: '#0D2340', point: '#C9A77A', sub: '#FBF8F3', text: '#333333' }}
-                  layout={
-                    (['corporate', 'gallery', 'dashboard', 'landing', 'commerce'] as const)[
-                      Number(step.no) - 1
-                    ]
-                  }
-                />
+              <div className="min-h-[120px] flex-1 overflow-hidden border-t border-line">
+                {getDesign(STEP_DESIGNS[Number(step.no) - 1]) && (
+                  <DeviceMockup
+                    source={{ design: getDesign(STEP_DESIGNS[Number(step.no) - 1])! }}
+                    variant="frame"
+                    ratio="16 / 10"
+                    className="size-full"
+                  />
+                )}
               </div>
             </li>
           ))}

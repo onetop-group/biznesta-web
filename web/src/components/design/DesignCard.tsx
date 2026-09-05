@@ -1,114 +1,132 @@
 import Link from 'next/link';
 import type { DesignSummary } from '@/types';
 import { getCategory } from '@/data/categories';
-import { Badge } from '@/components/ui/Badge';
+import { originShort } from '@/data/designs';
 import { DeviceMockup } from '@/components/ui/DeviceMockup';
 import { cx } from '@/lib/utils';
 
 /**
- * 디자인 카드 — 쇼룸 · 카테고리 상세 · 신규 디자인 · 관련 디자인에서 공통으로 씁니다.
+ * 디자인 카드 — Editorial Gallery 의 기본 단위.
  *
- * ⚠️ 카드 안의 화면은 시안 이미지를 자른 것이 아니라
- *    DeviceMockup + WireframePreview 로 그린 것입니다.
- *    design_images 가 연결되면 같은 자리에 실제 이미지가 들어갑니다.
+ * ▸ 상품 카드가 아니라 "작품"으로 보이게 하는 규칙
+ *   · 화면(작품)이 카드에서 가장 큰 요소입니다. 텍스트는 캡션 위치로 내립니다.
+ *   · 베젤 없는 frame 을 기본으로 씁니다. 목업 프레임이 반복되면 카탈로그처럼 보입니다.
+ *   · 그림자를 모든 카드에 똑같이 주지 않습니다. 크기별로 깊이를 다르게 둡니다.
  *
- * size
- *   md — 4열 그리드 (BN_PC_04 쇼룸)
- *   lg — 2열 그리드 (BN_PC_07 신규 디자인)
- *   sm — 3~4열 좁은 카드 (BN_PC_05 추천 시안 · BN_PC_06 관련 디자인)
+ * ▸ variant
+ *   plate   작품 액자 — 갤러리 기본 (베젤 없음)
+ *   device  목업 구도 — 큰 카드에서만
+ *   wide    가로로 긴 프레젠테이션
+ *
+ * ⚠️ 실제 고객 사례가 아니라 BIZNESTA 자체 CONCEPT / SAMPLE 디자인이므로
+ *    카드마다 origin 배지를 표기합니다 (지시서 4항).
  */
 export function DesignCard({
   design,
-  size = 'md',
+  variant = 'plate',
   index,
   showTags = false,
+  ratio,
+  eager = false,
 }: {
   design: DesignSummary;
-  size?: 'sm' | 'md' | 'lg';
-  /** 시안의 01 · 02 · 03 번호 표기 */
+  variant?: 'plate' | 'device' | 'wide';
   index?: number;
   showTags?: boolean;
+  ratio?: string;
+  eager?: boolean;
 }) {
   const category = getCategory(design.categorySlug);
+  const isDevice = variant === 'device';
+  const frameRatio = ratio ?? (variant === 'wide' ? '16 / 9' : '4 / 3');
 
   return (
-    <article className="group relative">
+    <article className="group flex h-full flex-col">
       <Link href={`/design/${design.slug}`} className="block">
-        {/* 미리보기 영역 */}
         <div
           className={cx(
             'relative overflow-hidden rounded-card',
             'transition-all duration-500 ease-out',
-            'shadow-[var(--shadow-card)] group-hover:-translate-y-1.5 group-hover:shadow-[var(--shadow-card-hover)]',
+            isDevice
+              ? 'shadow-[0_2px_10px_-4px_rgba(13,35,64,0.08)] group-hover:shadow-[0_30px_60px_-24px_rgba(13,35,64,0.34)]'
+              : 'ring-1 ring-line shadow-[0_2px_10px_-4px_rgba(13,35,64,0.08)] group-hover:ring-line-gold group-hover:shadow-[0_28px_58px_-24px_rgba(13,35,64,0.32)]',
+            'group-hover:-translate-y-1.5',
           )}
-          style={{
-            aspectRatio: size === 'lg' ? '16 / 10' : '4 / 3',
-            background: `linear-gradient(150deg, ${design.palette.sub} 0%, #ffffff 55%, ${design.palette.sub} 100%)`,
-          }}
+          style={
+            isDevice
+              ? {
+                  aspectRatio: frameRatio,
+                  background: `linear-gradient(152deg, ${design.palette.sub} 0%, #ffffff 54%, ${design.palette.sub} 100%)`,
+                }
+              : { aspectRatio: frameRatio }
+          }
         >
-          {/* 은은한 광원 — 시안의 "빛과 공간감" */}
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-1/4 -top-1/3 size-[70%] rounded-full opacity-45 blur-3xl"
-            style={{ backgroundColor: design.palette.point }}
-          />
+          {isDevice ? (
+            <>
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-[18%] -top-[24%] size-[62%] rounded-full opacity-40 blur-3xl"
+                style={{ backgroundColor: design.palette.point }}
+              />
+              <div className="absolute inset-0 flex items-end justify-center px-9 pt-10 lg:px-12 lg:pt-12">
+                <DeviceMockup
+                  source={{ design }}
+                  variant="duo"
+                  className="w-full translate-y-[6%] transition-transform duration-500 ease-out group-hover:translate-y-[3%]"
+                  phoneScale={0.2}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="absolute inset-0 origin-top transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+              <DeviceMockup
+                source={{ design }}
+                variant="frame"
+                ratio="16 / 10"
+                className="size-full"
+              />
+            </div>
+          )}
 
-          {/*
-            카드 크기에 따라 목업 여백과 폰 비율을 다르게 둡니다.
-            lg 카드에서 폰 비율을 그대로 두면 폰이 노트북 화면을 절반 가까이 덮습니다.
-          */}
-          <div
-            className={cx(
-              'absolute inset-0 flex items-end justify-center',
-              size === 'sm' && 'px-5 pt-6',
-              size === 'md' && 'px-7 pt-8 lg:px-9 lg:pt-10',
-              size === 'lg' && 'px-10 pt-10 lg:px-14 lg:pt-12',
-            )}
-          >
-            <DeviceMockup
-              source={{ palette: design.palette, layout: design.previewLayout }}
-              variant="duo"
-              className={cx(
-                'w-full transition-transform duration-500 ease-out',
-                size === 'lg'
-                  ? 'translate-y-[5%] group-hover:translate-y-[2%]'
-                  : 'translate-y-[8%] group-hover:translate-y-[5%]',
-              )}
-              phoneScale={size === 'sm' ? 0.24 : size === 'lg' ? 0.2 : 0.26}
-            />
-          </div>
-
-          {/* 좌상단 번호 · NEW */}
-          <div className="absolute left-4 top-4 flex items-center gap-2 lg:left-5 lg:top-5">
-            {design.isNew && <Badge tone="new">NEW</Badge>}
-            {typeof index === 'number' && !design.isNew && (
-              <span className="u-eyebrow-tight text-[12px] font-bold text-navy/45">
-                {String(index).padStart(2, '0')}
+          {/* 출처 배지 — 고객 사례가 아님을 항상 명시합니다 */}
+          <span className="u-eyebrow-tight absolute left-3.5 top-3.5 z-10 flex items-center gap-2">
+            {design.isNew && (
+              <span className="rounded-full bg-gradient-to-r from-gold-soft to-gold px-2.5 py-1 text-[10px] font-bold text-navy">
+                NEW
               </span>
             )}
-          </div>
+            <span className="rounded-full bg-navy/80 px-2.5 py-1 text-[9px] font-bold text-white/85 backdrop-blur-sm">
+              {originShort[design.origin]}
+            </span>
+          </span>
 
-          {/* 우상단 카테고리 */}
-          {category && (
-            <span className="u-eyebrow-tight absolute right-4 top-4 text-[10px] font-semibold text-navy/40 lg:right-5 lg:top-5">
-              {category.nameEn}
+          {typeof index === 'number' && (
+            <span className="u-eyebrow-tight absolute right-3.5 top-3.5 z-10 text-[11px] font-bold text-navy/45 mix-blend-luminosity">
+              {String(index).padStart(2, '0')}
             </span>
           )}
         </div>
       </Link>
 
-      {/* 카드 하단 정보 */}
-      <div className={cx('flex items-start justify-between gap-4', size === 'sm' ? 'pt-4' : 'pt-5')}>
+      {/* 캡션 */}
+      <div className="flex flex-1 items-start justify-between gap-4 pt-4">
         <div className="min-w-0">
           <h3
             className={cx(
               'font-bold text-navy transition-colors group-hover:text-gold-deep',
-              size === 'lg' ? 'text-[19px]' : 'text-[16px]',
+              variant === 'wide' ? 'text-[20px] lg:text-[22px]' : 'text-[16px]',
             )}
           >
             <Link href={`/design/${design.slug}`}>{design.title}</Link>
           </h3>
-          <p className="mt-1.5 text-[13px] leading-[1.65] text-ink-2">{design.shortDescription}</p>
+          <p
+            className={cx(
+              'mt-1.5 leading-[1.65] text-ink-2',
+              variant === 'wide' ? 'text-[14px]' : 'text-[13px]',
+            )}
+          >
+            {design.shortDescription}
+          </p>
 
           <p className="u-eyebrow-tight mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] text-muted">
             <span>{category?.name}</span>
@@ -137,12 +155,13 @@ export function DesignCard({
           className={cx(
             'mt-0.5 flex shrink-0 items-center justify-center rounded-full border border-line-gold text-gold-deep',
             'transition-all duration-300 group-hover:border-gold-deep group-hover:bg-gold group-hover:text-navy',
-            size === 'sm' ? 'size-8 text-[13px]' : 'size-10 text-[15px]',
+            variant === 'wide' ? 'size-11 text-[16px]' : 'size-9 text-[14px]',
           )}
         >
           →
         </span>
       </div>
+      {eager && <span className="u-sr-only">주요 디자인</span>}
     </article>
   );
 }

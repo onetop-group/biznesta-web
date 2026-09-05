@@ -107,11 +107,7 @@ export default async function NewDesignPage({
                 size="md"
                 className="mb-5 lg:mb-6 lg:text-right"
               />
-              <DeviceMockup
-                source={{ palette: heroDesign.palette, layout: heroDesign.previewLayout }}
-                variant="duo"
-                className="w-full"
-              />
+              <DeviceMockup source={{ design: heroDesign }} variant="duo" className="w-full" />
             </div>
 
             <VerticalKeywords
@@ -135,7 +131,7 @@ export default async function NewDesignPage({
         </div>
 
         <div className="mt-10 lg:mt-12">
-          <DesignGrid designs={result.items} columns={2} size="lg" showTags />
+          <DesignGrid designs={result.items} columns={2} variant="device" showTags />
         </div>
       </Section>
 

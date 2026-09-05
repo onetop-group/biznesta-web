@@ -123,10 +123,11 @@ export default async function DesignDetailPage({
 
             <div className="relative">
               <DeviceMockup
-                source={{ palette: design.palette, layout: design.previewLayout }}
-                variant="duo"
+                source={{ design }}
+                behind={related[0]}
+                variant="stack"
                 className="w-full"
-                phoneScale={0.28}
+                phoneScale={0.22}
               />
             </div>
 
@@ -247,7 +248,7 @@ export default async function DesignDetailPage({
             <ul className="mt-8 grid gap-x-5 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
               {related.map((item) => (
                 <li key={item.id}>
-                  <DesignCard design={item} size="sm" />
+                  <DesignCard design={item} variant="plate" />
                 </li>
               ))}
             </ul>
