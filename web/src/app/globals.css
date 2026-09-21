@@ -1,178 +1,66 @@
-@import 'tailwindcss';
-
-/* ==================================================================
-   BIZNESTA — DESIGN TOKENS
-   ------------------------------------------------------------------
-   ⚠️ 색상 · 서체 · 간격 변경은 이 블록에서만 합니다.
-      화면 파일에 hex 값을 직접 적지 마세요.
-
-   근거: BN_PC_06_DESIGN_DETAIL 시안이 팔레트 hex 를 직접 명시하고
-        있습니다 (MAIN #0D2340 / POINT #C9A77A / SUB #F6F2EB /
-        TEXT #333333). 나머지 토큰은 이 4색에서 파생했습니다.
-   ================================================================== */
-
-@theme {
-  /* ── 브랜드 코어 ─────────────────────────────────────────── */
-  --color-navy: #0d2340; /* MAIN  — 로고 · 헤더 텍스트 · 다크 밴드 */
-  --color-navy-deep: #081726; /* 푸터 최심부 · 그라디언트 끝 */
-  --color-navy-soft: #1b3a5c; /* 다크 밴드 안의 카드 · 경계선 */
-  --color-navy-line: #26456b; /* 다크 밴드 안의 구분선 */
-
-  --color-gold: #c9a77a; /* POINT — CTA · 로고 N · 강조 텍스트 */
-  --color-gold-deep: #a8834f; /* hover · 아이콘 라인 */
-  --color-gold-soft: #e4cda9; /* 골드 그라디언트 밝은 끝 */
-  --color-gold-pale: #f0e2cd; /* 아이콘 타일 배경 */
-
-  /* ── 배경 — 화면의 약 68% ────────────────────────────────── */
-  --color-ivory: #f6f2eb; /* SUB — 기본 섹션 배경 */
-  --color-ivory-soft: #fbf8f3; /* 카드 배경 */
-  --color-cream: #efe7da; /* 강조 블록 · 인용 밴드 */
-  --color-paper: #ffffff;
-
-  /* ── 텍스트 · 선 ─────────────────────────────────────────── */
-  --color-ink: #333333; /* TEXT — 본문 기본 */
-  --color-ink-2: #5a5a5a; /* 보조 본문 */
-  --color-muted: #8a8a8a; /* 캡션 · 비활성 */
-  --color-line: #e8e0d4; /* 밝은 배경의 구분선 */
-  --color-line-gold: #d9c4a3; /* 골드 계열 구분선 */
-
-  /* ── 상태 (Phase 7~8 관리자에서 사용) ────────────────────── */
-  --color-state-new: #b8860b;
-  --color-state-progress: #1b3a5c;
-  --color-state-done: #2f7d5a;
-  --color-state-hold: #8a8a8a;
-
-  /* ── 서체 ────────────────────────────────────────────────── */
-  --font-sans:
-    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
-    'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
-  /* next/font 가 html 에 주입하는 변수를 참조합니다 (src/app/layout.tsx) */
-  --font-display: var(--font-playfair), 'Noto Serif KR', Georgia, serif;
-  --font-script: var(--font-parisienne), 'Playfair Display', cursive;
-
-  /* ── 레이아웃 ────────────────────────────────────────────── */
-  --spacing-header: 88px; /* PC 고정 헤더 높이 */
-  --spacing-header-mo: 64px; /* 모바일 헤더 높이 */
-
-  /* ── 라운드 ──────────────────────────────────────────────── */
-  --radius-card: 16px;
-  --radius-tile: 12px;
-  --radius-pill: 999px;
-
-  /* ── 그림자 — 시안의 "빛과 공간감" 재현 ──────────────────── */
-  --shadow-card: 0 2px 8px rgb(13 35 64 / 0.04), 0 12px 32px rgb(13 35 64 / 0.06);
-  --shadow-card-hover: 0 4px 12px rgb(13 35 64 / 0.06), 0 20px 48px rgb(13 35 64 / 0.12);
-  --shadow-pill: 0 4px 14px rgb(169 131 79 / 0.28);
+/* Pretendard Variable, self-hosted and subset to the glyphs this site uses
+   (see scripts/build-font.mjs). Self-hosted so the design review never
+   renders in a fallback face because a CDN was slow. */
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('/fonts/pretendard-subset.woff2') format('woff2');
 }
 
-/* ==================================================================
-   기본 스타일
-   ================================================================== */
+/* ------------------------------------------------------------------
+   BIZNESTA — design tokens
+   Palette is taken from the colour chips printed on BN_PC_06 and from
+   pixel samples of BN_PC_01_HERO.png.
+------------------------------------------------------------------ */
+:root {
+  /* brand */
+  --bn-navy:        #0D2340;
+  --bn-gold:        #C9A77A;
+  --bn-ivory:       #F6F2EB;
+  --bn-text:        #333333;
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%;
-    scroll-padding-top: var(--spacing-header-mo);
-  }
+  /* PC_01 measured values */
+  --bn-header-bg:   #FCFAF6;
+  --bn-ink:         #0E1D2E;  /* headline / sub-headline */
+  --bn-bronze:      #A08160;  /* headline accent words */
+  --bn-eyebrow:     #9A8268;
+  --bn-body:        #4A4E52;
+  --bn-scroll:      #77685A;
+  --bn-hairline:    #B5A490;
 
-  @media (min-width: 1024px) {
-    html {
-      scroll-padding-top: var(--spacing-header);
-    }
-  }
+  --bn-band-from:   #15202D;
+  --bn-band-mid:    #131D28;
+  --bn-band-to:     #0B141E;
+  --bn-band-label:  #F8F8F9;
+  --bn-band-sub:    #99A1A7;
+  --bn-band-icon:   #E5C8A4;
+  --bn-band-rule:   rgba(255, 255, 255, 0.17);
 
-  body {
-    background-color: var(--color-ivory);
-    color: var(--color-ink);
-    font-family: var(--font-sans);
-    font-size: 15px;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-
-  @media (min-width: 1024px) {
-    body {
-      font-size: 16px;
-      line-height: 1.75;
-    }
-  }
-
-  /* 제목은 자간을 좁혀 시안의 밀도를 재현합니다 */
-  h1,
-  h2,
-  h3,
-  h4 {
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    word-break: keep-all; /* 한글 단어가 어절 중간에서 끊기지 않도록 */
-  }
-
-  p {
-    word-break: keep-all;
-  }
-
-  /* 59항 — 키보드 사용자를 위한 명확한 포커스 링 */
-  :focus-visible {
-    outline: 2px solid var(--color-gold-deep);
-    outline-offset: 3px;
-    border-radius: 4px;
-  }
-
-  /* 모션 최소화 설정을 존중합니다 */
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
+  --bn-vtype:       #CDC6BF;
+  --bn-vrule:       rgba(255, 255, 255, 0.38);
 }
 
-/* ==================================================================
-   유틸리티 — 시안에서 반복되는 표현만 최소한으로 정의합니다
-   ================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
 
-@layer utilities {
-  /* 섹션 라벨: 영문 대문자 + 넓은 자간 (32장 전체에 등장) */
-  .u-eyebrow {
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-  }
-
-  /* 우측 세로 키워드 컬럼 (PC 시안 10/16 장에 등장) */
-  .u-eyebrow-tight {
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-
-  /* 접근성: 화면에는 안 보이지만 스크린리더는 읽는 텍스트 */
-  .u-sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
-
-  /* 건너뛰기 링크 — 포커스될 때만 나타납니다 */
-  .u-skip-link {
-    position: absolute;
-    left: -9999px;
-    top: 0;
-    z-index: 100;
-  }
-  .u-skip-link:focus {
-    left: 1rem;
-    top: 1rem;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bn-header-bg);
+  color: var(--bn-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
+
+body {
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+               'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, p, figure, blockquote { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+img { display: block; max-width: 100%; }

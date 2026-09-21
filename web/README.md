@@ -1,54 +1,47 @@
-# BIZNESTA — 공식 홈페이지
+# BIZNESTA
 
-> 예쁜 홈페이지에서 끝나지 않습니다. 운영할 수 있는 홈페이지를 만듭니다.
+**PC01~16 + MO01~16 · TOTAL 32 SCREEN · OFFICIAL VISUAL MASTER · FINAL LOCK**
+(2026-09-06 사용자 최종 승인 · Preview 배포 단계 · Production 미배포)
 
-## 실행 방법
+32개 공식 디자인 화면은 확정 상태입니다. 변경 금지 범위, 재현 시스템, 사실성 정책
+(가격 · 제작기간 · 연락처 · 고객 후기 대체 문구)은 [VISUAL_MASTER_LOCK.md](./VISUAL_MASTER_LOCK.md)에
+기록되어 있습니다. 검수 인덱스는 `/review` 경로에서 확인합니다.
+
+---
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
 
 ```bash
-cd web
-npm install
-npm run dev      # http://localhost:3000
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-| 명령 | 설명 |
-| --- | --- |
-| `npm run dev` | 개발 서버 |
-| `npm run build` | 프로덕션 빌드 |
-| `npm run typecheck` | 타입 검사 |
-| `npm run logo` | 공식 로고에서 투명본 · 반전본 재생성 |
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 확인용 페이지
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-| 경로 | 내용 |
-| --- | --- |
-| `/` | 임시 홈 (Phase 2 기반 검증용 — 실제 메인은 Phase 3) |
-| `/styleguide` | 디자인 토큰 · 공통 컴포넌트 · 사이트 설정 미입력 현황 |
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## 규칙
+## Learn More
 
-**색상 · 서체 · 간격은 `src/app/globals.css` 의 `@theme` 블록에서만 바꿉니다.**
-화면 파일에 hex 값을 직접 적지 않습니다.
+To learn more about Next.js, take a look at the following resources:
 
-**배경색은 `<Section tone="...">` 으로만 지정합니다.**
-시안 32장 실측 비율(밝은 68% / 딥네이비 32%)을 지키기 위해서입니다.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-**도메인은 `src/lib/seo.ts` 한 곳에서만 결정됩니다.**
-`NEXT_PUBLIC_SITE_URL` 이 비어 있으면 Vercel 배포 URL → localhost 순으로 자동 대체되며,
-값이 비어 있는 동안에는 검색 색인이 차단됩니다.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-**확정되지 않은 회사 정보를 임의로 만들지 않습니다.**
-`src/data/site.ts` 의 빈 값은 화면에 렌더되지 않습니다. Phase 8 에서 관리자로 입력합니다.
+## Deploy on Vercel
 
-**로고는 `<Logo>` 컴포넌트로만 사용합니다.**
-SVG 원본을 받으면 `src/components/ui/Logo.tsx` 의 `LOGO_SOURCES` 경로만 교체하면 됩니다.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## 진행 단계
-
-- [x] **Phase 2** — Git · 프로젝트 구조 · Design System · Header/Footer/Section · 로고
-- [ ] Phase 3 — PC UI 16화면
-- [ ] Phase 4 — 모바일 반응형
-- [ ] Phase 5 — 카테고리 · 디자인 갤러리 · 상세
-- [ ] Phase 6 — Supabase 스키마 · RLS · Storage · Auth
-- [ ] Phase 7 — ADMIN 핵심 (인증 · 대시보드 · 디자인 관리 · 이미지 슬롯)
-- [ ] Phase 8 — ADMIN 운영 (문의 · 콘텐츠 · 설정 · 가격 · 모바일 관리자)
-- [ ] Phase 9~13 — Admin Demo · 점검 · Preview · 검수 · Production
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

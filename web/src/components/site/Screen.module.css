@@ -1,0 +1,11 @@
+/* PC / MOBILE 시안 전환. 화면 안쪽은 아무것도 바꾸지 않는다. */
+.desktop { display: none; }
+/* 시안이 화면보다 짧을 때 아래가 비어 보이지 않도록 마지막 면이 남은 높이를
+   가져간다. 시안보다 긴 페이지(예: 상담 폼)에서는 아무 일도 하지 않는다. */
+.mobile { display: flex; flex-direction: column; min-height: 100dvh; }
+.mobile > :last-child { flex: 1 0 auto; }
+
+@media (min-width: 1024px) {
+  .desktop { display: block; }
+  .mobile { display: none; }
+}

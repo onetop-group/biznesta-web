@@ -1,0 +1,192 @@
+/* ==================================================================
+   BIZNESTA WEB PORTFOLIO — 카테고리 안쪽 화면.
+
+   첨부해 주신 포트폴리오 시안과 이미 승인된 PC05 CATEGORY DETAIL 의
+   디자인 언어를 그대로 따른다 (짙은 네이비 히어로 + 공간 사진 → PORTFOLIO
+   섹션 → 아이보리 배경 2열 작품 → 마무리 상담 패널).
+   색은 globals.css 토큰만 쓴다. 새 색을 만들지 않는다.
+   ================================================================== */
+
+.page { background: var(--bn-ivory); color: var(--bn-ink); min-height: 100vh; }
+.wrap { width: min(100%, 1360px); margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+
+/* ------------------------------ 히어로 ----------------------------- */
+.hero { position: relative; overflow: hidden;
+  background: var(--bn-band-to); color: #fff; }
+/* BIZNESTA 공간 사진 — 오른쪽에 두고 왼쪽은 네이비로 덮어 글자를 읽게 한다 */
+.heroImg { position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 58% 62%; }
+.heroVeil { position: absolute; inset: 0;
+  background: linear-gradient(96deg,
+    var(--bn-band-to) 0%, rgba(11, 20, 30, 0.93) 30%,
+    rgba(11, 20, 30, 0.5) 46%, rgba(11, 20, 30, 0.08) 66%); }
+.heroInner { position: relative; width: min(100%, 1360px); margin: 0 auto;
+  padding: clamp(23px, 3vw, 40px) clamp(20px, 4vw, 56px) clamp(26px, 3.3vw, 45px); }
+
+.heroTop { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.heroBrand { display: inline-flex; align-items: center; text-decoration: none; }
+.heroBrand img { width: clamp(120px, 13vw, 152px); height: auto; display: block; }
+.heroCta { display: inline-flex; align-items: center; gap: 9px; flex: none;
+  height: 42px; padding: 0 20px; border-radius: 21px;
+  border: 1px solid rgba(255, 255, 255, 0.34); color: #fff;
+  background: rgba(11, 20, 30, 0.55); backdrop-filter: blur(2px);
+  font-size: 13.5px; font-weight: 700; letter-spacing: -0.012em; text-decoration: none;
+  transition: background-color 0.25s ease; }
+.heroCta:hover { background: rgba(11, 20, 30, 0.78); }
+.heroCta svg { width: 14px; height: 14px; }
+
+.crumb { display: flex; flex-wrap: wrap; align-items: center; gap: 7px;
+  margin: clamp(18px, 2.6vw, 34px) 0 0; font-size: 12px; letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.6); }
+.crumb a { color: rgba(255, 255, 255, 0.6); text-decoration: none;
+  display: inline-block; padding: 6px 2px; margin: -6px 0; }
+.crumb a:hover { color: #fff; }
+
+.heroEyebrow { margin: 14px 0 0; font-size: 11px; font-weight: 500;
+  letter-spacing: 0.42em; color: var(--bn-band-icon); }
+.heroTitle { margin: 12px 0 0; font-size: clamp(30px, 4.6vw, 50px); font-weight: 800;
+  letter-spacing: -0.02em; line-height: 1.14; color: #fff; word-break: keep-all; }
+.heroSub { margin: 12px 0 0; font-size: clamp(15px, 1.6vw, 19px); font-weight: 500;
+  letter-spacing: -0.01em; color: var(--bn-band-icon); word-break: keep-all; }
+.heroDesc { margin: 10px 0 0; font-size: clamp(13px, 1.4vw, 15px); line-height: 1.7;
+  color: var(--bn-band-sub); word-break: keep-all; max-width: 46ch; }
+
+.heroKeys { display: flex; flex-wrap: wrap; gap: clamp(18px, 3vw, 44px);
+  margin: clamp(18px, 2.4vw, 31px) 0 0; padding-top: clamp(13px, 1.7vw, 20px);
+  border-top: 1px solid var(--bn-band-rule); max-width: 560px; }
+.heroKey { min-width: 96px; }
+.heroKeyName { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.18em;
+  color: #fff; }
+.heroKeyNote { display: block; margin-top: 6px; font-size: 12px; letter-spacing: 0.02em;
+  color: var(--bn-band-sub); }
+
+/* ------------------------- 카테고리 이동 줄 -------------------------
+   Portfolio 언어(아이보리 바탕 · 브론즈 실선 · 네이비 선택)를 그대로 쓴다.
+   PC 는 한 줄, 좁은 화면에서는 이름이 잘리지 않게 줄바꿈한다. */
+.catNav { border-bottom: 1px solid color-mix(in srgb, var(--bn-hairline) 42%, transparent);
+  background: color-mix(in srgb, var(--bn-header-bg) 70%, var(--bn-ivory)); }
+.catNavInner { width: min(100%, 1360px); margin: 0 auto;
+  padding: clamp(14px, 1.8vw, 22px) clamp(20px, 4vw, 56px);
+  display: flex; flex-wrap: wrap; gap: clamp(7px, 0.8vw, 10px); }
+.catLink { display: inline-flex; align-items: center; height: 38px; padding: 0 16px;
+  border-radius: 19px;
+  border: 1px solid color-mix(in srgb, var(--bn-hairline) 55%, transparent);
+  background: #fff; color: var(--bn-body);
+  font-size: clamp(12.5px, 1.1vw, 13.5px); font-weight: 500; letter-spacing: -0.03em;
+  white-space: nowrap; text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease; }
+.catLink:hover { border-color: var(--bn-bronze); color: var(--bn-ink); }
+.catOn { background: var(--bn-navy); border-color: var(--bn-navy); color: #fff; font-weight: 600; }
+.catOn:hover { color: #fff; border-color: var(--bn-navy); }
+
+/* --------------------------- PORTFOLIO ---------------------------- */
+.sectionHead { display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 20px; padding: clamp(34px, 4.2vw, 56px) 0 clamp(20px, 2.4vw, 30px); }
+.sectionEyebrow { margin: 0; font-size: 11px; font-weight: 500; letter-spacing: 0.42em;
+  color: var(--bn-eyebrow); }
+.sectionTitle { margin: 12px 0 0; font-size: clamp(24px, 3.2vw, 34px); font-weight: 800;
+  letter-spacing: -0.03em; color: var(--bn-ink); }
+.sectionNote { margin: 10px 0 0; font-size: clamp(13px, 1.4vw, 15px); color: var(--bn-body);
+  word-break: keep-all; }
+.sectionCount { display: flex; align-items: center; gap: 14px; flex: none;
+  padding-left: 20px; border-left: 1px solid color-mix(in srgb, var(--bn-hairline) 60%, transparent); }
+.countNum { font-size: clamp(26px, 3vw, 36px); font-weight: 700; letter-spacing: -0.02em;
+  color: color-mix(in srgb, var(--bn-bronze) 70%, transparent); line-height: 1; }
+.countLabel { font-size: 10.5px; font-weight: 500; letter-spacing: 0.2em;
+  color: var(--bn-scroll); line-height: 1.7; }
+
+/* ---------------------------- 작품 격자 ---------------------------- */
+.grid { display: grid; gap: clamp(24px, 2.6vw, 36px);
+  grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+
+.card { display: block; padding: clamp(16px, 1.8vw, 24px);
+  background: var(--bn-header-bg); border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--bn-hairline) 38%, transparent);
+  box-shadow: 0 10px 26px rgba(13, 35, 64, 0.06); }
+
+.cardHead { display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 0 2px clamp(12px, 1.4vw, 18px); }
+.cardNo { flex: none; font-size: clamp(16px, 1.7vw, 20px); font-weight: 700;
+  letter-spacing: -0.01em; color: var(--bn-ink); }
+.cardName { flex: 1 1 auto; min-width: 0; margin: 0 0 0 12px;
+  font-size: clamp(15px, 1.6vw, 19px); font-weight: 700; letter-spacing: -0.035em;
+  color: var(--bn-ink); word-break: keep-all; }
+.cardName a { color: inherit; text-decoration: none; }
+.cardName a:hover { color: var(--bn-bronze); }
+.cardLabel { flex: none; font-size: 10.5px; font-weight: 500; letter-spacing: 0.16em;
+  color: var(--bn-scroll); white-space: nowrap; }
+
+/* 전시대 — PC 와 모바일을 같은 높이로. 두 이미지 모두 원본 비율 그대로다. */
+.shots { display: flex; align-items: flex-start; gap: clamp(8px, 1vw, 14px);
+  padding: clamp(12px, 1.6vw, 20px); border-radius: 10px;
+  background: linear-gradient(168deg, #FBF8F3 0%, #F0E9DF 100%); }
+.shotPc, .shotMo { min-width: 0; border-radius: 5px; overflow: hidden; background: #fff;
+  box-shadow: 0 8px 20px rgba(13, 35, 64, 0.14); }
+.shotMo { border-radius: 7px; }
+.shots img { width: 100%; height: auto; display: block; }
+
+.cardDesc { margin: clamp(14px, 1.6vw, 18px) 2px 0; font-size: clamp(13px, 1.3vw, 14.5px);
+  line-height: 1.65; color: var(--bn-body); word-break: keep-all; }
+.cardFoot { display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin: clamp(12px, 1.4vw, 16px) 2px 0; }
+.cardMeta { font-size: 11px; letter-spacing: 0.14em; color: var(--bn-scroll); }
+.viewMore { display: inline-flex; align-items: center; gap: 10px; flex: none;
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.16em; color: var(--bn-ink);
+  text-decoration: none; }
+.viewMoreDisc { display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--bn-bronze) 55%, transparent);
+  color: var(--bn-bronze);
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+.viewMoreDisc svg { width: 13px; height: 13px; }
+.viewMore:hover .viewMoreDisc { background: var(--bn-bronze); border-color: var(--bn-bronze);
+  color: #fff; }
+
+/* --------------------------- 페이지 넘김 --------------------------- */
+.pager { display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: clamp(34px, 4vw, 52px) 0 0; flex-wrap: wrap; }
+.pageLink { display: inline-flex; align-items: center; justify-content: center;
+  min-width: 40px; height: 40px; padding: 0 12px; border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--bn-hairline) 60%, transparent);
+  background: var(--bn-header-bg); color: var(--bn-body);
+  font-size: 13.5px; font-weight: 600; letter-spacing: 0.04em; text-decoration: none; }
+.pageLink:hover { border-color: var(--bn-bronze); color: var(--bn-ink); }
+.pageOn { background: var(--bn-navy); border-color: var(--bn-navy); color: #fff; }
+.pageOn:hover { color: #fff; border-color: var(--bn-navy); }
+
+/* ------------------------- 마무리 상담 패널 ------------------------- */
+.panel { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: clamp(20px, 3vw, 40px); margin: clamp(46px, 5vw, 74px) 0 clamp(56px, 6vw, 84px);
+  padding: clamp(28px, 3.4vw, 46px) clamp(24px, 3.4vw, 48px); border-radius: 16px;
+  background: linear-gradient(158deg, var(--bn-band-from) 0%, var(--bn-band-to) 100%);
+  color: #fff; }
+.panelText { flex: 1 1 min(560px, 100%); min-width: 0; }
+.panelBrand { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.42em;
+  color: var(--bn-band-icon); }
+.panelTitle { margin: 14px 0 0; font-size: clamp(19px, 2.4vw, 28px); font-weight: 800;
+  letter-spacing: -0.03em; line-height: 1.32; color: #fff; word-break: keep-all; }
+.panelNote { margin: 12px 0 0; font-size: clamp(13px, 1.4vw, 15px); line-height: 1.7;
+  color: var(--bn-band-sub); word-break: keep-all; }
+.panelCta { display: inline-flex; align-items: center; gap: 10px; flex: none;
+  height: 52px; padding: 0 28px; border-radius: 26px;
+  background: linear-gradient(148deg, #e8cfa8 0%, #d8b285 45%, #c09468 100%);
+  color: #17222f; font-size: 15px; font-weight: 700; letter-spacing: -0.012em;
+  text-decoration: none; transition: transform 0.25s ease, filter 0.25s ease; }
+.panelCta:hover { transform: translateY(-1px); filter: brightness(1.04); }
+.panelCta svg { width: 15px; height: 15px; }
+
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 760px) {
+  .heroImg { object-position: 68% 50%; }
+  .heroVeil { background: linear-gradient(178deg,
+    rgba(11, 20, 30, 0.9) 0%, rgba(11, 20, 30, 0.82) 45%, rgba(11, 20, 30, 0.92) 100%); }
+  .heroCta { height: 38px; padding: 0 16px; font-size: 12.5px; }
+  .sectionHead { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .sectionCount { padding-left: 0; border-left: 0; }
+  .panelCta { width: 100%; justify-content: center; }
+  /* 좁은 화면에서는 공식 문구의 줄바꿈을 풀고 자연스럽게 흐르게 둔다. */
+  .panelNote br, .panelTitle br { display: none; }
+}

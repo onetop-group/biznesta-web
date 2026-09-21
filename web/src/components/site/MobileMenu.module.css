@@ -1,0 +1,37 @@
+/* 모바일 메뉴 오버레이. 버튼을 누른 동안에만 존재하고, 32개 공식 화면의
+   구성에는 관여하지 않는다. 색은 BIZNESTA 브랜드 토큰 그대로. */
+
+.overlay { position: fixed; inset: 0; z-index: 90; display: flex; justify-content: flex-end; }
+
+.scrim { position: absolute; inset: 0; width: 100%; height: 100%;
+  padding: 0; border: 0; cursor: pointer;
+  background: rgba(9, 18, 30, 0.5); animation: fade 0.2s ease; }
+
+.panel { position: relative; width: min(310px, 84vw); height: 100%;
+  padding: 20px 22px 28px; box-sizing: border-box;
+  background: #0d2340; color: #f4f6f8; overflow-y: auto;
+  animation: slide 0.24s ease; }
+
+.top { display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 16px; border-bottom: 1px solid rgba(226, 200, 170, 0.28); }
+.brand { font-size: 13px; font-weight: 700; letter-spacing: 0.3em; color: #c9a77a; }
+.close { display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; margin-right: -9px;
+  padding: 0; border: 0; background: none; color: #f4f6f8; cursor: pointer; }
+
+.nav { display: flex; flex-direction: column; padding-top: 6px; }
+.item { display: flex; align-items: baseline; gap: 10px;
+  min-height: 48px; padding: 6px 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: inherit; text-decoration: none; }
+.item:last-child { border-bottom: 0; }
+.item:hover .ko, .item:focus-visible .ko { color: #e2c8aa; }
+.ko { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; transition: color 0.2s ease; }
+.en { font-size: 10px; font-weight: 500; letter-spacing: 0.22em; color: #8fa2b6; }
+
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide { from { transform: translateX(14px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .scrim, .panel { animation: none; }
+}

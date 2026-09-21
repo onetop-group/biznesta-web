@@ -1,0 +1,252 @@
+/* ==================================================================
+   BN_MO_13_PRICE — mobile.
+   Authored at 1024 x 1536 off the mobile artwork: a four-up plan row
+   with its own per-card rhythm, a photographic hero and a closing
+   consultation band. Not PC 13, and no amount is published — the
+   price slot carries the label from src/data/mo13.ts.
+   ================================================================== */
+
+.stage { container-type: inline-size; width: 100%; overflow: hidden; background: #fefefe; }
+.inner {
+  --s: min(calc(100cqw / 1024), 0.4199px);
+  position: relative; width: calc(1024 * var(--s));
+  -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+  margin: 0 auto; font-size: calc(16 * var(--s)); color: #14202c; background: #fefefe;
+}
+/* --- 2026-09-09 구조 안전화 (/about MO15 승인 방식) 세 면으로 쌓았다 --- */
+.hero { position: relative; min-height: calc(562 * var(--s)); }
+.plans { position: relative; min-height: calc(775 * var(--s)); }
+.close { position: relative; padding: 0 0 calc(68 * var(--s)); }
+/* 사진 위 글 기둥 — 라벨 · 제목 · 본문 · 꼬리 라벨이 서로 밀어낸다 */
+.heroCap { position: relative;
+  padding: calc(92 * var(--s)) calc(240 * var(--s)) calc(20 * var(--s)) calc(75 * var(--s)); }
+.heroTag { display: flex; align-items: flex-start;
+  margin: calc(7 * var(--s)) 0 0 calc(1 * var(--s)); }
+
+.heroImg { position: absolute; left: 0; top: 0;
+  width: calc(1024 * var(--s)); height: calc(545 * var(--s));
+  object-fit: cover; user-select: none; }
+
+/* ---------------------------- header ----------------------------- */
+.menuPanel { position: absolute; z-index: 4; left: calc(883 * var(--s)); top: 0;
+  width: calc(97 * var(--s)); height: calc(99 * var(--s));
+  border-radius: 0 0 calc(16 * var(--s)) calc(16 * var(--s)); background: #ffffff; }
+.logo { position: absolute; z-index: 5; left: calc(75 * var(--s)); top: calc(27 * var(--s));
+  width: calc(226 * var(--s)); height: calc(55.9 * var(--s)); }
+.logo img { width: 100%; height: 100%; }
+.menuBtn { position: absolute; z-index: 5; left: calc(911 * var(--s)); top: calc(26 * var(--s));
+  width: calc(39 * var(--s)); padding: 0; border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: calc(14 * var(--s)); }
+.burger { display: flex; flex-direction: column; gap: calc(7.5 * var(--s)); width: 100%; }
+.burger > span { display: block; width: 100%; height: calc(4.5 * var(--s));
+  border-radius: calc(3 * var(--s)); background: #10161c; }
+.menuLabel { font-size: calc(21 * var(--s)); font-weight: 700;
+  line-height: calc(21 * var(--s)); letter-spacing: -0.03em; color: #10161c; white-space: nowrap; }
+
+/* ----------------------------- hero ------------------------------ */
+.eyebrow { width: fit-content; margin: 0; font-size: calc(15.3 * var(--s)); font-weight: 500;
+  line-height: calc(15.3 * var(--s)); letter-spacing: 0.52em; color: #ac7c5c; }
+.headline { margin: calc(4 * var(--s)) 0 0; font-size: calc(48 * var(--s)); font-weight: 700;
+  line-height: calc(56 * var(--s)); letter-spacing: -0.015em; color: #14202c; }
+.headline > span { display: block; white-space: nowrap; }
+.gold { color: #8a5427; }
+.body { margin: calc(9 * var(--s)) 0 0; font-weight: 400;
+  letter-spacing: -0.02em; color: #46525e; word-break: keep-all; }
+.body > span { display: block; }
+.heroRule { flex: none; margin: calc(10 * var(--s)) calc(32 * var(--s)) 0 0;
+  width: calc(39 * var(--s)); height: 1px; background: #a98a6e; }
+.heroLabel { margin: 0; font-size: calc(13.5 * var(--s)); font-weight: 500;
+  line-height: calc(15 * var(--s)); letter-spacing: 0.33em; color: #6a7480; }
+.heroLabel > span { display: block; white-space: nowrap; }
+
+/* -------------------------- plan header --------------------------- */
+.secTitle { position: absolute; left: calc(49 * var(--s)); top: calc(30 * var(--s));
+  margin: 0; font-size: calc(33 * var(--s)); font-weight: 700;
+  line-height: calc(34 * var(--s)); letter-spacing: -0.02em; color: #14202c; white-space: nowrap; }
+.secSub { position: absolute; left: calc(256 * var(--s)); top: calc(38 * var(--s));
+  margin: 0; font-size: calc(18.6 * var(--s)); font-weight: 400;
+  line-height: calc(22 * var(--s)); letter-spacing: -0.035em; color: #46525e; white-space: nowrap; }
+.secMore { position: absolute; left: calc(826 * var(--s)); top: calc(11 * var(--s));
+  height: calc(26 * var(--s)); display: flex; align-items: center; gap: calc(9 * var(--s));
+  font-size: calc(18.2 * var(--s)); font-weight: 500; letter-spacing: -0.03em; color: #8a5427;
+  white-space: nowrap; border-bottom: 1px solid rgba(138, 84, 39, 0.5);
+  transition: color 0.25s ease; }
+.secMore:hover { color: #6d3f1a; }
+.secMore svg { width: calc(18 * var(--s)); height: calc(18 * var(--s)); }
+
+/* ---------------------------- plan card --------------------------- */
+.card { position: absolute; border-radius: calc(16 * var(--s));
+  background: #fdf9f5; border: 1px solid rgba(20, 30, 45, 0.05);
+  color: #14202c; text-align: center; }
+.featured { background: #032034; border-color: rgba(226, 178, 122, 0.55);
+  box-shadow: 0 calc(10 * var(--s)) calc(26 * var(--s)) rgba(4, 26, 48, 0.28); }
+
+.badge { position: absolute; left: calc(180 * var(--s)); top: calc(-2 * var(--s));
+  height: calc(30 * var(--s)); padding: 0 calc(13 * var(--s));
+  border-radius: calc(15 * var(--s)); background: #dc9c6c;
+  display: inline-flex; align-items: center;
+  font-size: calc(17 * var(--s)); font-weight: 700; letter-spacing: -0.02em; color: #142c44;
+  white-space: nowrap; }
+
+.disc { position: absolute; left: 50%; top: calc(20 * var(--s)); transform: translateX(-50%);
+  width: calc(58 * var(--s)); height: calc(58 * var(--s));
+  border-radius: 50%; background: #fbeade; }
+.featured .disc { background: rgba(226, 178, 122, 0.16); }
+.planIcon { position: absolute; left: 50%; top: calc(28.5 * var(--s)); transform: translateX(-50%);
+  height: calc(40 * var(--s)); color: #864f2c; }
+.featured .planIcon { color: #e6b884; }
+.planIcon svg { height: 100%; width: auto; }
+
+.planLabel { position: absolute; left: 0; top: calc(83 * var(--s)); width: 100%;
+  margin: 0; font-size: calc(12.5 * var(--s)); font-weight: 500;
+  line-height: calc(14 * var(--s)); letter-spacing: 0.3em; color: #7a7168; }
+.featured .planLabel { color: #c9b49b; }
+.planName { position: absolute; left: 0; top: calc(114 * var(--s)); width: 100%;
+  margin: 0; padding: 0 calc(8 * var(--s)); box-sizing: border-box; font-size: calc(29 * var(--s)); font-weight: 700;
+  line-height: calc(34 * var(--s)); letter-spacing: -0.075em; color: #0e2440; }
+.featured .planName { color: #fcfcfc; }
+.planDesc { position: absolute; left: 0; top: calc(158 * var(--s)); width: 100%;
+  margin: 0; padding: 0 calc(8 * var(--s)); box-sizing: border-box; word-break: keep-all;
+  font-size: calc(17 * var(--s)); font-weight: 400;
+  line-height: calc(25 * var(--s)); letter-spacing: -0.035em; color: #75838f; }
+.featured .planDesc { color: #bcc4cc; }
+.planDesc > span { display: block; }
+
+/* the artwork printed an amount here — see src/data/mo13.ts */
+.price { position: absolute; left: 0; top: calc(254 * var(--s)); width: 100%;
+  margin: 0; font-size: calc(28 * var(--s)); font-weight: 700;
+  line-height: calc(32 * var(--s)); letter-spacing: -0.03em; color: #86502e; }
+.featured .price { color: #f2c28c; }
+
+.features { position: absolute; left: 0; top: 0; width: 100%;
+  margin: 0; padding: 0; list-style: none; }
+.features li { position: absolute; left: calc(17 * var(--s));
+  display: flex; align-items: center; gap: calc(10 * var(--s));
+  text-align: left; }
+.featured .features li { left: calc(13 * var(--s)); }
+.check { display: block; width: calc(15 * var(--s)); height: calc(15 * var(--s));
+  flex: none; color: #86502e; }
+.featured .check { color: #e6b884; }
+.check svg { width: 100%; height: 100%; }
+.featText { font-size: calc(17 * var(--s)); font-weight: 400; line-height: calc(21 * var(--s));
+  letter-spacing: -0.035em; color: #4f6272; white-space: nowrap; }
+.featured .featText { color: #d3dae1; }
+
+.planCta { position: absolute; left: calc(15 * var(--s)); top: calc(546 * var(--s));
+  width: calc(198 * var(--s)); height: calc(53 * var(--s));
+  border-radius: calc(26.5 * var(--s));
+  border: 1px solid rgba(138, 84, 39, 0.3); background: #fdf5ec;
+  display: flex; align-items: center; justify-content: center; gap: calc(11 * var(--s));
+  font-size: calc(19 * var(--s)); font-weight: 500; letter-spacing: -0.03em; color: #64381f;
+  white-space: nowrap; transition: background 0.25s ease, color 0.25s ease; }
+.planCta:hover { background: #f8ead9; color: #4a2712; }
+.planCta svg { width: calc(18 * var(--s)); height: calc(18 * var(--s)); }
+.featured .planCta { left: calc(15 * var(--s)); width: calc(204 * var(--s));
+  top: calc(547 * var(--s)); border: 0; color: #2b3037;
+  background: linear-gradient(180deg, #f4cba2 0%, #e8bd93 34%, #d7a97d 70%, #c1926a 100%); }
+.featured .planCta:hover { filter: brightness(1.04); background:
+  linear-gradient(180deg, #f4cba2 0%, #e8bd93 34%, #d7a97d 70%, #c1926a 100%); color: #2b3037; }
+
+/* ----------------------------- band ------------------------------- */
+.bandBox { position: relative; min-height: calc(211 * var(--s));
+  margin: 0 calc(36 * var(--s)); width: calc(954 * var(--s));
+  border-radius: calc(16 * var(--s)); overflow: hidden; background: #f4efe9; }
+.bandImg { position: absolute; left: 0; top: 0;
+  width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; }
+.bnCol { position: relative;
+  padding: calc(19 * var(--s)) calc(180 * var(--s)) calc(20 * var(--s)) calc(493 * var(--s)); }
+.bandQuote { margin: 0; font-size: calc(23 * var(--s)); font-weight: 700;
+  line-height: calc(34 * var(--s)); letter-spacing: -0.035em; color: #14202c; }
+.bandQuote > span { display: block; white-space: nowrap; }
+.bandSub { margin: calc(6 * var(--s)) 0 0; font-size: calc(17.3 * var(--s)); font-weight: 400;
+  line-height: calc(26 * var(--s)); letter-spacing: -0.035em; color: #5c6670; white-space: nowrap; }
+.bandCta { position: relative; z-index: 1; margin: calc(26 * var(--s)) 0 0 calc(1 * var(--s));
+  width: calc(265 * var(--s)); min-height: calc(58 * var(--s));
+  border-radius: calc(29 * var(--s)); background: #143352;
+  display: flex; align-items: center; justify-content: center; gap: calc(14 * var(--s));
+  color: #ffffff; transition: background 0.25s ease, transform 0.25s ease; }
+.bandCta:hover { background: #1c4670; transform: translateY(calc(-1 * var(--s))); }
+.bandCtaLabel { font-size: calc(23 * var(--s)); font-weight: 700; letter-spacing: -0.03em;
+  white-space: nowrap; }
+.bandCta svg { width: calc(21 * var(--s)); height: calc(21 * var(--s)); }
+/* 사진에 남아 있던 번짐 자국을 버튼 자리 뒤에서 덮는다 */
+.ctaVeil { position: absolute; left: calc(452 * var(--s)); top: calc(110 * var(--s));
+  width: calc(349 * var(--s)); height: calc(128 * var(--s)); pointer-events: none;
+  background: radial-gradient(ellipse at center,
+    #f2ebe1 0%, #f2ebe1 52%, rgba(242, 235, 225, 0.7) 74%, rgba(242, 235, 225, 0) 100%); }
+.bandRule { position: absolute; left: calc(830 * var(--s)); top: calc(52 * var(--s));
+  width: 1px; height: calc(110 * var(--s)); background: rgba(20, 30, 45, 0.18); }
+.bandLabel { position: absolute; left: calc(857 * var(--s)); top: calc(67 * var(--s));
+  margin: 0; font-size: calc(12 * var(--s)); font-weight: 500;
+  line-height: calc(19 * var(--s)); letter-spacing: 0.235em; color: #6a7480; }
+.bandLabel > span { display: block; white-space: nowrap; }
+.bandLabel > span:last-child { margin-top: calc(15 * var(--s)); color: #46525e; }
+
+/* --------------------------- support ------------------------------ */
+/* 사용자 제공 시안 — 상담 3종을 남색 상자 하나에 담는다 */
+.supBox { position: relative; margin: calc(46 * var(--s)) calc(36 * var(--s)) 0;
+  width: calc(954 * var(--s)); padding: calc(22 * var(--s)) 0 calc(22 * var(--s));
+  border-radius: calc(16 * var(--s));
+  background: linear-gradient(118deg, #12263c 0%, #0e1f31 55%, #0a1826 100%); }
+.supRow { position: relative; height: calc(52 * var(--s)); }
+.sup { position: absolute; top: 0; height: calc(52 * var(--s));
+  display: flex; align-items: center; gap: calc(12 * var(--s)); }
+.supIcon { display: block; height: calc(51 * var(--s)); color: #d9b184; }
+.supIcon svg { height: 100%; width: auto; }
+.supLabel { font-size: calc(21 * var(--s)); font-weight: 500; line-height: calc(21 * var(--s));
+  letter-spacing: -0.03em; color: #e8ecf0; white-space: nowrap; }
+
+.supSep { position: absolute; top: calc(6 * var(--s));
+  width: 1px; height: calc(41 * var(--s)); background: rgba(232, 236, 240, 0.26); }
+
+/* ==================================================================
+   FINAL MOBILE USABILITY OPTIMIZATION — PHASE 4 (MO 13~16)
+   2026-09-07 · 사용자 승인: 430px Visual Master 의 exact pixel
+   reproduction 보다 실제 모바일 가독성을 우선한다. redesign 이 아니라
+   FINAL MOBILE USABILITY OVERRIDE 다. VISUAL_MASTER_LOCK.md 4-A 참조.
+
+   이전의 max-width:400px floor 블록을 대체한다. 그 블록은 400px 에서
+   글자가 갑자기 커지는 401->400 불연속을 만들고 있었고, 확대된 값이
+   카드/스텝 폭을 넘어가고 있었다. 여기서는 breakpoint 없이 항상 적용한다.
+   스테이지는 --s 가 .4199px 로 상한이 걸려 430px 에서 고정되므로
+   430px 이상 모든 폭이 430px 과 같다.
+
+   px = 폭과 무관하게 유지할 실사용 크기 (핵심 본문 · CTA · 메뉴).
+   calc(N * --s) = 격자 칸/카드 폭에 묶여 칸과 함께 커져야 하는 보조 텍스트.
+   주석의 숫자는 원래 Visual Master 토큰이다.
+   MO 13: 4개 plan card · feature row · 추천 배지 · support row 구조를
+   유지한다. 가격은 숫자를 쓰지 않고 "상담 후 안내" / "맞춤 견적" 을
+   그대로 둔다 (사실성 정책).
+   ================================================================== */
+
+.menuLabel { font-size: 13px; line-height: 1.1; }                /* was 21 * --s */
+.eyebrow { font-size: 8.5px; line-height: 1.1; }                 /* was 15.3 * --s */
+/* hero body — 헤드라인과 hero rule 사이 여백 안에서만 위로 올렸다 */
+.body { font-size: 10.5px; line-height: 1.4; letter-spacing: -0.02em; }  /* was 22 * --s */
+.secSub { font-size: calc(22 * var(--s)); }                      /* was 18.6 * --s */
+.secMore { font-size: calc(22 * var(--s)); }                     /* was 18.2 * --s */
+/* 4개 plan card — 카드 폭이 상한 */
+.planDesc { font-size: calc(22 * var(--s)); line-height: 1.32; } /* was 18.5 * --s */
+.price { font-size: calc(30 * var(--s)); }                       /* was 28 * --s */
+/* 배지는 카드 오른쪽 끝에 닿아 있어 padding 을 줄여 자리를 만들었다 */
+.badge { padding: 0 calc(10 * var(--s));                          /* was 13 * --s */
+  font-size: calc(18 * var(--s)); }                               /* was 17 * --s */
+/* feature row: 행 자체의 padding 과 아이콘 간격을 줄여 글자 자리를 만들었다 */
+.features li { left: calc(12 * var(--s)); gap: calc(7 * var(--s)); }  /* was 17 / 10 */
+.featured .features li { left: calc(9 * var(--s)); }                 /* was 13 * --s */
+.featText { font-size: calc(19.5 * var(--s)); letter-spacing: -0.055em; }  /* was 17 * --s */
+.planCta { font-size: calc(25 * var(--s)); }                     /* was 19 * --s */
+.bandSub { font-size: calc(21 * var(--s)); }                     /* was 17.3 * --s */
+.bandCtaLabel { font-size: 13px; }                               /* was 23 * --s */
+.supLabel { font-size: calc(25 * var(--s)); }                    /* was 21 * --s */
+
+/* touch targets — invisible hit area only; nothing changes on screen */
+.menuBtn, .secMore, .planCta { position: absolute; }
+.menuBtn::after, .secMore::after, .planCta::after, .bandCta::after {
+  content: ""; position: absolute; inset: -9px -4px; }
+
+/* --- 하단 기준선 맞춤: 면 사이 여백만 고르게 벌린다 --- */
+.inner > section:not(:last-child),
+.inner > nav:not(:last-child) { margin-bottom: calc(40 * var(--s)); }
+.inner > section:not(:first-child):not(:last-child),
+.inner > nav:not(:first-child):not(:last-child) { margin-bottom: calc(75 * var(--s)); }

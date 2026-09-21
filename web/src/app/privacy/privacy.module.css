@@ -1,0 +1,42 @@
+/* 공식 32화면에 없는 보조 페이지. BIZNESTA 브랜드 토큰만 사용한다. */
+.wrap { max-width: 720px; margin: 0 auto; padding: 64px 24px 96px;
+  font-family: inherit; color: #333333; }
+.brand { margin: 0 0 24px; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.32em; color: #c9a77a; }
+.title { margin: 0 0 10px; font-size: 26px; font-weight: 700;
+  letter-spacing: -0.02em; color: #0d2340; }
+.meta { margin: 0 0 28px; font-size: 13px; color: #7d8894; }
+
+.draft { margin: 0 0 36px; padding: 14px 16px; border-radius: 10px;
+  background: #fdf6ee; border: 1px solid rgba(201, 167, 122, 0.5);
+  font-size: 14px; line-height: 1.65; letter-spacing: -0.01em; color: #6d4a24; }
+.draft strong { font-weight: 700; }
+
+.section { margin: 0 0 32px; }
+.h2 { margin: 0 0 10px; font-size: 16px; font-weight: 700;
+  letter-spacing: -0.02em; color: #0d2340; }
+.body { margin: 0 0 10px; font-size: 15px; line-height: 1.75;
+  letter-spacing: -0.01em; color: #46525e; }
+.list { margin: 0 0 10px; padding-left: 18px; }
+.list li { margin: 0 0 6px; font-size: 15px; line-height: 1.7;
+  letter-spacing: -0.01em; color: #46525e; }
+
+.rows { margin: 12px 0 0; padding: 0;
+  border-top: 1px solid rgba(20, 30, 45, 0.1); }
+.row { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 11px 2px;
+  border-bottom: 1px solid rgba(20, 30, 45, 0.08); }
+.dt { flex: 0 0 190px; margin: 0; font-size: 14px; font-weight: 600;
+  letter-spacing: -0.01em; color: #2f3a47; }
+.dd { flex: 1 1 200px; margin: 0; font-size: 15px; line-height: 1.6;
+  letter-spacing: -0.01em; color: #46525e; }
+.tbd { color: #a4713a; font-weight: 600; }
+
+.back { display: inline-flex; align-items: center; min-height: 44px; margin-top: 12px;
+  font-size: 14px; font-weight: 600; color: #8a5427; text-decoration: none;
+  border-bottom: 1px solid rgba(138, 84, 39, 0.4); }
+.back:hover { color: #6d3f1a; }
+
+@media (max-width: 520px) {
+  .wrap { padding: 48px 20px 72px; }
+  .dt { flex-basis: 100%; }
+}

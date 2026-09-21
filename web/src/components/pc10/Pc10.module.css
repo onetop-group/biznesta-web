@@ -1,0 +1,137 @@
+/* ==================================================================
+   BN_PC_10_ADMIN_SYSTEM
+   Authored at 1536 x 1024, scaled by --s. A deep navy operations
+   room: the photographed admin mockup fills the right of the hero,
+   an ivory feature shelf sits below it, and the navy band closes.
+   ================================================================== */
+
+.stage { container-type: inline-size; width: 100%; overflow: hidden; background: #fcfaf8; }
+.inner {
+  --s: min(calc(100cqw / 1536), 1.32px);
+  position: relative; width: calc(1536 * var(--s)); height: calc(1024 * var(--s));
+  margin: 0 auto; font-size: calc(16 * var(--s)); color: #14202c;
+}
+.heroImg { position: absolute; left: 0; top: 0;
+  width: calc(1536 * var(--s)); height: calc(612 * var(--s));
+  object-fit: cover; user-select: none; }
+
+/* ---------------------------- header ----------------------------- */
+.wordmark { position: absolute; left: calc(74 * var(--s)); top: calc(21 * var(--s));
+  width: calc(194 * var(--s)); height: calc(36.1 * var(--s)); }
+.wordmark img { width: 100%; height: 100%; }
+.headerTagline { position: absolute; left: calc(74 * var(--s)); top: calc(64 * var(--s));
+  font-size: calc(9.3 * var(--s)); font-weight: 500; line-height: calc(9.3 * var(--s));
+  letter-spacing: 0.354em; color: #35404e; white-space: nowrap; }
+.navItem { position: absolute; top: calc(32 * var(--s)); text-align: center; white-space: nowrap;
+  transform: translateX(-50%); }
+.navEn { display: block; font-size: calc(13.9 * var(--s)); font-weight: 700;
+  line-height: calc(13.9 * var(--s)); letter-spacing: -0.04em; color: #101822; }
+.navKo { display: block; margin-top: calc(10 * var(--s)); font-size: calc(12.6 * var(--s));
+  font-weight: 400; line-height: calc(12.6 * var(--s)); letter-spacing: -0.01em; color: #6b7280; }
+.headerCta { position: absolute; left: calc(1266 * var(--s)); top: calc(21 * var(--s));
+  width: calc(200 * var(--s)); height: calc(50 * var(--s)); border-radius: calc(25 * var(--s));
+  background: linear-gradient(148deg, #e8cfa8 0%, #d8b285 45%, #c09468 100%);
+  color: #17222f; display: flex; align-items: center; justify-content: center; gap: calc(11 * var(--s));
+  transition: transform 0.25s ease, filter 0.25s ease; }
+.headerCta:hover { transform: translateY(calc(-1 * var(--s))); filter: brightness(1.04); }
+.ctaLabel { font-size: calc(15.5 * var(--s)); font-weight: 700; letter-spacing: -0.012em;
+  word-spacing: 0.06em; white-space: nowrap; }
+.headerCta svg { width: calc(16 * var(--s)); height: calc(16 * var(--s)); }
+
+/* ----------------------------- hero ------------------------------ */
+.eyebrow { position: absolute; left: calc(77 * var(--s)); top: calc(133 * var(--s));
+  font-size: calc(12.4 * var(--s)); font-weight: 500; line-height: calc(12.4 * var(--s));
+  letter-spacing: 0.473em; color: #dbb98e; white-space: nowrap; }
+.headline { position: absolute; left: calc(76 * var(--s)); top: calc(161 * var(--s));
+  font-size: calc(47 * var(--s)); font-weight: 700; line-height: calc(58 * var(--s));
+  letter-spacing: -0.004em; color: #ffffff; }
+.headline > span { display: block; white-space: nowrap; }
+.headCream { color: #fbe5c5; }
+.sub { position: absolute; left: calc(78 * var(--s)); top: calc(291 * var(--s));
+  font-size: calc(18 * var(--s)); font-weight: 400; line-height: calc(27 * var(--s));
+  letter-spacing: 0.038em; color: #eef1f3; }
+.sub > span { display: block; white-space: nowrap; }
+
+.checks { position: absolute; left: 0; top: 0; list-style: none; margin: 0; padding: 0; }
+.check { position: absolute; left: calc(77 * var(--s)); display: flex; align-items: center;
+  gap: calc(17 * var(--s)); white-space: nowrap; }
+.checkIcon { height: calc(22 * var(--s)); color: #d3a877; flex: none; }
+.checkIcon svg { height: 100%; width: auto; }
+.checkText { font-size: calc(16.5 * var(--s)); font-weight: 400; line-height: calc(16.5 * var(--s));
+  letter-spacing: -0.02em; color: #eceeee; }
+
+.heroDash { position: absolute; left: calc(76 * var(--s)); top: calc(474 * var(--s));
+  width: calc(32 * var(--s)); height: calc(2 * var(--s)); background: rgba(255, 255, 255, 0.5); }
+.heroQuoteRule { position: absolute; left: calc(86 * var(--s)); top: calc(508 * var(--s));
+  width: 1px; height: calc(46 * var(--s)); background: rgba(255, 255, 255, 0.35); }
+.heroQuote { position: absolute; left: calc(102 * var(--s)); top: calc(510 * var(--s));
+  font-size: calc(12.8 * var(--s)); font-weight: 500; line-height: calc(20 * var(--s));
+  letter-spacing: 0.251em; color: #d4d8db; }
+.heroQuote > span { display: block; white-space: nowrap; }
+
+/* ------------------------ admin features -------------------------- */
+.featEyebrow { position: absolute; left: calc(63 * var(--s)); top: calc(639 * var(--s));
+  font-size: calc(12.4 * var(--s)); font-weight: 500; line-height: calc(12.4 * var(--s));
+  letter-spacing: 0.454em; color: #ac7c5c; white-space: nowrap; }
+.featTitle { position: absolute; left: calc(63 * var(--s)); top: calc(666 * var(--s));
+  font-size: calc(28.7 * var(--s)); font-weight: 700; line-height: calc(41 * var(--s));
+  letter-spacing: 0.03em; color: #0d1a2b; }
+.featTitle > span { display: block; white-space: nowrap; }
+.featDesc { position: absolute; left: calc(63 * var(--s)); top: calc(760 * var(--s));
+  font-size: calc(16.5 * var(--s)); font-weight: 400; line-height: calc(26 * var(--s));
+  letter-spacing: -0.035em; color: #3c4653; }
+.featDesc > span { display: block; white-space: nowrap; }
+
+.card { position: absolute; top: calc(639 * var(--s)); height: calc(218 * var(--s));
+  border-radius: calc(8 * var(--s)); border: 1px solid rgba(20, 30, 45, 0.08);
+  background: #ffffff; text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.card:hover { transform: translateY(calc(-3 * var(--s)));
+  box-shadow: 0 calc(10 * var(--s)) calc(24 * var(--s)) rgba(20, 30, 45, 0.08); }
+.cardIcon { position: absolute; left: 50%; top: calc(25 * var(--s)); transform: translateX(-50%);
+  width: calc(58 * var(--s)); height: calc(58 * var(--s)); border-radius: 50%;
+  background: #f3e7d9; color: #a06f42;
+  display: flex; align-items: center; justify-content: center; }
+.cardIcon svg { width: calc(37 * var(--s)); height: calc(37 * var(--s)); }
+.cardTitle { position: absolute; left: 50%; top: calc(103 * var(--s)); transform: translateX(-50%);
+  font-size: calc(17 * var(--s)); font-weight: 700; line-height: calc(17 * var(--s));
+  letter-spacing: 0.02em; color: #14202c; white-space: nowrap; }
+.cardDesc { position: absolute; left: 50%; top: calc(132 * var(--s)); transform: translateX(-50%);
+  font-size: calc(14.4 * var(--s)); font-weight: 400; line-height: calc(21 * var(--s));
+  letter-spacing: 0.017em; color: #5b6673; }
+.cardDesc > span { display: block; white-space: nowrap; }
+
+/* --------------------------- closing band ------------------------- */
+.band { position: absolute; left: 0; top: calc(883 * var(--s));
+  width: calc(1536 * var(--s)); height: calc(141 * var(--s));
+  object-fit: cover; user-select: none; }
+.bandWordmark { position: absolute; left: calc(59 * var(--s)); top: calc(910 * var(--s));
+  width: calc(166 * var(--s)); height: calc(30.9 * var(--s)); }
+.bandWordmark img { width: 100%; height: 100%; }
+.bandTagline { position: absolute; left: calc(59 * var(--s)); top: calc(955 * var(--s));
+  font-size: calc(8.6 * var(--s)); font-weight: 500; line-height: calc(8.6 * var(--s));
+  letter-spacing: 0.384em; color: #b9c0c8; white-space: nowrap; }
+.bandQuote { position: absolute; left: calc(299 * var(--s)); top: calc(915 * var(--s));
+  font-size: calc(16.5 * var(--s)); font-weight: 500; line-height: calc(26 * var(--s));
+  letter-spacing: -0.025em; color: #eef1f3; }
+.bandQuote > span { display: block; white-space: nowrap; }
+.bandQuote > span:last-child { margin-left: calc(14 * var(--s)); }
+.quoteMark { color: #c9a273; }
+.bandIcon { position: absolute; top: calc(917 * var(--s)); height: calc(37 * var(--s));
+  color: #d3a877; transform: translateX(-50%); }
+.bandIcon svg { height: 100%; width: auto; }
+.bandLabel { position: absolute; top: calc(963 * var(--s)); font-size: calc(14.9 * var(--s));
+  font-weight: 500; line-height: calc(14.9 * var(--s)); letter-spacing: -0.03em;
+  color: #e6e9ec; white-space: nowrap; transform: translateX(-50%); }
+.bandCta { position: absolute; left: calc(1227 * var(--s)); top: calc(908 * var(--s));
+  width: calc(256 * var(--s)); height: calc(50 * var(--s)); border-radius: calc(25 * var(--s));
+  background: linear-gradient(148deg, #e8cfa8 0%, #d8b285 45%, #c09468 100%);
+  color: #17222f; display: flex; align-items: center; justify-content: center; gap: calc(11 * var(--s));
+  transition: transform 0.25s ease, filter 0.25s ease; }
+.bandCta:hover { transform: translateY(calc(-1 * var(--s))); filter: brightness(1.04); }
+.bandCtaLabel { font-size: calc(15.5 * var(--s)); font-weight: 700; letter-spacing: -0.012em;
+  word-spacing: 0.06em; white-space: nowrap; }
+.bandCta svg { width: calc(16 * var(--s)); height: calc(16 * var(--s)); }
+.bandCtaNote { position: absolute; left: calc(1355 * var(--s)); top: calc(972 * var(--s));
+  transform: translateX(-50%); font-size: calc(14.9 * var(--s)); font-weight: 400;
+  line-height: calc(14.9 * var(--s)); letter-spacing: -0.03em; color: #cfd5db; white-space: nowrap; }

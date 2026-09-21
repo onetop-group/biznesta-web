@@ -1,0 +1,98 @@
+/* 모바일 상담 폼 — real CSS px.
+   색 · 모서리 · 사진 · 문구는 MO16 Visual Master 의 상담 패널 그대로 쓰고,
+   크기만 실제 손가락으로 쓸 수 있는 값으로 만든다.
+   스테이지가 430px 에서 멈추므로 폼도 같은 폭에 맞춰 가운데 정렬한다. */
+
+.wrap { width: 100%; background: #fefefe; display: flex; justify-content: center;
+  padding: 0 0 4px; }
+.panel { width: min(430px, 100%); box-sizing: border-box;
+  background: #fdf8f4; overflow: hidden; }
+
+.banner { display: block; width: 100%; height: 104px; object-fit: cover;
+  object-position: center; user-select: none; }
+
+.body { padding: 22px 20px 28px; }
+.title { margin: 0 0 8px; font-size: 20px; font-weight: 700;
+  letter-spacing: -0.03em; color: #14202c; }
+.sub { margin: 0 0 22px; font-size: 14px; font-weight: 400; line-height: 1.6;
+  letter-spacing: -0.02em; color: #46525e; }
+
+.form { display: flex; flex-direction: column; gap: 18px; }
+
+.field { position: relative; display: flex; flex-direction: column; gap: 7px; }
+.label { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; color: #2f3a47; }
+.req { color: #c0714a; }
+
+/* 16px 미만이면 iOS 가 포커스할 때 화면을 확대한다 */
+.input, .textarea {
+  box-sizing: border-box; width: 100%; margin: 0;
+  padding: 0 14px; border: 1px solid rgba(20, 30, 45, 0.16); border-radius: 10px;
+  background: #fffdfc; font-family: inherit; font-size: 16px; line-height: 1.5;
+  letter-spacing: -0.02em; color: #14202c;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease; }
+.input { min-height: 48px; }
+.textarea { min-height: 132px; padding: 13px 14px; resize: vertical; }
+.input::placeholder, .textarea::placeholder { color: #97a1ab; }
+.input:focus-visible, .textarea:focus-visible, .select:focus-visible {
+  outline: none; border-color: #a97a4a; box-shadow: 0 0 0 3px rgba(201, 167, 122, 0.32); }
+.input[aria-invalid="true"], .textarea[aria-invalid="true"] { border-color: #b4553a; }
+
+.select { appearance: none; -webkit-appearance: none; padding-right: 40px; cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' fill='none' stroke='%236a7480' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 8.5 11 14.5 17 8.5'/%3E%3C/svg%3E");
+  background-position: right 13px center; background-size: 20px 20px; background-repeat: no-repeat; }
+.select:invalid, .select option[value=""] { color: #97a1ab; }
+
+.counter { align-self: flex-end; margin-top: -2px;
+  font-size: 12px; letter-spacing: -0.01em; color: #9aa4ae; }
+
+.consentRow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.consent { display: flex; align-items: center; gap: 10px; min-height: 44px;
+  font-size: 14px; font-weight: 500; letter-spacing: -0.02em; color: #2f3a47;
+  cursor: pointer; }
+.checkbox { flex: none; width: 22px; height: 22px; margin: 0; accent-color: #8a5427; cursor: pointer; }
+.checkbox:focus-visible { outline: 2px solid #a97a4a; outline-offset: 2px; }
+.reqNote { font-style: normal; font-weight: 400; color: #7d8894; }
+.consentMore { display: inline-flex; align-items: center; min-height: 44px;
+  font-size: 13px; letter-spacing: -0.02em; color: #7d8894; text-decoration: none; }
+.consentMore:hover { color: #8a5427; }
+
+.error { width: 100%; margin: 0; font-size: 13px; line-height: 1.45;
+  letter-spacing: -0.02em; color: #b4553a; }
+
+.submit { display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; min-height: 52px; margin-top: 2px;
+  border: 0; border-radius: 26px; background: #0e273d; cursor: pointer;
+  font-family: inherit; font-size: 16px; font-weight: 700; letter-spacing: -0.02em;
+  color: #ffffff; transition: background 0.2s ease, transform 0.2s ease; }
+.submit:hover { background: #17395a; }
+.submit:active { transform: translateY(1px); }
+.submit:focus-visible { outline: 2px solid #a97a4a; outline-offset: 3px; }
+.submit svg { width: 18px; height: 18px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .input, .textarea, .submit { transition: none; }
+}
+
+/* ---- 제출 상태 (SUPABASE INQUIRY DB PHASE 2) ---- */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.failure { margin: 0; padding: 12px 14px; border-radius: 10px;
+  background: #fdf0ec; border: 1px solid rgba(180, 85, 58, 0.3);
+  font-size: 14px; line-height: 1.5; letter-spacing: -0.02em; color: #a4462c; }
+
+.submit:disabled { background: #4a5b6d; cursor: progress; }
+
+.sent { display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  padding: 26px 22px; border-radius: 12px;
+  background: #ffffff; border: 1px solid rgba(20, 30, 45, 0.1); }
+.sentTitle { margin: 0; font-size: 17px; font-weight: 700;
+  letter-spacing: -0.02em; color: #0e273d; }
+.sentBody { margin: 0; font-size: 14px; line-height: 1.6;
+  letter-spacing: -0.02em; color: #46525e; }
+.again { min-height: 44px; margin-top: 6px; padding: 0 18px;
+  border: 1px solid rgba(138, 84, 39, 0.4); border-radius: 22px;
+  background: none; cursor: pointer;
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  letter-spacing: -0.02em; color: #8a5427; }
+.again:hover { background: #fbf1e6; }
+.again:focus-visible { outline: 2px solid #a97a4a; outline-offset: 2px; }

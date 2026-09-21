@@ -1,0 +1,222 @@
+/* ==================================================================
+   BN_MO_11_CUSTOM_SOLUTION — mobile.
+   Authored at 1024 x 1536 off the mobile artwork: a designed process,
+   not a feature table — hero tablet, five-step process row, four
+   recommendation cards and the closing principle panel. Not PC 11.
+   ================================================================== */
+
+.stage { container-type: inline-size; width: 100%; overflow: hidden; background: #fefdfc; }
+.inner {
+  --s: min(calc(100cqw / 1024), 0.4199px);
+  position: relative; width: calc(1024 * var(--s));
+  -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+  margin: 0 auto; font-size: calc(16 * var(--s)); color: #14202c; background: #fefdfc;
+}
+.heroWash { position: absolute; left: 0; top: 0;
+  width: calc(1024 * var(--s)); height: calc(590 * var(--s)); pointer-events: none;
+  background: linear-gradient(90deg,
+    rgba(255, 253, 250, 0.99) 0%, rgba(255, 253, 250, 0.985) 40%,
+    rgba(255, 253, 250, 0.62) 46%, rgba(255, 253, 250, 0) 53%); }
+.heroImg { position: absolute; left: 0; top: 0;
+  width: calc(1024 * var(--s)); height: calc(590 * var(--s));
+  object-fit: cover; user-select: none; }
+
+/* ---------------------------- header ----------------------------- */
+.logo { position: absolute; z-index: 5; left: calc(76 * var(--s)); top: calc(29 * var(--s));
+  width: calc(226 * var(--s)); height: calc(55.9 * var(--s)); }
+.logo img { width: 100%; height: 100%; }
+.menuBtn { position: absolute; z-index: 5; left: calc(910 * var(--s)); top: calc(27 * var(--s));
+  width: calc(40 * var(--s)); padding: 0; border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: calc(14 * var(--s)); }
+.burger { display: flex; flex-direction: column; gap: calc(7 * var(--s)); width: 100%; }
+.burger > span { display: block; width: 100%; height: calc(5 * var(--s));
+  border-radius: calc(3 * var(--s)); background: #10161c; }
+.menuLabel { font-size: calc(20.5 * var(--s)); font-weight: 700;
+  line-height: calc(20.5 * var(--s)); letter-spacing: -0.03em; color: #10161c; white-space: nowrap; }
+
+/* --- 2026-09-09 구조 안전화 (/about MO15 승인 방식) 다섯 면으로 쌓았다 --- */
+.hero { position: relative; min-height: calc(608 * var(--s)); }
+.proc { position: relative; min-height: calc(338 * var(--s)); }
+.recs { position: relative; min-height: calc(352 * var(--s)); }
+.principle { position: relative; min-height: calc(228 * var(--s)); }
+.close { position: relative; padding: 0 0 calc(56 * var(--s)); }
+/* 사진 위 글 기둥 — 오른쪽 세로 글(aside) 자리는 비워 둔다 */
+.heroCap { position: relative; z-index: 1;
+  padding: calc(128 * var(--s)) calc(255 * var(--s)) calc(24 * var(--s)) calc(73 * var(--s)); }
+
+/* ----------------------------- hero ------------------------------ */
+.eyebrow { width: fit-content; margin: 0 0 0 calc(3 * var(--s)); font-size: calc(15.3 * var(--s));
+  font-weight: 500; line-height: calc(15.3 * var(--s));
+  letter-spacing: 0.39em; color: #ac7c5c; }
+.headline { margin: calc(9 * var(--s)) 0 0; font-size: calc(48 * var(--s)); font-weight: 700;
+  line-height: calc(56 * var(--s)); letter-spacing: 0.005em; color: #14202c; }
+.headline > span { display: block; white-space: nowrap; }
+/* the artwork sets the closing headline line larger than the two above it */
+.gold { color: #8a5427; }
+.body { margin: calc(18 * var(--s)) 0 0 calc(2 * var(--s)); font-weight: 400;
+  letter-spacing: -0.02em; color: #46525e; word-break: keep-all; }
+.body > span { display: block; }
+.aside { position: absolute; left: calc(832 * var(--s)); top: calc(172 * var(--s));
+  margin: 0; font-size: calc(17.5 * var(--s)); font-weight: 500;
+  line-height: calc(31 * var(--s)); letter-spacing: -0.03em; color: #14202c; }
+.aside > span { display: block; width: fit-content; white-space: nowrap; }
+.asideRule { position: absolute; left: calc(821 * var(--s)); top: calc(348 * var(--s));
+  width: 1px; height: calc(22 * var(--s)); background: rgba(20, 30, 45, 0.3); }
+.asideLabel { position: absolute; left: calc(832 * var(--s)); top: calc(350 * var(--s));
+  margin: 0; font-size: calc(12.5 * var(--s)); font-weight: 500;
+  line-height: calc(21 * var(--s)); letter-spacing: 0.4em; color: #46525e; }
+.asideLabel > span { display: block; white-space: nowrap; }
+
+/* ---------------------------- process ----------------------------- */
+.secTitle { position: absolute; left: calc(55 * var(--s)); top: 0;
+  margin: 0; font-size: calc(27.5 * var(--s)); font-weight: 700;
+  line-height: calc(32 * var(--s)); letter-spacing: -0.035em; color: #14202c; white-space: nowrap; }
+.secMore { position: absolute; left: calc(859 * var(--s)); top: calc(6 * var(--s));
+  height: calc(34 * var(--s)); display: flex; align-items: center; gap: calc(10 * var(--s));
+  font-size: calc(19 * var(--s)); font-weight: 500; letter-spacing: -0.03em; color: #3c4653;
+  white-space: nowrap; transition: color 0.25s ease; }
+.secMore:hover { color: #8a5427; }
+.secMore svg { width: calc(19 * var(--s)); height: calc(19 * var(--s)); }
+
+.procPanel { position: absolute; left: calc(38 * var(--s)); top: calc(80 * var(--s));
+  width: calc(948 * var(--s)); height: calc(222 * var(--s));
+  border-radius: calc(16 * var(--s)); background: #faf5f0; }
+.chev { position: absolute; top: calc(122 * var(--s)); transform: translateX(-50%);
+  font-size: calc(26 * var(--s)); line-height: calc(26 * var(--s)); color: #c3ad95; }
+.step { position: absolute; top: calc(108 * var(--s)); transform: translateX(-50%);
+  text-align: center; }
+.stepIcon { display: block; margin: 0 auto; height: calc(39 * var(--s)); color: #a0703f; }
+.stepIcon svg { height: 100%; width: auto; }
+.stepTitle { margin: calc(30 * var(--s)) 0 0; font-size: calc(20 * var(--s)); font-weight: 700;
+  line-height: calc(20 * var(--s)); letter-spacing: -0.03em; color: #14202c; white-space: nowrap; }
+.stepDesc { margin: calc(14 * var(--s)) 0 0; font-size: calc(16 * var(--s)); font-weight: 400;
+  line-height: calc(24 * var(--s)); letter-spacing: -0.035em; color: #5c6670; }
+.stepDesc > span { display: block; white-space: nowrap; }
+
+/* --------------------------- recommend ---------------------------- */
+.secTitle2 { position: absolute; left: calc(45 * var(--s)); top: 0;
+  margin: 0; font-size: calc(27 * var(--s)); font-weight: 700;
+  line-height: calc(32 * var(--s)); letter-spacing: -0.035em; color: #14202c; white-space: nowrap; }
+.secMore2 { position: absolute; left: calc(850 * var(--s)); top: calc(4 * var(--s));
+  height: calc(34 * var(--s)); display: flex; align-items: center; gap: calc(10 * var(--s));
+  font-size: calc(19 * var(--s)); font-weight: 500; letter-spacing: -0.03em; color: #3c4653;
+  white-space: nowrap; transition: color 0.25s ease; }
+.secMore2:hover { color: #8a5427; }
+.secMore2 svg { width: calc(19 * var(--s)); height: calc(19 * var(--s)); }
+
+.rec { position: absolute; top: calc(64 * var(--s)); width: calc(228 * var(--s));
+  text-align: center; }
+.recImg { display: block; width: 100%; height: calc(116 * var(--s));
+  border-radius: calc(10 * var(--s)); object-fit: cover; user-select: none; }
+.recTitle { margin: calc(22 * var(--s)) 0 0; font-size: calc(19 * var(--s)); font-weight: 700;
+  line-height: calc(22 * var(--s)); letter-spacing: -0.035em; color: #14202c; }
+.recTitle > span { display: block; white-space: nowrap; }
+.recWant { margin: calc(20 * var(--s)) 0 0; font-size: calc(16 * var(--s)); font-weight: 400;
+  line-height: calc(22 * var(--s)); letter-spacing: -0.035em; color: #6a7480; }
+.recWant > span { display: block; white-space: nowrap; }
+
+/* --------------------------- principle ---------------------------- */
+.prPanel { position: absolute; left: calc(38 * var(--s)); top: 0;
+  width: calc(948 * var(--s)); height: calc(206 * var(--s));
+  border-radius: calc(16 * var(--s)); background: #faf4ef; }
+.prImg { position: absolute; left: calc(38 * var(--s)); top: 0;
+  width: calc(323 * var(--s)); height: calc(206 * var(--s));
+  border-radius: calc(16 * var(--s)) 0 0 calc(16 * var(--s));
+  object-fit: cover; display: block; user-select: none; }
+.prNav { position: absolute; top: calc(83 * var(--s));
+  width: calc(41 * var(--s)); height: calc(41 * var(--s)); border-radius: 50%;
+  background: #ffffff; color: #a3703f;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 calc(2 * var(--s)) calc(8 * var(--s)) rgba(20, 30, 45, 0.12); }
+.prNav svg { width: calc(19 * var(--s)); height: calc(19 * var(--s)); }
+.prPrev { left: calc(366 * var(--s)); transform: rotate(180deg); }
+.prNext { left: calc(903 * var(--s)); }
+.prQuote { position: absolute; left: calc(420 * var(--s)); top: calc(46 * var(--s));
+  width: calc(460 * var(--s)); margin: 0; text-align: center;
+  font-size: calc(22 * var(--s)); font-weight: 500;
+  line-height: calc(31 * var(--s)); letter-spacing: -0.035em; color: #2f3a47; }
+.prQuote > span { display: block; white-space: nowrap; }
+.prBy { position: absolute; left: calc(420 * var(--s)); top: calc(157 * var(--s));
+  width: calc(460 * var(--s)); margin: 0; text-align: center;
+  font-size: calc(18 * var(--s)); font-weight: 400;
+  line-height: calc(18 * var(--s)); letter-spacing: -0.03em; color: #7d8894; white-space: nowrap; }
+
+/* ----------------------------- CTA -------------------------------- */
+.cta { position: relative; margin: 0 auto; width: calc(786 * var(--s)); min-height: calc(70 * var(--s));
+  border-radius: calc(35 * var(--s));
+  background: linear-gradient(180deg, #f0c49e 0%, #e0b58f 30%, #cc9b76 70%, #b28661 100%);
+  color: #2b3037; display: flex; align-items: center; justify-content: center;
+  gap: calc(16 * var(--s)); transition: transform 0.25s ease, filter 0.25s ease; }
+.cta:hover { transform: translateY(calc(-1 * var(--s))); filter: brightness(1.04); }
+.ctaLabel { font-size: calc(30 * var(--s)); font-weight: 700; letter-spacing: -0.03em;
+  word-spacing: 0.05em; white-space: nowrap; }
+.cta svg { width: calc(27 * var(--s)); height: calc(27 * var(--s)); }
+
+.supRow { position: relative; height: calc(46 * var(--s)); margin-top: calc(28 * var(--s)); }
+.sup { position: absolute; top: 0; height: calc(46 * var(--s));
+  display: flex; align-items: center; gap: calc(21 * var(--s)); }
+.supIcon { display: block; height: calc(38 * var(--s)); color: #d9b184; }
+.supIcon svg { height: 100%; width: auto; }
+.supLabel { font-size: calc(19 * var(--s)); font-weight: 500; line-height: calc(19 * var(--s));
+  letter-spacing: -0.03em; color: #e8ecf0; white-space: nowrap; }
+
+.supSep { position: absolute; top: calc(-8 * var(--s));
+  width: 1px; height: calc(40 * var(--s)); background: rgba(232, 236, 240, 0.26); }
+
+/* ==================================================================
+   FINAL MOBILE USABILITY OPTIMIZATION — PHASE 3 (MO 09~12)
+   2026-09-06 · 사용자 승인: 430px Visual Master 의 exact pixel
+   reproduction 보다 실제 모바일 가독성을 우선한다. redesign 이 아니라
+   FINAL MOBILE USABILITY OVERRIDE 다. VISUAL_MASTER_LOCK.md 4-A 참조.
+
+   breakpoint 없이 항상 적용된다. 스테이지는 --s 가 .4199px 로 상한이
+   걸려 430px 에서 고정되므로 430px 이상 모든 폭이 430px 과 같고,
+   360~430px 사이에 글자가 갑자기 작아지는 구간이 없다.
+
+   px = 폭과 무관하게 유지할 실사용 크기 (핵심 본문 · CTA · 메뉴 · 링크).
+   calc(N * --s) = 격자 칸에 묶여 칸과 함께 커져야 하는 보조 텍스트.
+   주석의 숫자는 원래 Visual Master 토큰이다.
+   MO 11: 5단계 프로세스 행과 4개 추천 카드를 유지한다.
+   하단 원칙 문구와 "— 비즈네스타의 맞춤 설계 원칙 —", 교체된 중립
+   상담 공간 이미지는 건드리지 않는다 (사실성 정책).
+   ================================================================== */
+
+.menuLabel { font-size: 13px; line-height: 1.1; }                /* was 20.5 * --s */
+.eyebrow { font-size: 8.5px; line-height: 1.1; }                 /* was 15.3 * --s */
+.body { font-size: 10.5px; line-height: 1.4; letter-spacing: -0.02em; }  /* was 21 * --s */
+.aside { font-size: calc(22 * var(--s)); }                       /* was 17.5 * --s */
+/* 오른쪽 끝에 붙은 보조 링크 — 폭이 상한이라 --s 로 두고 위치만 당긴다 */
+.secMore { left: calc(800 * var(--s)); font-size: calc(24 * var(--s)); }   /* was 859 / 19 */
+.secMore2 { left: calc(790 * var(--s)); font-size: calc(24 * var(--s)); }  /* was 850 / 19 */
+/* 5단계 프로세스 — 칸 폭이 상한 */
+.stepTitle { margin-top: calc(26 * var(--s));                     /* was 30 * --s */
+  font-size: calc(23 * var(--s)); }                               /* was 20 * --s */
+.stepDesc { margin-top: calc(16 * var(--s));                      /* was 14 * --s */
+  font-size: calc(20 * var(--s)); line-height: 1.62; }            /* was 16 * --s */
+/* 4개 추천 카드 — 카드 폭이 상한 */
+.recTitle { margin-top: calc(24 * var(--s));                      /* was 22 * --s */
+  font-size: calc(22 * var(--s)); }                               /* was 19 * --s */
+.recWant { margin-top: calc(20 * var(--s));                       /* was 20 * --s */
+  font-size: calc(20 * var(--s)); line-height: 1.55; }            /* was 16 * --s */
+.prQuote { font-size: calc(25 * var(--s)); }                     /* was 22 * --s */
+.prBy { font-size: calc(20.5 * var(--s)); }                      /* was 18 * --s */
+.ctaLabel { font-size: 14px; }
+.supLabel { font-size: calc(24 * var(--s)); }                    /* was 19 * --s */
+
+/* touch targets — invisible hit area only; nothing changes on screen */
+.menuBtn, .secMore, .secMore2 { position: absolute; }
+.menuBtn::after, .cta::after, .secMore::after, .secMore2::after {
+  content: ""; position: absolute; inset: -9px -4px; }
+
+/* ---------------- 마무리 남색 박스 (상담 3종 포함) ----------------
+   사용자 제공 시안대로 버튼과 상담 3종을 하나의 남색 상자에 담는다. */
+.ctaBox { position: relative; margin: 0 calc(34 * var(--s)); width: calc(956 * var(--s));
+  padding: calc(46 * var(--s)) 0 calc(44 * var(--s));
+  border-radius: calc(16 * var(--s));
+  background: linear-gradient(118deg, #12263c 0%, #0e1f31 55%, #0a1826 100%); }
+
+/* --- 하단 기준선 맞춤: 면 사이 여백만 고르게 벌린다 --- */
+.inner > section:not(:last-child),
+.inner > nav:not(:last-child) { margin-bottom: calc(12 * var(--s)); }
+.inner > section:not(:first-child):not(:last-child),
+.inner > nav:not(:first-child):not(:last-child) { margin-bottom: calc(20 * var(--s)); }

@@ -26,3 +26,10 @@ desktop.ini
 *.log
 npm-debug.log*
 dev.log
+
+# ── 저장소 루트의 작업용 파일 (소스 아님) ── 2026-09-21 checkpoint 때 추가
+# QA 렌더 스크린샷 (67MB)
+review/
+*.zip
+* - 복사본.*
+ChatGPT Image *

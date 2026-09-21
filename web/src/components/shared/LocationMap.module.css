@@ -1,0 +1,31 @@
+/* 위치 안내 상자.
+   크기 · 위치 · 배경 · 테두리는 쓰는 화면이 정하고, 여기서는 안쪽만 그린다.
+   시안 안에서 쓰일 때는 스테이지의 --s 를 그대로 물려받고, 그 밖에서는
+   1px 을 기준으로 계산한다. */
+/* position 은 일부러 정하지 않는다. 여기서 relative 를 걸면 화면 쪽의
+   absolute 를 덮어써서 상자가 문서 흐름에 끼어든다. 자리 잡는 일은
+   className 을 넘기는 화면이 하고(반드시 positioned 여야 한다), 여기서는
+   안쪽만 그린다. */
+.box { overflow: hidden; }
+.canvas { position: absolute; inset: 0; width: 100%; height: 100%;
+  border: 0; display: block; }
+
+/* 카카오맵으로 나가는 링크 — 지도 위에 얹힌다.
+   지도 서비스의 저작권 표기(아래)와 확대/축소(오른쪽 아래)를 피해 오른쪽 위에 둔다. */
+.links { position: absolute; right: calc(10 * var(--s, 1px)); top: calc(10 * var(--s, 1px));
+  display: flex; gap: calc(6 * var(--s, 1px)); }
+.link { display: inline-flex; align-items: center;
+  height: calc(24 * var(--s, 1px)); padding: 0 calc(11 * var(--s, 1px));
+  border-radius: calc(12 * var(--s, 1px));
+  border: 1px solid rgba(20, 30, 45, 0.14); background: rgba(255, 255, 255, 0.94);
+  font-size: calc(11.5 * var(--s, 1px)); font-weight: 500; letter-spacing: -0.03em;
+  color: #3c4653; text-decoration: none; white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease; }
+.link:hover { background: #ffffff; border-color: rgba(160, 111, 66, 0.5); color: #a06f42; }
+
+/* 모바일 등 좁은 화면에서는 손가락으로 누를 수 있는 크기를 지킨다. */
+@media (max-width: 1023px) {
+  .link { height: 34px; padding: 0 14px; border-radius: 17px; font-size: 13px; }
+  .links { left: 12px; bottom: 12px; gap: 8px; }
+  .label { font-size: 13px; }
+}

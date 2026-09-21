@@ -1,0 +1,75 @@
+/* 최소형 BUSINESS INFO — 시안 아래에 조용히 붙는 사업자 정보 띠.
+   팔레트는 globals.css 의 BIZNESTA 토큰(navy · gold · ivory)만 쓴다.
+   시안의 프리미엄 화면보다 눈에 띄지 않도록: 작은 글자, 낮은 대비, 얇은 선. */
+
+.wrap {
+  background: var(--bn-ivory);
+  border-top: 1px solid rgba(13, 35, 64, 0.08);
+  color: #6b7480;
+}
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 26px 24px 30px;
+}
+
+/* 머리줄: 왼쪽 눈썹 + 워드마크, 오른쪽 방침 링크 */
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px 24px;
+  flex-wrap: wrap;
+  margin: 0 0 14px;
+}
+.brand { margin: 0; display: flex; align-items: baseline; gap: 12px; }
+.eyebrow {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.32em;
+  color: var(--bn-gold);
+}
+.mark {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.18em;
+  color: var(--bn-navy);
+}
+.link {
+  font-size: 12px; font-weight: 500; letter-spacing: -0.01em;
+  color: #46525e; text-decoration: none;
+  border-bottom: 1px solid rgba(70, 82, 94, 0.35);
+  padding-bottom: 1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.link:hover { color: var(--bn-navy); border-color: var(--bn-navy); }
+
+/* 정보 줄: 한 줄에 여러 항목이 흐르다가 좁아지면 자연스럽게 다음 줄로 */
+.rows {
+  margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap;
+  gap: 5px 22px;
+}
+.row { display: flex; align-items: baseline; gap: 7px; margin: 0; }
+.dt {
+  margin: 0; flex: none;
+  font-size: 11.5px; font-weight: 600; letter-spacing: -0.01em;
+  color: #46525e; white-space: nowrap;
+}
+.dd {
+  margin: 0;
+  font-size: 12px; line-height: 1.6; letter-spacing: -0.01em;
+  color: #6b7480; word-break: keep-all;
+}
+.value { color: inherit; text-decoration: none; }
+.value:hover { color: var(--bn-navy); }
+
+.copy {
+  margin: 16px 0 0;
+  font-size: 11px; letter-spacing: 0.01em;
+  color: #9aa3ad;
+}
+
+/* 모바일: 항목을 한 줄에 하나씩, 여백은 조금 좁게 */
+@media (max-width: 640px) {
+  .inner { padding: 22px 20px 26px; }
+  .rows { flex-direction: column; gap: 6px; }
+  .row { gap: 8px; }
+  .dt { min-width: 112px; }
+}

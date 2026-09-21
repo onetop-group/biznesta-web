@@ -1,0 +1,299 @@
+/* ==================================================================
+   BIZNESTA DESIGN COLLECTION — 카테고리 안쪽 갤러리 · 작품 상세.
+
+   32개 시안처럼 고정 크기 무대에 얹을 수 없는 화면이다(작품 수가 늘어난다).
+   대신 BIZNESTA 가 이미 쓰고 있는 토큰(globals.css)만 그대로 가져와
+   같은 사이트 안의 화면으로 읽히게 한다 — 새 색을 만들지 않는다.
+     배경  --bn-ivory / --bn-header-bg
+     글자  --bn-ink / --bn-navy / --bn-body
+     강조  --bn-gold / --bn-bronze / --bn-eyebrow
+     선    --bn-hairline
+   작품은 상품이 아니라 전시물이다. 이미지를 자르지 않고(crop 금지)
+   PC 와 모바일을 한 쌍으로 같은 높이에 나란히 세운다.
+   ================================================================== */
+
+.page { background: var(--bn-ivory); color: var(--bn-ink); min-height: 100vh; }
+.wrap { width: min(100%, 1360px); margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+
+/* ------------------------------ 상단 ------------------------------ */
+.top { display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 22px 0 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--bn-hairline) 45%, transparent); }
+.brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand img { width: clamp(124px, 14vw, 158px); height: auto; display: block; }
+.topCta { display: inline-flex; align-items: center; gap: 8px; flex: none;
+  height: 42px; padding: 0 20px; border-radius: 21px;
+  background: linear-gradient(158deg, #17293f 0%, var(--bn-navy) 100%); color: #fff;
+  font-size: 14px; font-weight: 700; letter-spacing: -0.012em; text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.topCta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(11, 22, 36, 0.28); }
+.topCta svg { width: 14px; height: 14px; }
+
+.crumb { display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  padding: 20px 0 0; font-size: 12.5px; color: var(--bn-scroll); }
+.crumb a { display: inline-block; padding: 6px 2px; margin: -6px 0;
+  color: var(--bn-scroll); text-decoration: none; }
+.crumb a:hover { color: var(--bn-ink); }
+.crumbSep { color: var(--bn-hairline); }
+
+/* --------------------------- 카테고리 머리 -------------------------- */
+.head { padding: 18px 0 26px; }
+.collection { margin: 0; font-size: 11px; font-weight: 500; letter-spacing: 0.42em;
+  color: var(--bn-eyebrow); text-transform: uppercase; }
+.eyebrow { margin: 10px 0 0; font-size: 11.5px; font-weight: 500; letter-spacing: 0.42em;
+  color: var(--bn-bronze); text-transform: uppercase; }
+.title { margin: 14px 0 0; font-size: clamp(28px, 4.4vw, 46px); font-weight: 800;
+  letter-spacing: -0.03em; line-height: 1.16; color: var(--bn-ink); word-break: keep-all; }
+.lead { margin: 14px 0 0; font-size: clamp(14px, 1.5vw, 17px); font-weight: 400;
+  line-height: 1.65; color: var(--bn-body); word-break: keep-all; }
+.count { display: inline-flex; align-items: baseline; gap: 7px; margin: 18px 0 0;
+  font-size: 12px; letter-spacing: 0.16em; color: var(--bn-scroll); }
+.count b { font-size: 18px; font-weight: 700; letter-spacing: 0; color: var(--bn-bronze); }
+.headRule { display: block; width: 100%; height: 1px; margin-top: 24px;
+  background: color-mix(in srgb, var(--bn-hairline) 55%, transparent); }
+
+/* --------------------------- 카테고리 줄 --------------------------- */
+.chips { display: flex; gap: 8px; padding: 22px 0 6px; overflow-x: auto;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex: none; display: inline-flex; align-items: center; height: 40px;
+  padding: 0 18px; border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--bn-hairline) 60%, transparent);
+  background: var(--bn-header-bg); color: var(--bn-body); font-size: 13.5px; font-weight: 500;
+  letter-spacing: -0.03em; white-space: nowrap; text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease; }
+.chip:hover { border-color: var(--bn-bronze); color: var(--bn-ink); }
+.chipOn { background: var(--bn-navy); border-color: var(--bn-navy); color: #fff; font-weight: 600; }
+.chipOn:hover { color: #fff; border-color: var(--bn-navy); }
+
+/* ============================ 작품 갤러리 ==========================
+   한 작품 = 하나의 전시물. PC 와 모바일을 같은 높이로 나란히 세운다.
+   flex-grow 를 각 이미지의 가로세로비로 주면 두 이미지의 높이가 저절로
+   같아지고 어느 쪽도 잘리지 않는다 (width 100% · height auto). */
+.gallery { display: grid; gap: clamp(30px, 3.4vw, 54px);
+  grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 32px 0 8px; }
+@media (max-width: 1080px) { .gallery { grid-template-columns: minmax(0, 1fr); } }
+
+.work { display: block; color: inherit; }
+
+/* 전시대 — 작품이 놓이는 아이보리 판 */
+.stage { display: flex; align-items: flex-start; gap: clamp(10px, 1.4vw, 18px);
+  padding: clamp(16px, 2.2vw, 30px);
+  background: linear-gradient(168deg, var(--bn-header-bg) 0%, #F1EAE0 100%);
+  border: 1px solid color-mix(in srgb, var(--bn-hairline) 40%, transparent);
+  border-radius: 14px; }
+.shotPc, .shotMo { min-width: 0; border-radius: 6px; overflow: hidden;
+  background: #fff; box-shadow: 0 10px 26px rgba(13, 35, 64, 0.13); }
+.shotMo { border-radius: 8px; }
+/* 자르지 않는다 — 원본 비율 그대로 폭에 맞춰 들어간다. */
+.stage img { width: 100%; height: auto; display: block; user-select: none; }
+
+.caption { display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 20px; }
+.catLabel { display: inline-flex; align-items: center; height: 23px; padding: 0 11px;
+  border-radius: 11.5px; border: 1px solid color-mix(in srgb, var(--bn-bronze) 45%, transparent);
+  font-size: 11px; font-weight: 600; letter-spacing: -0.02em; color: var(--bn-bronze);
+  white-space: nowrap; }
+.workNo { font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; color: var(--bn-scroll); }
+.workName { margin: 11px 0 0; font-size: clamp(17px, 1.7vw, 21px);
+  font-weight: 700; letter-spacing: -0.035em; line-height: 1.32; color: var(--bn-ink);
+  word-break: keep-all; }
+.workName a { color: inherit; text-decoration: none; }
+.workName a:hover { color: var(--bn-bronze); }
+.workDesc { margin: 9px 0 0; font-size: clamp(13px, 1.3vw, 14.5px); font-weight: 400;
+  line-height: 1.6; color: var(--bn-body); word-break: keep-all; }
+.workFoot { display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; margin-top: 14px; }
+.workMeta { display: flex; align-items: center; gap: 9px;
+  font-size: 11.5px; letter-spacing: 0.12em; color: var(--bn-scroll); }
+/* VIEW MORE — 작품 상세로 가는 길 */
+.viewMore { display: inline-flex; align-items: center; gap: 10px; flex: none;
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0.16em; color: var(--bn-ink);
+  text-decoration: none; }
+.viewMoreDisc { display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--bn-navy) 30%, transparent);
+  color: var(--bn-ink);
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+.viewMoreDisc svg { width: 14px; height: 14px; }
+.viewMore:hover .viewMoreDisc { background: var(--bn-navy); border-color: var(--bn-navy); color: #fff; }
+.metaRule { display: block; width: 18px; height: 1px; background: var(--bn-hairline); }
+
+/* ------------------------- 크게 보기 --------------------------------
+   이미지 자리는 버튼이다. 눌러도 이미지가 잘리거나 늘어나지 않는다. */
+.zoomBtn { position: relative; display: block; padding: 0; border: 0; background: none;
+  cursor: zoom-in; font: inherit; color: inherit; text-align: left; }
+.zoomBtn img { width: 100%; height: auto; display: block; user-select: none; }
+.zoomHint { position: absolute; right: 10px; bottom: 10px;
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 28px; padding: 0 11px; border-radius: 14px;
+  background: color-mix(in srgb, var(--bn-navy) 82%, transparent); color: #fff;
+  font-size: 11px; font-weight: 600; letter-spacing: -0.02em;
+  opacity: 0; transition: opacity 0.22s ease; pointer-events: none; }
+.zoomHint svg { width: 13px; height: 13px; }
+.zoomBtn:hover .zoomHint, .zoomBtn:focus-visible .zoomHint { opacity: 1; }
+/* 손가락 환경에서는 hover 가 없으므로 항상 보이되, 작품을 가리지 않게
+   돋보기 아이콘만 남긴다. */
+@media (hover: none) {
+  .zoomHint { opacity: 0.92; width: 26px; height: 26px; padding: 0;
+    justify-content: center; border-radius: 50%; right: 7px; bottom: 7px; }
+  .zoomHintText { display: none; }
+}
+
+.lightbox { position: fixed; inset: 0; z-index: 60;
+  background: rgba(8, 14, 22, 0.92);
+  display: flex; flex-direction: column; }
+.lightboxBar { flex: none; display: flex; align-items: center; gap: 12px;
+  padding: 14px clamp(14px, 3vw, 28px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12); color: #fff; }
+.lightboxName { font-size: 13.5px; font-weight: 700; letter-spacing: -0.02em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lightboxSize { flex: none; font-size: 11.5px; letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.6); }
+.lightboxClose { flex: none; width: 38px; height: 38px;
+  border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff; display: inline-flex; align-items: center; justify-content: center;
+  transition: background-color 0.2s ease; }
+.lightboxClose:hover { background: rgba(255, 255, 255, 0.14); }
+.lightboxClose svg { width: 16px; height: 16px; }
+/* 배율 버튼 */
+.lightboxZoom { flex: none; margin-left: auto; display: inline-flex; align-items: center;
+  gap: 4px; padding: 3px; border-radius: 20px; background: rgba(255, 255, 255, 0.1); }
+.zoomStep, .zoomReset { height: 30px; border-radius: 15px; color: #fff;
+  font-size: 13px; font-weight: 600; letter-spacing: -0.01em;
+  transition: background-color 0.2s ease, opacity 0.2s ease; }
+.zoomStep { width: 32px; font-size: 16px; line-height: 1; }
+.zoomReset { padding: 0 12px; font-size: 12px; }
+.zoomStep:hover, .zoomReset:hover { background: rgba(255, 255, 255, 0.18); }
+.zoomStep:disabled, .zoomReset:disabled { opacity: 0.32; cursor: default; }
+.zoomStep:disabled:hover, .zoomReset:disabled:hover { background: none; }
+
+/* 길거나 확대한 이미지는 이 영역에서 상하 · 좌우로 스크롤한다 */
+.lightboxScroll { flex: 1 1 auto; overflow: auto; -webkit-overflow-scrolling: touch;
+  padding: clamp(18px, 3.4vw, 44px); display: flex; justify-content: center;
+  align-items: flex-start; }
+/* 원본 비율 그대로. 화면을 가득 채우지 않고 좌우 · 상하에 여백을 남긴다.
+   가로형(PC 화면)과 세로형(모바일 화면)의 기본 폭을 따로 둔다. */
+.lightboxImg { max-width: none;
+  height: auto; display: block; flex: none;
+  border-radius: 6px; background: #fff; cursor: default; }
+@media (max-width: 560px) {
+  .lightboxZoom { margin-left: 0; }
+  .lightboxSize { display: none; }
+}
+
+/* --------------------- B안 : 기기 목업 (검수 샘플) -------------------
+   노트북 · 휴대폰 틀은 이미지 크기를 따라간다. 고정 비율 화면에 끼워
+   넣지 않으므로 원본이 잘리거나 늘어나지 않는다. */
+.mockStage { align-items: flex-end; gap: 0;
+  padding: clamp(20px, 2.6vw, 34px) clamp(16px, 2vw, 26px) clamp(16px, 2vw, 26px); }
+.laptop { flex: 1 1 auto; min-width: 0; }
+.laptopScreen { border-radius: 10px 10px 3px 3px;
+  background: linear-gradient(160deg, #2b323b 0%, #171c22 100%);
+  padding: clamp(6px, 0.9vw, 11px) clamp(6px, 0.9vw, 11px) clamp(8px, 1.1vw, 13px);
+  box-shadow: 0 16px 34px rgba(13, 35, 64, 0.22); }
+.laptopShot { display: block; width: 100%; border-radius: 3px; overflow: hidden;
+  background: #fff; }
+/* 노트북 아래 받침 — 화면보다 살짝 넓게 */
+.laptopBase { display: block; width: 112%; margin-left: -6%;
+  height: clamp(7px, 0.9vw, 11px); border-radius: 0 0 7px 7px;
+  background: linear-gradient(180deg, #d9d3ca 0%, #b9b1a6 60%, #9a9187 100%);
+  box-shadow: 0 8px 16px rgba(13, 35, 64, 0.16); }
+
+.phone { flex: 0 0 21%; margin-left: 2.5%; margin-bottom: 2.5%; position: relative; z-index: 1; }
+.phoneBody { position: relative; border-radius: clamp(12px, 1.6vw, 20px);
+  background: linear-gradient(160deg, #2b323b 0%, #171c22 100%);
+  padding: clamp(4px, 0.6vw, 7px);
+  box-shadow: 0 16px 30px rgba(13, 35, 64, 0.26); }
+.phoneNotch { position: absolute; left: 50%; top: clamp(6px, 0.8vw, 9px);
+  transform: translateX(-50%); width: 34%; height: clamp(3px, 0.45vw, 5px);
+  border-radius: 3px; background: rgba(255, 255, 255, 0.22); z-index: 2; }
+.phoneShot { display: block; width: 100%; border-radius: clamp(8px, 1.1vw, 14px);
+  overflow: hidden; background: #fff; }
+
+@media (max-width: 760px) {
+  .mockStage { padding: 16px 12px 12px; }
+  .phone { flex-basis: 24%; margin-left: 2%; }
+}
+.empty { padding: 60px 0 80px; color: var(--bn-body); font-size: 15px; }
+
+/* --------------------------- 페이지 넘김 --------------------------- */
+.pager { display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 52px 0 10px; flex-wrap: wrap; }
+.pageLink { display: inline-flex; align-items: center; justify-content: center;
+  min-width: 40px; height: 40px; padding: 0 12px; border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--bn-hairline) 60%, transparent);
+  background: var(--bn-header-bg); color: var(--bn-body);
+  font-size: 13.5px; font-weight: 600; letter-spacing: 0.04em; text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease; }
+.pageLink:hover { border-color: var(--bn-bronze); color: var(--bn-ink); }
+.pageOn { background: var(--bn-navy); border-color: var(--bn-navy); color: #fff; }
+.pageOn:hover { color: #fff; border-color: var(--bn-navy); }
+
+/* ------------------------------ 하단 ------------------------------ */
+.foot { margin-top: 60px;
+  border-top: 1px solid color-mix(in srgb, var(--bn-hairline) 45%, transparent);
+  padding: 36px 0 64px; display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 18px; }
+.footText { margin: 0; font-size: clamp(15px, 1.7vw, 20px); font-weight: 700;
+  letter-spacing: -0.03em; color: var(--bn-ink); word-break: keep-all; }
+.footNote { margin: 7px 0 0; font-size: 13px; color: var(--bn-body); word-break: keep-all; }
+.footCta { display: inline-flex; align-items: center; gap: 10px; flex: none;
+  height: 48px; padding: 0 24px; border-radius: 24px;
+  border: 1px solid color-mix(in srgb, var(--bn-navy) 30%, transparent);
+  background: transparent; color: var(--bn-ink);
+  font-size: 14.5px; font-weight: 700; letter-spacing: -0.02em; text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
+.footCta:hover { background: var(--bn-navy); border-color: var(--bn-navy); color: #fff; }
+.footCta svg { width: 15px; height: 15px; }
+
+/* ============================ 작품 상세 ============================ */
+.detailHead { padding: 18px 0 30px; }
+.viewer { display: grid; gap: clamp(28px, 3vw, 46px); padding-bottom: 8px; }
+.viewBlock { min-width: 0; }
+.viewTitle { display: flex; align-items: baseline; gap: 10px; margin: 0 0 14px; }
+.viewTitle h2 { margin: 0; font-size: 14px; font-weight: 700; letter-spacing: 0.14em;
+  color: var(--bn-ink); }
+.viewTitle span { font-size: 11.5px; letter-spacing: 0.1em; color: var(--bn-scroll); }
+/* 원본 비율 그대로. 억지로 자르거나 같은 비율로 맞추지 않는다. */
+.viewFrame { border-radius: 10px; overflow: hidden; background: #fff;
+  border: 1px solid color-mix(in srgb, var(--bn-hairline) 40%, transparent);
+  box-shadow: 0 12px 30px rgba(13, 35, 64, 0.12); }
+.viewFrame img { width: 100%; height: auto; display: block; }
+.viewFrame.zoomBtn { width: 100%; }
+.viewPc { width: 100%; }
+.viewMo { width: min(100%, 420px); flex: none; }
+
+/* 모바일 화면 오른쪽에 남는 자리 — 작품을 다 본 지점에 상담으로 가는 길을
+   놓는다. 버튼은 이미 쓰고 있는 네이비 '제작 상담하기'(.topCta) 그대로다. */
+.viewMoRow { display: flex; flex-wrap: wrap; align-items: flex-end;
+  gap: clamp(24px, 4vw, 72px); }
+.moCta { flex: 1 1 260px; min-width: 0; padding-bottom: clamp(4px, 1vw, 14px); }
+.moCtaText { margin: 0 0 16px; font-size: clamp(15px, 1.6vw, 19px); font-weight: 700;
+  letter-spacing: -0.03em; color: var(--bn-ink); word-break: keep-all; }
+.moCtaNote { margin: 14px 0 0; font-size: 12.5px; color: var(--bn-body); word-break: keep-all; }
+
+@media (max-width: 760px) {
+  .viewMoRow { gap: 26px; }
+  .moCta { padding-bottom: 0; }
+  .moCta .topCta { width: 100%; justify-content: center; }
+}
+
+.related { margin-top: 64px; }
+.relatedHead { display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin-bottom: 22px; }
+.relatedHead h2 { margin: 0; font-size: clamp(17px, 2vw, 22px); font-weight: 800;
+  letter-spacing: -0.03em; color: var(--bn-ink); }
+.relatedMore { font-size: 13px; color: var(--bn-scroll); text-decoration: none; white-space: nowrap; }
+.relatedMore:hover { color: var(--bn-ink); }
+
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 760px) {
+  .top { padding: 16px 0 14px; }
+  .topCta { height: 38px; padding: 0 16px; font-size: 13px; }
+  .stage { padding: 14px; gap: 9px; border-radius: 12px; }
+  .foot { padding: 28px 0 52px; }
+  .footCta { width: 100%; justify-content: center; }
+}

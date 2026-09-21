@@ -1,0 +1,100 @@
+/* Development review index only — no BIZNESTA screen imports this file. */
+
+.page {
+  min-height: 100vh;
+  background: #f7f6f4;
+  padding: 72px 32px 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.head {
+  width: 100%;
+  max-width: 880px;
+  margin-bottom: 36px;
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  color: #a8845e;
+}
+.title {
+  margin-top: 12px;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #0d1a2b;
+}
+.note {
+  margin-top: 10px;
+  font-size: 13.5px;
+  letter-spacing: -0.02em;
+  color: #6a7078;
+}
+
+.list {
+  width: 100%;
+  max-width: 880px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid rgba(20, 30, 45, 0.08);
+  border-radius: 10px;
+  padding: 18px 22px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(20, 30, 45, 0.08);
+}
+
+.num {
+  font-size: 15px;
+  font-weight: 700;
+  color: #a8845e;
+  min-width: 26px;
+}
+.name {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0d1a2b;
+  min-width: 190px;
+}
+.file {
+  font-size: 12.5px;
+  color: #8a9099;
+  letter-spacing: 0.01em;
+  flex: 1;
+}
+.status {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  padding: 5px 11px;
+  border-radius: 999px;
+}
+.approved {
+  color: #1d6b4a;
+  background: rgba(29, 107, 74, 0.1);
+}
+.review {
+  color: #8a5a1e;
+  background: rgba(201, 167, 122, 0.2);
+}
+.arrow {
+  color: #6a7078;
+  font-size: 16px;
+}

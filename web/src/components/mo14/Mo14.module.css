@@ -1,0 +1,205 @@
+/* ==================================================================
+   BN_MO_14_PROCESS — mobile.
+   Authored at 1024 x 1536 off the mobile artwork: a six-up connected
+   process row, the navy "Why BIZNESTA?" band and the closing
+   principle panel. Not PC 14, and no step states a duration.
+   ================================================================== */
+
+.stage { container-type: inline-size; width: 100%; overflow: hidden; background: #fefefe; }
+.inner {
+  --s: min(calc(100cqw / 1024), 0.4199px);
+  /* PHASE 4 에서 본문 글자를 px 로 키웠는데 좌표는 시안 그대로였다.
+     시안이 비워 둔 자리보다 더 차지하는 만큼만 바로 아래를 내린다(넓은 폭에서는 0). */
+  position: relative; width: calc(1024 * var(--s));
+  -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+  margin: 0 auto; font-size: calc(16 * var(--s)); color: #14202c; background: #fefefe;
+}
+/* --- 2026-09-09 구조 안전화 (/about MO15 승인 방식) 다섯 면으로 쌓았다 --- */
+.hero { position: relative; min-height: calc(550 * var(--s)); }
+.proc { position: relative; min-height: calc(365 * var(--s)); }
+.reasons { position: relative; min-height: calc(172 * var(--s)); }
+.principle { position: relative; min-height: calc(253 * var(--s)); }
+.close { position: relative; padding: 0 0 calc(57 * var(--s)); }
+/* 사진 위 글 기둥 — 라벨 · 제목 · 본문 · 꼬리 라벨이 서로 밀어낸다 */
+.heroCap { position: relative;
+  padding: calc(124 * var(--s)) calc(240 * var(--s)) calc(24 * var(--s)) calc(73 * var(--s)); }
+.heroTag { display: flex; align-items: flex-start;
+  margin: calc(22 * var(--s)) 0 0 calc(3 * var(--s)); }
+
+.heroImg { position: absolute; left: 0; top: 0;
+  width: calc(1024 * var(--s)); height: calc(530 * var(--s));
+  object-fit: cover; user-select: none; }
+
+/* ---------------------------- header ----------------------------- */
+.menuPanel { position: absolute; z-index: 4; left: calc(883 * var(--s)); top: 0;
+  width: calc(96 * var(--s)); height: calc(107 * var(--s));
+  border-radius: 0 0 calc(16 * var(--s)) calc(16 * var(--s)); background: #ffffff; }
+.logo { position: absolute; z-index: 5; left: calc(75 * var(--s)); top: calc(27 * var(--s));
+  width: calc(226 * var(--s)); height: calc(55.9 * var(--s)); }
+.logo img { width: 100%; height: 100%; }
+.menuBtn { position: absolute; z-index: 5; left: calc(911 * var(--s)); top: calc(26 * var(--s));
+  width: calc(40 * var(--s)); padding: 0; border: 0; background: none; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: calc(12 * var(--s)); }
+.burger { display: flex; flex-direction: column; gap: calc(8 * var(--s)); width: 100%; }
+.burger > span { display: block; width: 100%; height: calc(5 * var(--s));
+  border-radius: calc(3 * var(--s)); background: #10161c; }
+.menuLabel { font-size: calc(21 * var(--s)); font-weight: 700;
+  line-height: calc(21 * var(--s)); letter-spacing: -0.03em; color: #10161c; white-space: nowrap; }
+
+/* ----------------------------- hero ------------------------------ */
+.eyebrow { width: fit-content; margin: 0 0 0 calc(1 * var(--s)); font-size: calc(15.3 * var(--s)); font-weight: 500;
+  line-height: calc(15.3 * var(--s)); letter-spacing: 0.52em; color: #ac7c5c; white-space: nowrap; }
+.headline { margin: calc(11 * var(--s)) 0 0; font-size: calc(48 * var(--s)); font-weight: 700;
+  line-height: calc(56 * var(--s)); letter-spacing: -0.005em; color: #14202c; }
+.headline > span { display: block; white-space: nowrap; }
+/* the artwork sets the closing headline line larger than the two above it */
+.gold { position: relative; top: calc(2 * var(--s));
+  color: #8a5427; }
+.body { margin: calc(18 * var(--s)) 0 0 calc(1 * var(--s)); font-size: calc(20.2 * var(--s)); font-weight: 400;
+  line-height: calc(28 * var(--s)); letter-spacing: -0.02em; color: #46525e; word-break: keep-all; }
+.body > span { display: block; }
+.heroRule { flex: none; margin: calc(10 * var(--s)) calc(32 * var(--s)) 0 0;
+  width: calc(39 * var(--s)); height: 1px; background: #a98a6e; }
+.heroLabel { margin: 0; font-size: calc(13.5 * var(--s)); font-weight: 500;
+  line-height: calc(21 * var(--s)); letter-spacing: 0.33em; color: #6a7480; }
+.heroLabel > span { display: block; white-space: nowrap; }
+
+/* --------------------------- process ------------------------------ */
+.secTitle { position: absolute; left: calc(50 * var(--s)); top: 0;
+  margin: 0; font-size: calc(34.6 * var(--s)); font-weight: 700;
+  line-height: calc(34 * var(--s)); letter-spacing: -0.02em; color: #14202c; white-space: nowrap; }
+.secSub { position: absolute; left: calc(269 * var(--s)); top: calc(7 * var(--s));
+  margin: 0; font-size: calc(18.6 * var(--s)); font-weight: 400;
+  line-height: calc(22 * var(--s)); letter-spacing: -0.035em; color: #46525e; white-space: nowrap; }
+.secMore { position: absolute; left: calc(818 * var(--s)); top: calc(5 * var(--s));
+  height: calc(26 * var(--s)); display: flex; align-items: center; gap: calc(9 * var(--s));
+  font-size: calc(18.8 * var(--s)); font-weight: 500; letter-spacing: -0.03em; color: #8a5427;
+  white-space: nowrap; border-bottom: 1px solid rgba(138, 84, 39, 0.5);
+  transition: color 0.25s ease; }
+.secMore:hover { color: #6d3f1a; }
+.secMore svg { width: calc(18 * var(--s)); height: calc(18 * var(--s)); }
+
+.link { position: absolute; top: calc(106 * var(--s)); height: 1px; background: #d8bfa5; }
+.step { position: absolute; top: calc(63 * var(--s)); transform: translateX(-50%);
+  text-align: center; }
+.disc { display: block; width: calc(86 * var(--s)); height: calc(86 * var(--s));
+  margin: 0 auto; border-radius: 50%; background: #f8efe7; }
+.stepIcon { position: absolute; left: 50%; top: calc(17 * var(--s)); transform: translateX(-50%);
+  height: calc(52 * var(--s)); color: #8a5024; }
+.stepIcon svg { height: 100%; width: auto; }
+.stepNum { margin: calc(10 * var(--s)) 0 0; font-size: calc(19.5 * var(--s)); font-weight: 700;
+  line-height: calc(20 * var(--s)); letter-spacing: 0.02em; color: #a3703f; }
+.stepTitle { margin: calc(9 * var(--s)) 0 0; font-size: calc(21.5 * var(--s)); font-weight: 700;
+  line-height: calc(24 * var(--s)); letter-spacing: -0.035em; color: #14202c; white-space: nowrap; }
+.stepDesc { margin: calc(15 * var(--s)) 0 0; font-size: calc(17.5 * var(--s)); font-weight: 400;
+  line-height: calc(24.6 * var(--s)); letter-spacing: -0.035em; color: #5c6670; }
+.stepDesc > span { display: block; white-space: nowrap; }
+
+/* ------------------------- why BIZNESTA --------------------------- */
+.bandImg { position: absolute; left: calc(30 * var(--s)); top: 0;
+  width: calc(965 * var(--s)); height: calc(169 * var(--s));
+  border-radius: calc(16 * var(--s)); object-fit: cover; display: block; user-select: none; }
+.bandItem { position: absolute; top: calc(93 * var(--s)); transform: translateX(-50%);
+  margin: 0; text-align: center; font-size: calc(17 * var(--s)); font-weight: 500;
+  line-height: calc(23 * var(--s)); letter-spacing: -0.035em; color: #f2f5f8; }
+.bandItem > span { display: block; white-space: nowrap; }
+.bandQuote { position: absolute; left: calc(894 * var(--s)); top: calc(21 * var(--s));
+  margin: 0; font-size: calc(20.3 * var(--s)); font-weight: 500;
+  line-height: calc(28.6 * var(--s)); letter-spacing: -0.03em; color: #f0e3d4; }
+.bandQuote > span { display: block; white-space: nowrap; }
+.bandBrand { position: absolute; left: calc(894 * var(--s)); top: calc(149 * var(--s));
+  margin: 0; padding-bottom: calc(5 * var(--s));
+  border-bottom: 1px solid rgba(226, 200, 170, 0.5);
+  font-size: calc(12.5 * var(--s)); font-weight: 500; line-height: calc(13 * var(--s));
+  letter-spacing: 0.29em; color: #e2c8aa; white-space: nowrap;
+  display: inline-block; }
+
+/* ------------------------- principle ------------------------------ */
+.tesImg { position: absolute; left: calc(30 * var(--s)); top: 0;
+  width: calc(965 * var(--s)); height: calc(238 * var(--s));
+  border-radius: calc(16 * var(--s)); object-fit: cover; display: block; user-select: none; }
+.tesTitle { position: absolute; left: calc(60 * var(--s)); top: calc(22 * var(--s));
+  margin: 0; font-size: calc(26 * var(--s)); font-weight: 700;
+  line-height: calc(33 * var(--s)); letter-spacing: -0.035em; color: #14202c; }
+.tesTitle > span { display: block; white-space: nowrap; }
+.tesQuote { position: absolute; left: calc(371 * var(--s)); top: calc(50 * var(--s));
+  margin: 0; font-size: calc(18.5 * var(--s)); font-weight: 400;
+  line-height: calc(25.5 * var(--s)); letter-spacing: -0.035em; color: #3c4653; }
+.tesQuote > span { display: block; white-space: nowrap; }
+.tesBy { position: absolute; left: calc(330 * var(--s)); top: calc(198 * var(--s));
+  width: calc(364 * var(--s)); margin: 0; text-align: center;
+  font-size: calc(16 * var(--s)); font-weight: 400;
+  line-height: calc(18 * var(--s)); letter-spacing: -0.03em; color: #7d8894; white-space: nowrap; }
+
+/* ---------------------------- CTA --------------------------------- */
+.cta { position: relative; margin: 0 auto; width: calc(731 * var(--s)); min-height: calc(60 * var(--s));
+  border-radius: calc(30 * var(--s));
+  background: linear-gradient(180deg, #f0c49e 0%, #e0b58f 30%, #cc9b76 70%, #b28661 100%);
+  color: #2b3037; display: flex; align-items: center; justify-content: center;
+  gap: calc(16 * var(--s)); transition: transform 0.25s ease, filter 0.25s ease; }
+.cta:hover { transform: translateY(calc(-1 * var(--s))); filter: brightness(1.04); }
+.ctaLabel { font-size: calc(28 * var(--s)); font-weight: 700; letter-spacing: -0.03em;
+  white-space: nowrap; }
+.cta svg { width: calc(25 * var(--s)); height: calc(25 * var(--s)); }
+
+/* --------------------------- support ------------------------------ */
+.supRow { position: relative; height: calc(52 * var(--s)); margin-top: calc(22 * var(--s)); }
+.sup { position: absolute; top: 0; height: calc(52 * var(--s));
+  display: flex; align-items: center; gap: calc(12 * var(--s)); }
+.supIcon { display: block; height: calc(51 * var(--s)); color: #a0703f; }
+.supIcon svg { height: 100%; width: auto; }
+.supLabel { font-size: calc(21 * var(--s)); font-weight: 500; line-height: calc(21 * var(--s));
+  letter-spacing: -0.03em; color: #2f3a47; white-space: nowrap; }
+.supSep { position: absolute; top: calc(5 * var(--s));
+  width: 1px; height: calc(42 * var(--s)); background: #e4e7ed; }
+
+/* ==================================================================
+   FINAL MOBILE USABILITY OPTIMIZATION — PHASE 4 (MO 13~16)
+   2026-09-07 · 사용자 승인: 430px Visual Master 의 exact pixel
+   reproduction 보다 실제 모바일 가독성을 우선한다. redesign 이 아니라
+   FINAL MOBILE USABILITY OVERRIDE 다. VISUAL_MASTER_LOCK.md 4-A 참조.
+
+   이전의 max-width:400px floor 블록을 대체한다. 그 블록은 400px 에서
+   글자가 갑자기 커지는 401->400 불연속을 만들고 있었고, 확대된 값이
+   카드/스텝 폭을 넘어가고 있었다. 여기서는 breakpoint 없이 항상 적용한다.
+   스테이지는 --s 가 .4199px 로 상한이 걸려 430px 에서 고정되므로
+   430px 이상 모든 폭이 430px 과 같다.
+
+   px = 폭과 무관하게 유지할 실사용 크기 (핵심 본문 · CTA · 메뉴).
+   calc(N * --s) = 격자 칸/카드 폭에 묶여 칸과 함께 커져야 하는 보조 텍스트.
+   주석의 숫자는 원래 Visual Master 토큰이다.
+   MO 14: 6단계 process row · 원형 step system · 연결선 · navy 밴드 ·
+   원칙 패널 구조를 유지한다. 제작 소요 기간을 새로 넣지 않고, 고객 후기
+   표현 없이 "— 비즈네스타의 제작 원칙 —" 을 유지한다 (사실성 정책).
+   growth 아이콘 형태는 승인된 Visual Master 이므로 손대지 않는다.
+   ================================================================== */
+
+.menuLabel { font-size: 13px; line-height: 1.1; }                /* was 21 * --s */
+.eyebrow { font-size: 8.5px; line-height: 1.1; }                 /* was 15.3 * --s */
+.body { font-size: 10.5px; line-height: 1.4; letter-spacing: -0.02em; }  /* was 20.2 * --s */
+.secSub { font-size: calc(22 * var(--s)); }                      /* was 18.6 * --s */
+.secMore { font-size: calc(21 * var(--s)); }                     /* was 18.8 * --s */
+/* 6단계 process row — 스텝 간격이 상한 */
+.stepNum { font-size: calc(23 * var(--s)); }                     /* was 19.5 * --s */
+.stepTitle { margin-top: calc(7 * var(--s));                      /* was 9 * --s */
+  font-size: calc(24 * var(--s)); }                               /* was 21.5 * --s */
+.stepDesc { margin-top: calc(11 * var(--s));                      /* was 15 * --s */
+  font-size: calc(18.5 * var(--s)); line-height: 1.4;
+  letter-spacing: -0.06em; }                                      /* was 17.5 * --s */
+/* navy Why BIZNESTA 밴드 */
+.bandItem { font-size: calc(21 * var(--s)); }                    /* was 17 * --s */
+.bandQuote { font-size: calc(26 * var(--s)); }                   /* was 20.3 * --s */
+/* 원칙 패널 */
+.tesQuote { font-size: calc(25 * var(--s)); line-height: 1.36; } /* was 18.5 * --s */
+.tesBy { font-size: calc(22 * var(--s)); }                       /* was 16 * --s */
+.ctaLabel { font-size: 14px; }                                   /* was 28 * --s */
+.supLabel { font-size: calc(25 * var(--s)); }                    /* was 21 * --s */
+
+/* touch targets — invisible hit area only; nothing changes on screen */
+.menuBtn, .secMore { position: absolute; }
+.menuBtn::after, .secMore::after, .cta::after {
+  content: ""; position: absolute; inset: -9px -4px; }
+
+/* --- 하단 기준선 맞춤: 면 사이 여백만 고르게 벌린다 --- */
+.inner > section:not(:last-child),
+.inner > nav:not(:last-child) { margin-bottom: calc(89 * var(--s)); }

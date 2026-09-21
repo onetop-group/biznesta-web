@@ -1,0 +1,193 @@
+/* ==================================================================
+   BN_PC_12_SERVICE_SELECT
+   Authored at 1536 x 1024, scaled by --s. A dark hero with the
+   photographed brand site and glass sign, an ivory service shelf of
+   six cards, an advisory bar, and the navy closing band.
+   ================================================================== */
+
+.stage { container-type: inline-size; width: 100%; overflow: hidden; background: #fcfaf8; }
+.inner {
+  --s: min(calc(100cqw / 1536), 1.32px);
+  position: relative; width: calc(1536 * var(--s)); height: calc(1024 * var(--s));
+  margin: 0 auto; font-size: calc(16 * var(--s)); color: #14202c;
+}
+.heroImg { position: absolute; left: 0; top: 0;
+  width: calc(1536 * var(--s)); height: calc(433 * var(--s));
+  object-fit: cover; user-select: none; }
+
+/* ---------------------------- header ----------------------------- */
+.wordmark { position: absolute; left: calc(78 * var(--s)); top: calc(22 * var(--s));
+  width: calc(190 * var(--s)); height: calc(35.4 * var(--s)); }
+.wordmark img { width: 100%; height: 100%; }
+.headerTagline { position: absolute; left: calc(77 * var(--s)); top: calc(63 * var(--s));
+  font-size: calc(9.3 * var(--s)); font-weight: 500; line-height: calc(9.3 * var(--s));
+  letter-spacing: 0.345em; color: #35404e; white-space: nowrap; }
+.navItem { position: absolute; top: calc(33 * var(--s)); text-align: center; white-space: nowrap;
+  transform: translateX(-50%); }
+.navEn { display: block; font-size: calc(13.9 * var(--s)); font-weight: 700;
+  line-height: calc(13.9 * var(--s)); letter-spacing: -0.04em; color: #101822; }
+.navKo { display: block; margin-top: calc(9 * var(--s)); font-size: calc(12.6 * var(--s));
+  font-weight: 400; line-height: calc(12.6 * var(--s)); letter-spacing: -0.01em; color: #6b7280; }
+.headerCta { position: absolute; left: calc(1274 * var(--s)); top: calc(22 * var(--s));
+  width: calc(191 * var(--s)); height: calc(49 * var(--s)); border-radius: calc(24.5 * var(--s));
+  background: linear-gradient(148deg, #e8cfa8 0%, #d8b285 45%, #c09468 100%);
+  color: #17222f; display: flex; align-items: center; justify-content: center; gap: calc(11 * var(--s));
+  transition: transform 0.25s ease, filter 0.25s ease; }
+.headerCta:hover { transform: translateY(calc(-1 * var(--s))); filter: brightness(1.04); }
+.ctaLabel { font-size: calc(15.5 * var(--s)); font-weight: 700; letter-spacing: -0.012em;
+  word-spacing: 0.06em; white-space: nowrap; }
+.headerCta svg { width: calc(16 * var(--s)); height: calc(16 * var(--s)); }
+
+/* ----------------------------- hero ------------------------------ */
+.eyebrow { position: absolute; left: calc(79 * var(--s)); top: calc(128 * var(--s));
+  font-size: calc(12.5 * var(--s)); font-weight: 500; line-height: calc(12.5 * var(--s));
+  letter-spacing: 0.437em; color: #dbb98e; white-space: nowrap; }
+.headline { position: absolute; left: calc(79 * var(--s)); top: calc(159 * var(--s));
+  font-size: calc(47 * var(--s)); font-weight: 700; line-height: calc(55 * var(--s));
+  letter-spacing: 0.017em; color: #ffffff; }
+.headline > span { display: block; white-space: nowrap; }
+.headCream { color: #fbdfb6; }
+.sub { position: absolute; left: calc(79 * var(--s)); top: calc(277 * var(--s));
+  font-size: calc(17.5 * var(--s)); font-weight: 400; line-height: calc(26.5 * var(--s));
+  letter-spacing: 0.075em; color: #e6e9ec; }
+.sub > span { display: block; white-space: nowrap; }
+.engRule { position: absolute; left: calc(66 * var(--s)); top: calc(374 * var(--s));
+  width: 1px; height: calc(38 * var(--s)); background: rgba(255, 255, 255, 0.35); }
+.engQuote { position: absolute; left: calc(78 * var(--s)); top: calc(372 * var(--s));
+  font-size: calc(11.4 * var(--s)); font-weight: 500; line-height: calc(20 * var(--s));
+  letter-spacing: 0.498em; color: #cdd2d7; }
+.engQuote > span { display: block; white-space: nowrap; }
+
+/* --------------------------- services ----------------------------- */
+.svcEyebrow { position: absolute; left: calc(57 * var(--s)); top: calc(454 * var(--s));
+  font-size: calc(12.4 * var(--s)); font-weight: 500; line-height: calc(12.4 * var(--s));
+  letter-spacing: 0.384em; color: #ac7c5c; white-space: nowrap; }
+/* 제목 — 라인 — 설명 한 행.
+   시안 좌표(제목 56, 라인 405~946, 설명 971~1266)를 그대로 재현하되, 셋을
+   각각 절대좌표로 못 박지 않는다. 못 박으면 글자가 조금만 넓어져도 — 웹폰트가
+   오기 전 대체글꼴로 그려지는 순간이 대표적이다 — 제목이 라인을 파고든다.
+   여기서는 제목과 설명이 제 폭을 갖고, 가운데 라인이 남는 폭을 흡수한다.
+   라인이 최소 40u 로 줄어들 때까지 버티므로 글자가 87% 넓어져도 겹치지 않고,
+   글자 크기 · 자간을 줄여 억지로 맞추는 일도 없다. */
+.svcHead { position: absolute; left: calc(56 * var(--s)); top: calc(481 * var(--s));
+  width: calc(1210 * var(--s)); display: flex; align-items: flex-start; }
+.svcTitle { position: static; flex: none; margin: 0;
+  font-size: calc(27.8 * var(--s)); font-weight: 700; line-height: calc(27.8 * var(--s));
+  letter-spacing: 0.052em; color: #14202c; white-space: nowrap; }
+.svcRule { position: static; flex: 1 1 auto; width: auto;
+  min-width: calc(40 * var(--s)); height: 1px;
+  margin: calc(9 * var(--s)) calc(25 * var(--s)) 0 calc(18.3 * var(--s));
+  background: rgba(160, 120, 80, 0.35); }
+.svcNote { position: static; flex: none; margin: calc(1 * var(--s)) 0 0;
+  font-size: calc(14.6 * var(--s)); font-weight: 400; line-height: calc(14.6 * var(--s));
+  letter-spacing: 0.065em; color: #3c4653; white-space: nowrap; }
+.svcMore { position: absolute; left: calc(1367 * var(--s)); top: calc(477 * var(--s));
+  display: flex; align-items: center; gap: calc(9 * var(--s));
+  font-size: calc(13 * var(--s)); font-weight: 500; letter-spacing: -0.02em;
+  color: #a06f42; white-space: nowrap; }
+.svcMore svg { width: calc(19 * var(--s)); height: calc(19 * var(--s)); }
+
+.card { position: absolute; top: calc(520.5 * var(--s)); height: calc(318 * var(--s));
+  border-radius: calc(10 * var(--s)); background: #ffffff;
+  border: 1px solid rgba(20, 30, 45, 0.07); overflow: hidden; text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.card:hover { transform: translateY(calc(-3 * var(--s)));
+  box-shadow: 0 calc(10 * var(--s)) calc(24 * var(--s)) rgba(20, 30, 45, 0.09); }
+.cardNumber { position: absolute; left: calc(21 * var(--s)); top: calc(19.5 * var(--s));
+  font-family: 'Times New Roman', Times, Georgia, serif;
+  font-size: calc(26 * var(--s)); font-weight: 400; line-height: calc(26 * var(--s));
+  letter-spacing: 0.01em; color: #a97c56; }
+.cardIcon { position: absolute; left: calc(98 * var(--s)); top: calc(12.5 * var(--s));
+  height: calc(30 * var(--s)); color: #a06f42; }
+.cardIcon svg { height: 100%; width: auto; }
+.cardTitle { position: absolute; left: 50%; top: calc(56.5 * var(--s)); transform: translateX(-50%);
+  font-size: calc(18.5 * var(--s)); font-weight: 700; line-height: calc(18.5 * var(--s));
+  letter-spacing: -0.035em; color: #14202c; white-space: nowrap; }
+.cardDesc { position: absolute; left: 50%; top: calc(88.5 * var(--s)); transform: translateX(-50%);
+  font-size: calc(14.2 * var(--s)); font-weight: 400; line-height: calc(20 * var(--s));
+  letter-spacing: 0.03em; color: #6a7480; }
+.cardDesc > span { display: block; white-space: nowrap; }
+/* "자세히 보기" 버튼을 없애면 카드 아래쪽이 빈다. 사진이 카드 아래 끝까지
+   닿도록 높이만 늘려 빈 띠를 없앤다 (136.5 ~ 318 unit = 시안의 657 ~ 838.5). */
+.cardImg { position: absolute; left: 0; top: calc(136.5 * var(--s));
+  width: 100%; height: calc(181.5 * var(--s)); object-fit: cover; display: block; user-select: none; }
+.cardCta { position: absolute; left: 50%; top: calc(257.5 * var(--s)); transform: translateX(-50%);
+  height: calc(29 * var(--s)); padding: 0 calc(19 * var(--s)); border-radius: calc(14.5 * var(--s));
+  border: 1px solid rgba(160, 120, 80, 0.55);
+  display: flex; align-items: center; gap: calc(8 * var(--s));
+  font-size: calc(13.2 * var(--s)); font-weight: 500; letter-spacing: -0.02em;
+  color: #8a6242; white-space: nowrap; transition: background-color 0.2s ease; }
+.cardCta:hover { background: rgba(160, 120, 80, 0.08); }
+.cardCta svg { width: calc(12 * var(--s)); height: calc(12 * var(--s)); }
+
+/* -------------------------- advisory ------------------------------ */
+.advBar { position: absolute; left: calc(55 * var(--s)); top: calc(839 * var(--s));
+  width: calc(868 * var(--s)); height: calc(77 * var(--s));
+  border-radius: calc(10 * var(--s)); background: #f6f1ec;
+  border: 1px solid rgba(180, 145, 110, 0.18); }
+.advIcon { position: absolute; left: calc(83 * var(--s)); top: calc(848 * var(--s));
+  height: calc(58 * var(--s)); color: #b98d5f; }
+.advIcon svg { height: 100%; width: auto; }
+.advTitle { position: absolute; left: calc(158 * var(--s)); top: calc(856 * var(--s));
+  font-size: calc(18.7 * var(--s)); font-weight: 700; line-height: calc(18.7 * var(--s));
+  letter-spacing: 0.019em; color: #14202c; white-space: nowrap; }
+.advDesc { position: absolute; left: calc(158 * var(--s)); top: calc(884 * var(--s));
+  font-size: calc(13.6 * var(--s)); font-weight: 400; line-height: calc(13.6 * var(--s));
+  letter-spacing: 0.032em; color: #5b6673; white-space: nowrap; }
+.advCta { position: absolute; left: calc(676 * var(--s)); top: calc(854 * var(--s));
+  width: calc(214 * var(--s)); height: calc(49 * var(--s)); border-radius: calc(24.5 * var(--s));
+  background: linear-gradient(148deg, #e0bd91 0%, #cfa670 45%, #b98d5f 100%);
+  color: #17222f; display: flex; align-items: center; justify-content: center; gap: calc(9 * var(--s));
+  transition: transform 0.25s ease, filter 0.25s ease; }
+.advCta:hover { transform: translateY(calc(-1 * var(--s))); filter: brightness(1.04); }
+.advCtaLabel { font-size: calc(14.6 * var(--s)); font-weight: 700; letter-spacing: -0.02em;
+  word-spacing: 0.05em; white-space: nowrap; }
+.advCta svg { width: calc(14 * var(--s)); height: calc(14 * var(--s)); }
+.advRule { position: absolute; left: calc(950 * var(--s)); top: calc(848 * var(--s));
+  width: 1px; height: calc(58 * var(--s)); background: rgba(20, 30, 45, 0.12); }
+.advPointIcon { position: absolute; top: calc(852 * var(--s)); height: calc(28 * var(--s));
+  color: #a06f42; transform: translateX(-50%); }
+.advPointIcon svg { height: 100%; width: auto; }
+.advPointLabel { position: absolute; top: calc(894 * var(--s)); font-size: calc(13 * var(--s));
+  font-weight: 500; line-height: calc(13 * var(--s)); letter-spacing: -0.03em;
+  color: #3c4653; white-space: nowrap; transform: translateX(-50%); }
+
+/* --------------------------- closing band ------------------------- */
+.band { position: absolute; left: 0; top: calc(930 * var(--s));
+  width: calc(1536 * var(--s)); height: calc(94 * var(--s));
+  object-fit: cover; user-select: none; }
+.bandWordmark { position: absolute; left: calc(60 * var(--s)); top: calc(947 * var(--s));
+  width: calc(149 * var(--s)); height: calc(27.8 * var(--s)); }
+.bandWordmark img { width: 100%; height: 100%; }
+.bandTagline { position: absolute; left: calc(60 * var(--s)); top: calc(986 * var(--s));
+  font-size: calc(8.6 * var(--s)); font-weight: 500; line-height: calc(8.6 * var(--s));
+  letter-spacing: 0.345em; color: #b9c0c8; white-space: nowrap; }
+.bandQuote { position: absolute; left: calc(301 * var(--s)); top: calc(945 * var(--s));
+  font-size: calc(18.5 * var(--s)); font-weight: 500; line-height: calc(27 * var(--s));
+  letter-spacing: -0.025em; color: #eef1f3; }
+.bandQuote > span { display: block; white-space: nowrap; }
+.bandQuote > span:last-child { margin-left: calc(13 * var(--s)); }
+.quoteMark { color: #c9a273; }
+.bandIcon { position: absolute; top: calc(945 * var(--s)); height: calc(28 * var(--s));
+  color: #d3a877; transform: translateX(-50%); }
+.bandIcon svg { height: 100%; width: auto; }
+.bandLabel { position: absolute; top: calc(982 * var(--s)); font-size: calc(12.4 * var(--s));
+  font-weight: 500; line-height: calc(12.4 * var(--s)); letter-spacing: -0.03em;
+  color: #e6e9ec; white-space: nowrap; transform: translateX(-50%); }
+.bandCta { position: absolute; left: calc(1098 * var(--s)); top: calc(950 * var(--s));
+  width: calc(223 * var(--s)); height: calc(49 * var(--s)); border-radius: calc(24.5 * var(--s));
+  background: linear-gradient(148deg, #e8cfa8 0%, #d8b285 45%, #c09468 100%);
+  color: #17222f; display: flex; align-items: center; justify-content: center; gap: calc(10 * var(--s));
+  transition: transform 0.25s ease, filter 0.25s ease; }
+.bandCta:hover { transform: translateY(calc(-1 * var(--s))); filter: brightness(1.04); }
+.bandCtaLabel { font-size: calc(15.5 * var(--s)); font-weight: 700; letter-spacing: -0.02em;
+  word-spacing: 0.05em; white-space: nowrap; }
+.bandCta svg { width: calc(15 * var(--s)); height: calc(15 * var(--s)); }
+.bandKeywords { position: absolute; left: calc(1378 * var(--s)); top: calc(957 * var(--s));
+  font-size: calc(9.8 * var(--s)); font-weight: 500; line-height: calc(17 * var(--s));
+  letter-spacing: 0.194em; color: #b9c0c8; }
+.bandKeywords > span { display: block; white-space: nowrap; }
+
+/* 카드 전체 탭 영역 (REAL USER CLICK FLOW). 보이지 않으며 레이아웃에 영향이
+   없다 — 카드 안을 손가락으로 아무 데나 눌러도 화살표와 같은 곳으로 간다. */
+.tapArea { position: absolute; inset: 0; border-radius: inherit; }
