@@ -76,3 +76,27 @@ DB · API · UI · 외부 PG 연동을 설계하거나 구현하지 않는다. P
 
 JOURNAL DB 이관 · CMS · 콘텐츠 자동화 · 결제 · 프로젝트 DB · 포트폴리오 DB · Storage 전환 ·
 Public 디자인/SEO/Visual Master 수정 · 문의 DELETE.
+
+## 7. STEP 1-B 검증 기록 (2026-09-22, Preview = 커밋 ebe19b2)
+
+**대표 실사용 검수 (Preview, 관리자 계정)** — 로그인 · 오늘의 운영 · 문의함 조회(실제 5건) ·
+문의 상세 · 상태 변경 · 관리자 메모 저장 · 목록/대시보드 반영 · 로그아웃 · 재로그인 **전부 정상**.
+
+**자동 검증**
+
+| 항목 | 결과 |
+|---|---|
+| 비로그인 `/admin`, `/admin/inquiries`, `/admin/inquiries/<id>`, `/admin/orders`, `/admin/settings` | 307 → `/admin/login?next=…` |
+| `/admin/login` | 200 · `Cache-Control: no-store` · `X-Robots-Tag: noindex` · meta robots noindex |
+| 잘못된 이메일/비밀번호 | `?error=invalid` · "이메일 또는 비밀번호가 맞지 않습니다." (이유 비구분) |
+| 클라이언트 번들(.next/static) | supabase 주소 0 · 토큰 패턴 0 · `SUPABASE_` 0 |
+| 공개 상담폼 INSERT (Preview 모바일 폼) | "상담 신청이 접수되었습니다." — anon INSERT 그대로 |
+| Public 회귀: 이 빌드 vs Production 본문 (11 경로) | 11/11 일치 · `/contact` 표식 일치 |
+| Public 렌더 (PC 1024px · MO 719px · 넘침 0 · 방침 링크) | 변경 전과 동일 |
+| 공개 화면이 proxy 를 거치는가 | 아니오 (matcher `/admin` 뿐, `X-Robots-Tag` 없음) |
+
+**DB 권한 (마이그레이션 0005 실행 결과)** — anon INSERT 유지 · authenticated SELECT ·
+UPDATE(status, admin_note) · DELETE 없음. 관리자 1명 등록.
+
+**남은 확인** — `set role anon; select count(*) from public.inquiries;` 가 permission denied 인지
+대시보드에서 1회 확인(anon key 가 Vercel Sensitive 라 코드 밖에서 자동 검증 불가).
