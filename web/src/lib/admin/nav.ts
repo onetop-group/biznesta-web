@@ -41,8 +41,11 @@ export const ADMIN_NAV: AdminNavItem[] = [
     note: '콘텐츠 자동 생성 엔진과 연결되는 검수 · 승인 화면입니다. 이후 단계에서 연결됩니다.' },
   { no: '07', label: '서비스 · 상품',      href: '/admin/services',       state: 'soon',
     note: '제작 서비스와 플랜을 관리하는 화면입니다. 가격 확정 후 준비합니다.' },
+  /* 2026-09-22 대표 결정: 주문·결제는 잠정 보류. 다른 프로젝트(PURPLE SAJU)의 결제 검증이
+     끝난 뒤 검증된 구조를 참고해 적용 범위를 정한다. 그때까지 DB · API · UI · PG 연동을
+     설계하지 않는다. 배지와 자리는 그대로 둔다. */
   { no: '08', label: '주문 · 결제',        href: '/admin/orders',         state: 'later',
-    note: '결제 시스템과 연결되는 주문 관리 화면입니다. 별도 결제 단계에서 연결됩니다.' },
+    note: '결제 시스템과 연결되는 주문 관리 화면입니다. 현재는 잠정 보류 상태이며, 별도 결제 시스템 검증이 끝난 뒤 연결 범위를 정합니다.' },
   { no: '09', label: '운영 설정',          href: '/admin/settings',       state: 'soon',
     note: '관리자 계정 · 알림 · 사업자정보를 관리하는 화면입니다. 다음 단계에서 준비합니다.' },
   { no: '10', label: '시스템 상태',        href: '/admin/system',         state: 'soon',

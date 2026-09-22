@@ -65,7 +65,14 @@ src/app/admin/(shell)/{projects,designs,journal,content-studio,services,orders,s
                                            자리만 있는 화면 (Placeholder)
 ```
 
-## 5. 이 단계에서 하지 않은 것
+## 5. 대표 결정 (2026-09-22) — 08 주문 · 결제 잠정 보류
+
+주문 · 결제 모듈은 **보류**한다. Placeholder(연결 예정)는 그대로 두고, Payment 관련
+DB · API · UI · 외부 PG 연동을 설계하거나 구현하지 않는다. PURPLE SAJU 의 결제 방식 전환과
+실결제 검증이 끝난 뒤, 검증된 Payment 구조를 별도 Reference 로 분석해 BIZNESTA 적용 범위를
+정한다. 이 결정은 STEP 1-B(문의함 · Auth · Foundation)에 영향을 주지 않는다.
+
+## 6. 이 단계에서 하지 않은 것
 
 JOURNAL DB 이관 · CMS · 콘텐츠 자동화 · 결제 · 프로젝트 DB · 포트폴리오 DB · Storage 전환 ·
 Public 디자인/SEO/Visual Master 수정 · 문의 DELETE.
