@@ -1,3 +1,4 @@
+.section { margin: 0 0 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--ad-mute); }
 .warn { margin: 0 0 16px; padding: 10px 12px; border-radius: 9px; font-size: 13px;
   background: #fdecec; color: #9b2c2c; border: 1px solid #f3c9c9; }
 

@@ -19,6 +19,10 @@
 .status_progress { background: #e9f0fb; color: #2b4d8a; border: 1px solid #c9d8f2; }
 .status_done     { background: #e9f5ec; color: #2f6b3f; border: 1px solid #c5e2cc; }
 .status_spam     { background: #f1f1f1; color: #6b6b6b; border: 1px solid #dcdcdc; }
+/* 프로젝트 상태 — 문의 배지(위 4개)와 같은 모양, 색만 다르다 */
+.status_review    { background: #f3edfb; color: #5b3d8a; border: 1px solid #ddcdf0; }
+.status_hold      { background: #fbf1e6; color: #8a5a2b; border: 1px solid #ecd9c0; }
+.status_cancelled { background: #f4f4f5; color: #70757c; border: 1px solid #dedfe2; }
 
 .placeholder {
   background: var(--ad-panel); border: 1px dashed rgba(14, 29, 46, 0.2); border-radius: var(--ad-radius);

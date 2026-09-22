@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { STATUS_LABEL, type InquiryStatus } from '@/lib/admin/inquiries';
+import { PROJECT_STATUS_LABEL, type ProjectStatus } from '@/lib/admin/projects';
 import { NAV_STATE_LABEL, type AdminNavItem } from '@/lib/admin/nav';
 import styles from './ui.module.css';
 
@@ -27,6 +28,11 @@ export function Card({ title, children, className = '' }: { title?: string; chil
 
 export function StatusBadge({ status }: { status: InquiryStatus }) {
   const s = STATUS_LABEL[status] ?? { label: status, tone: 'spam' as const };
+  return <span className={`${styles.status} ${styles['status_' + s.tone]}`}>{s.label}</span>;
+}
+
+export function ProjectStatusBadge({ status }: { status: ProjectStatus }) {
+  const s = PROJECT_STATUS_LABEL[status] ?? { label: status, tone: 'cancelled' as const };
   return <span className={`${styles.status} ${styles['status_' + s.tone]}`}>{s.label}</span>;
 }
 

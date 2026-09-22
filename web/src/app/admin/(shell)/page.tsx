@@ -1,20 +1,22 @@
 import Link from 'next/link';
 import { countByStatus, listInquiries } from '@/lib/admin/inquiries';
+import { countProjectsByStatus } from '@/lib/admin/projects';
 import { Card, PageHead, StatusBadge, fmtDate, sourceLabel } from '@/components/admin/ui';
 import styles from './dashboard.module.css';
 
 export const metadata = { title: '오늘의 운영' };
 
 /**
- * 오늘의 운영 — V1.
- * 실제로 쌓이는 데이터가 문의뿐이므로 문의 지표만 보여준다.
- * 매출 · 프로젝트 · 결제 · 콘텐츠 성과처럼 없는 데이터는 만들지 않는다.
+ * 오늘의 운영.
+ * 실제로 쌓이는 데이터(문의 · 프로젝트)만 보여준다.
+ * 매출 · 결제 · 콘텐츠 성과처럼 아직 없는 데이터는 만들지 않는다.
  */
 export default async function Page() {
-  const [{ counts, total, error }, fresh, recent] = await Promise.all([
+  const [{ counts, total, error }, fresh, recent, prj] = await Promise.all([
     countByStatus(),
     listInquiries({ status: 'NEW' }),
     listInquiries({}),
+    countProjectsByStatus(),
   ]);
 
   const kpi = [
@@ -26,7 +28,8 @@ export default async function Page() {
 
   return (
     <>
-      <PageHead title="오늘의 운영" desc="홈페이지 상담폼으로 들어온 문의 현황입니다." />
+      <PageHead title="오늘의 운영" desc="문의와 프로젝트 현황입니다." />
+      <p className={styles.section}>문의</p>
 
       {error && (
         <p className={styles.warn} role="alert">
@@ -41,6 +44,28 @@ export default async function Page() {
             <span className={styles.kpiValue}>{k.value}</span>
           </Link>
         ))}
+      </div>
+
+      <p className={styles.section}>프로젝트</p>
+      {/* 실제로 쌓이는 값만. 없는 지표는 만들지 않는다. */}
+      <div className={styles.kpis}>
+        <Link href="/admin/projects" className={styles.kpi}>
+          <span className={styles.kpiLabel}>진행 중 프로젝트</span>
+          <span className={styles.kpiValue}>{prj.active}</span>
+        </Link>
+        <Link href="/admin/projects?status=IN_PROGRESS" className={styles.kpi}>
+          <span className={styles.kpiLabel}>제작 중</span>
+          <span className={styles.kpiValue}>{prj.counts.IN_PROGRESS}</span>
+        </Link>
+        <Link href="/admin/projects?status=REVIEW"
+              className={`${styles.kpi} ${prj.counts.REVIEW > 0 ? styles.kpiHot : ''}`}>
+          <span className={styles.kpiLabel}>검수 대기</span>
+          <span className={styles.kpiValue}>{prj.counts.REVIEW}</span>
+        </Link>
+        <Link href="/admin/projects?status=ON_HOLD" className={styles.kpi}>
+          <span className={styles.kpiLabel}>보류</span>
+          <span className={styles.kpiValue}>{prj.counts.ON_HOLD}</span>
+        </Link>
       </div>
 
       <div className={styles.cols}>

@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { INQUIRY_STATUSES, STATUS_LABEL, getInquiry } from '@/lib/admin/inquiries';
-import { Card, PageHead, StatusBadge, fmtDate, screenLabel, sourceLabel } from '@/components/admin/ui';
+import { projectsForInquiry, serviceLabel } from '@/lib/admin/projects';
+import { Card, PageHead, ProjectStatusBadge, StatusBadge, fmtDate, screenLabel, sourceLabel } from '@/components/admin/ui';
 import { changeStatus, saveNote } from '../actions';
 import styles from '../inquiries.module.css';
 
@@ -25,6 +26,8 @@ export default async function Page({
 
   const q = await getInquiry(id);
   if (!q) notFound();
+  /* 이 문의에서 만들어진 프로젝트들. 없으면 빈 배열이다. */
+  const linked = await projectsForInquiry(id);
 
   const tel = q.contact.replace(/[^0-9+]/g, '');
 
@@ -75,6 +78,35 @@ export default async function Page({
               <button type="submit" className={styles.btn}>상태 변경</button>
             </form>
             <p className={styles.hint}>스팸으로 표시해도 데이터는 지워지지 않습니다. 삭제 기능은 없습니다.</p>
+          </Card>
+
+          <Card title="프로젝트">
+            {linked.length === 0 ? (
+              <>
+                <Link href={`/admin/projects/new?from=${q.id}`} className={styles.btnLink}>프로젝트로 전환</Link>
+                <p className={styles.hint}>
+                  상담이 끝났다면 제작 업무로 등록합니다. 전환해도 이 문의와 문의 상태는 그대로 남습니다.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className={styles.linkedHead}>연결된 프로젝트 {linked.length}건</p>
+                <ul className={styles.linkedList}>
+                  {linked.map((p) => (
+                    <li key={p.id}>
+                      <Link href={`/admin/projects/${p.id}`} className={styles.linkedRow}>
+                        <span className={styles.linkedMain}>
+                          <span className={styles.linkedTitle}>{p.title}</span>
+                          <span className={styles.linkedSub}>{p.project_no} · {serviceLabel(p.service_type)}</span>
+                        </span>
+                        <ProjectStatusBadge status={p.status} />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <Link href={`/admin/projects/new?from=${q.id}`} className={styles.btnLink}>프로젝트 추가</Link>
+              </>
+            )}
           </Card>
 
           <Card title="관리자 메모">
