@@ -100,3 +100,67 @@ UPDATE(status, admin_note) · DELETE 없음. 관리자 1명 등록.
 
 **남은 확인** — `set role anon; select count(*) from public.inquiries;` 가 permission denied 인지
 대시보드에서 1회 확인(anon key 가 Vercel Sensitive 라 코드 밖에서 자동 검증 불가).
+
+---
+
+# STEP 2 — PROJECT OPERATIONS (프로젝트)
+
+브랜치 `admin-v1/step2b-project-ui`. Production 반영 전 (main 은 여전히 87e9167).
+
+## 8. 경계 — 문의와 프로젝트
+
+`inquiries` 는 **접수 당시의 원본 기록**이고 `projects` 는 **상담 이후 실제로 진행되는
+업무**다. 문의를 프로젝트로 옮기거나 변형하지 않는다. 연결은 `projects.source_inquiry_id`
+한 방향 참조뿐이며, 전환해도 **문의 상태를 자동으로 바꾸지 않는다**(대표 확정).
+
+고객은 별도 테이블로 빼지 않고 프로젝트 안에 스냅샷(`client_name` · `client_contact` ·
+`client_email`)으로 둔다. 프로젝트가 충분히 쌓여 중복 관리 필요가 실제로 보이면 그때
+`customers` 를 별도 설계한다.
+
+## 9. DB — `supabase/migrations/0006_projects.sql` (STEP 2-A · Production 적용 완료)
+
+| 대상 | 내용 |
+|---|---|
+| `public.projects` | 15컬럼. 상태 7값(CONSULTING · PREPARING · IN_PROGRESS · REVIEW · DONE · ON_HOLD · CANCELLED), 유형 6값, 플랜 4값 |
+| `project_no` | `BN-2026-001`. DB 시퀀스 + BEFORE INSERT 트리거가 채번한다. 코드에서 만들지 않는다 |
+| RLS | `admin can read/insert/update projects` — 셋 다 `is_admin()` |
+| GRANT | select · insert · update(10컬럼). `project_no` · `created_at` · `source_inquiry_id` 는 수정 불가 |
+| DELETE | 정책도 GRANT 도 없다. 취소(CANCELLED)도 기록으로 남긴다 |
+| `inquiries` | **변경 0** — 컬럼 · 정책 · GRANT 그대로 |
+
+STEP 2-A 적용 확인(대표 실행, 2026-09-22): 확인 쿼리 1~10 PASS · 프로젝트 0건.
+
+## 10. 코드 (STEP 2-B)
+
+```
+src/lib/admin/projects.ts                  목록(진행 중 우선) · 검색 · 필터 · 건수 · 상세 ·
+                                           생성 · 상태/메모/정보 수정 · 문의별 조회
+src/app/admin/(shell)/projects/page.tsx    목록 (PC 표 · 모바일 카드)
+                       /new/page.tsx       생성 (문의에서 오면 초기값)
+                       /[id]/page.tsx      상세 · 상태 · 메모 · 원본 문의 보기
+                       /actions.ts         Server Action 4개 (관리자 재확인 후 실행)
+```
+추가만 한 곳: `nav.ts`(03 활성화) · `(shell)/page.tsx`(프로젝트 지표) ·
+`inquiries/[id]/page.tsx`(프로젝트 카드) · `ui.tsx`(ProjectStatusBadge).
+
+## 11. STEP 2-B 검증 기록 (2026-09-25)
+
+**대표 실사용 검수 (Preview, 관리자 계정)** — 문의함 → 문의 상세 → 「프로젝트로 전환」 →
+문의 정보가 생성 화면에 정상 전달 → 프로젝트 생성 성공 → **`BN-2026-001` 자동 채번 확인** →
+상세 화면 정상 → 상태를 「제작 중」으로 변경 → **상태 배지 · 운영 정보 반영 확인** →
+내부 메모 「STEP 2-B 프로젝트 메모 저장 테스트」 저장 → **저장 후 유지 확인** →
+**원본 문의 연결 표시 확인**. 전 구간 정상.
+
+**자동 검증** — 격리 Postgres(PGlite)에 0001→0005→0006 을 실제 적용하고 역할을 바꿔 가며
+운영 FLOW 를 끝까지 따라감: **28/28 PASS**. 접수(anon INSERT) → 전환 초기값 → 생성 →
+채번 → 목록 → 상세 → 상태 → 메모 → updated_at 갱신 → 정보 수정 → 원본 문의 →
+연결 확인 / 한 문의 2건 / 문의 없이 생성 / `source_inquiry_id` · `project_no` 수정 거부 /
+DELETE 불가 / 취소 기록 보존 / anon · 비관리자 차단 / 공개 상담폼 정상 / 날짜 제약.
+
+**문의 원본 보존** — 이름 · 연락처 · 이메일 · 내용 불변, 상태 NEW 유지, `admin_note` null 유지,
+`updated_at` 까지 그대로.
+
+**Public Regression** — Public 파일 변경 0 · 본문 11/11 Production 일치 ·
+PC 1024px / MO 719px / 넘침 0 · 클라이언트 번들 비밀값 0.
+
+**Production** — 영향 없음. `biznesta.com` 은 `87e9167` 빌드이고 `/admin` 은 404.
