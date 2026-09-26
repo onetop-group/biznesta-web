@@ -48,8 +48,8 @@ export const ADMIN_NAV: AdminNavItem[] = [
     note: '결제 시스템과 연결되는 주문 관리 화면입니다. 현재는 잠정 보류 상태이며, 별도 결제 시스템 검증이 끝난 뒤 연결 범위를 정합니다.' },
   { no: '09', label: '운영 설정',          href: '/admin/settings',       state: 'soon',
     note: '관리자 계정 · 알림 · 사업자정보를 관리하는 화면입니다. 다음 단계에서 준비합니다.' },
-  { no: '10', label: '시스템 상태',        href: '/admin/system',         state: 'soon',
-    note: '데이터베이스 연결과 배포 상태를 확인하는 화면입니다. 다음 단계에서 준비합니다.' },
+  { no: '10', label: '시스템 상태',        href: '/admin/system',         state: 'readonly',
+    note: '데이터베이스 · 결제 CORE 연결 상태를 확인합니다. 값은 보여주지 않고 설정 여부만 봅니다.' },
 ];
 
 export const navItemFor = (href: string) => ADMIN_NAV.find((n) => n.href === href);

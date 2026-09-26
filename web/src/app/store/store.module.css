@@ -1,0 +1,35 @@
+/* 공식 32화면에 없는 신규 페이지. BIZNESTA 브랜드 토큰만 쓴다.
+   (privacy 페이지와 같은 색·간격 체계 — 새 디자인 언어를 만들지 않는다) */
+.wrap { max-width: 720px; margin: 0 auto; padding: 64px 24px 96px;
+  font-family: inherit; color: #333333; }
+.brand { margin: 0 0 24px; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.32em; color: #c9a77a; }
+.title { margin: 0 0 10px; font-size: 26px; font-weight: 700;
+  letter-spacing: -0.02em; color: #0d2340; }
+.lead { margin: 0 0 32px; font-size: 15px; line-height: 1.75;
+  letter-spacing: -0.01em; color: #46525e; }
+
+.notice { margin: 0 0 36px; padding: 22px 20px; border-radius: 12px;
+  background: #fdf6ee; border: 1px solid rgba(201, 167, 122, 0.5); }
+.noticeTitle { margin: 0 0 8px; font-size: 16px; font-weight: 700;
+  letter-spacing: -0.02em; color: #6d4a24; }
+.noticeBody { margin: 0; font-size: 14px; line-height: 1.7;
+  letter-spacing: -0.01em; color: #6d4a24; }
+
+.list { margin: 0; padding: 0; list-style: none;
+  border-top: 1px solid rgba(20, 30, 45, 0.1); }
+.item { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px;
+  padding: 16px 2px; border-bottom: 1px solid rgba(20, 30, 45, 0.08); }
+.itemName { flex: 1 1 240px; margin: 0; font-size: 16px; font-weight: 600;
+  letter-spacing: -0.01em; color: #0d2340; }
+.itemPrice { flex: 0 0 auto; margin: 0; font-size: 15px; font-weight: 700;
+  letter-spacing: -0.01em; color: #8a5427; }
+
+.back { display: inline-flex; align-items: center; min-height: 44px; margin-top: 28px;
+  font-size: 14px; font-weight: 600; color: #8a5427; text-decoration: none;
+  border-bottom: 1px solid rgba(138, 84, 39, 0.4); }
+.back:hover { color: #6d3f1a; }
+
+@media (max-width: 520px) {
+  .wrap { padding: 48px 20px 72px; }
+}
