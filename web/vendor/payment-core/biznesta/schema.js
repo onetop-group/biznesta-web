@@ -14,8 +14,8 @@ const path = require('path');
 
 const DIR = path.join(__dirname, 'sql');
 
-const FILES = ['30_store.sql'];
-const RLS_FILES = ['31_rls.sql'];
+const FILES = ['30_store.sql', '32_products_ops.sql'];
+const RLS_FILES = ['31_rls.sql', '33_products_rls.sql'];
 
 function read(name) { return fs.readFileSync(path.join(DIR, name), 'utf8'); }
 function all(list) { return (list || FILES).map(f => ({ name: f, sql: read(f) })); }
@@ -41,7 +41,7 @@ async function apply(exec, list) {
 /* 이 도메인이 쓰는 이름 — rollback · 스냅샷 도구가 씁니다 */
 const PREFIX = 'biz_';
 const TABLES = ['biz_products', 'biz_buyers', 'biz_entitlements'];
-const FUNCTIONS = ['biz_set_updated_at', 'biz_buyer_upsert', 'biz_entitlement_grant',
+const FUNCTIONS = ['biz_set_updated_at', 'biz_products_ref_immutable', 'biz_buyer_upsert', 'biz_entitlement_grant',
   'biz_entitlement_revoke', 'biz_entitlement_by_token'];
 
 module.exports = { DIR, FILES, RLS_FILES, PREFIX, TABLES, FUNCTIONS, read, all, apply };

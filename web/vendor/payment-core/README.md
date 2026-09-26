@@ -26,6 +26,11 @@ npm run verify:core
 
 사본의 유일한 위험은 '몰래 달라지는 것' 이고, 그것은 해시 확인으로 막습니다.
 
+## 이 README 는 사본이 아닙니다
+
+`vendor/payment-core/README.md`(이 파일)는 우리가 쓴 것이고 sync 가 건드리지 않습니다.
+sync 는 `core/` 와 `biznesta/` 두 폴더만 비우고 다시 채웁니다.
+
 ## 여기 없는 것
 
 - `sql/core/*.sql` — CORE 스키마 파일. WEB 은 스키마를 적용하지 않습니다.

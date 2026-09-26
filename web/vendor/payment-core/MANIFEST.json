@@ -2,14 +2,14 @@
   "note": "자동 생성 사본입니다. 여기서 직접 고치지 마십시오 — 원본 저장소를 고치고 다시 sync 하십시오.",
   "source": {
     "repo": "onetop-group/biznesta-payment-core",
-    "commit": "92fa1b7891da697b379d4d2edd48966ebeaf1403",
-    "tag": "paycore-stepc-adapter"
+    "commit": "98ca252c6d16a38279bbc36f148a92192571ca71",
+    "tag": "paycore-stepd2a-products"
   },
   "dirs": [
     "core",
     "biznesta"
   ],
-  "generatedAt": "2026-09-26T09:05:31.872Z",
+  "generatedAt": "2026-09-26T09:46:31.931Z",
   "files": {
     "core/adapter/contract.js": "5a0096025940e342d3c3d8f27916f3392bee674c21e768ac947b1918729a8ead",
     "core/db/port.js": "2a77cc34ace84a66663334ed949dbeea0d8dd0069d79cb7b18809f6ca4d58576",
@@ -46,10 +46,12 @@
     "biznesta/README.md": "98094f98287cc194cc0140fdc18e7b7938d38bba0175d3799a8e26e07dd7c5a6",
     "biznesta/adapter.js": "806d08620a293f3b08826b01bbcfb5d8fc2c4fe83928de14b3d624c4dc7d8d88",
     "biznesta/index.js": "3dd45b024dcfffb823248aaf373654fb848119c66b2448649234c0c84de0e0cb",
-    "biznesta/schema.js": "7633763f55f11c67d8ae6a018c1a9c7adca934c3526a87e59c320870526b4a07",
+    "biznesta/schema.js": "8943d308ad47099b07904dee4a51a305bc53600793d8593c577e203ba092603c",
     "biznesta/sql-store.js": "24570b45a95e93a3865694ed8e4e3908136ff54ba0854a2f5410725334d768d4",
     "biznesta/sql/30_store.sql": "568634a67a125727776d76821aa40971a3ce7201e1b106958c66b8d4730af2aa",
     "biznesta/sql/31_rls.sql": "17a3e63ee0df910a3b5ee43687bd65124e532628ed55f17563fae93a642621f7",
+    "biznesta/sql/32_products_ops.sql": "db0a7041ca543844c3fcc21c5a8154d3e044b386b419cee9d2ce2f36e7de3905",
+    "biznesta/sql/33_products_rls.sql": "3b5818c9d53fa58045d23351e908594623509503469935a057abd39ff535c6cf",
     "biznesta/store-port.js": "70dfb219b6c1e2a7300e4f354aadc6b9ad01cfc83dcb168272b9e2a366fd69b0",
     "biznesta/token.js": "6bc70dcc01441575e0cd8b4f206b37bd7f3bcb36221ac3c3202d9ed60364e31b"
   }

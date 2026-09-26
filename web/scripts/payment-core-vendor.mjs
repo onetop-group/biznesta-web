@@ -80,7 +80,9 @@ function sync() {
     process.exit(2);
   }
 
-  fs.rmSync(DEST, { recursive: true, force: true });
+  /* ★ DEST 를 통째로 지우지 않습니다 — 여기 우리가 쓴 README.md 도 함께 살고 있습니다.
+     가져오는 폴더만 비웁니다(원본에서 없어진 파일이 남지 않도록). */
+  for (const d of INCLUDE_DIRS) fs.rmSync(path.join(DEST, d), { recursive: true, force: true });
   const files = {};
   for (const d of INCLUDE_DIRS) {
     for (const rel of listFiles(path.join(src, d))) {

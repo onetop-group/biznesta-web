@@ -50,6 +50,10 @@ export const ADMIN_NAV: AdminNavItem[] = [
     note: '관리자 계정 · 알림 · 사업자정보를 관리하는 화면입니다. 다음 단계에서 준비합니다.' },
   { no: '10', label: '시스템 상태',        href: '/admin/system',         state: 'readonly',
     note: '데이터베이스 · 결제 CORE 연결 상태를 확인합니다. 값은 보여주지 않고 설정 여부만 봅니다.' },
+  /* 2026-09-26 STEP D-2A 로 추가. 07 '서비스 · 상품' 은 제작 서비스(플랜)이고,
+     이쪽은 STORE 에서 파는 디지털 상품이라 자리를 나눴다. */
+  { no: '11', label: 'STORE 상품',         href: '/admin/store',          state: 'live',
+    note: 'STORE 에서 판매할 디지털 상품을 등록하고 판매상태를 관리합니다.' },
 ];
 
 export const navItemFor = (href: string) => ADMIN_NAV.find((n) => n.href === href);
