@@ -1,25 +1,25 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { listStoreProducts, formatPrice } from '@/lib/store/catalog';
+import BusinessInfo from '@/components/site/BusinessInfo';
+import { assetsFor } from '@/lib/store/assets';
+import { KIND_LABEL, formatPrice, listStoreProducts } from '@/lib/store/catalog';
 import styles from './store.module.css';
 
 /**
- * BIZNESTA STORE — 골격.
+ * BIZNESTA STORE 목록.
  *
- * 지금은 판매 상품이 없다. 그래서 이 페이지는 **가짜 상품을 만들지 않고**
- * 상품 0건 상태를 그대로 "준비 중" 으로 보여준다.
+ * 판매 중인 상품만 보인다(초안·판매중지는 DB 의 RLS 가 걸러 준다).
+ * 한 건도 없으면 **가짜 상품을 만들지 않고** 그대로 "준비 중" 을 보여준다.
  *
- * 색인하지 않는다 — 준비 중 페이지가 검색에 잡히면 안 되고,
- * 기존 sitemap(PUBLIC_ROUTES)·robots 설정은 건드리지 않는다.
+ * 색인하지 않는다 — 기존 sitemap(PUBLIC_ROUTES)·robots 설정은 건드리지 않는다.
  */
 export const metadata: Metadata = {
   title: 'STORE',
-  description: '비즈네스타 디지털 상품 스토어입니다.',
+  description: '비즈네스타가 만든 디지털 상품을 판매합니다.',
   alternates: { canonical: '/store' },
   robots: { index: false, follow: false },
 };
 
-/* 상품표는 언제든 바뀐다. 빌드 시점에 굳히지 않는다. */
 export const dynamic = 'force-dynamic';
 
 export default async function Page() {
@@ -41,17 +41,33 @@ export default async function Page() {
           </p>
         </section>
       ) : (
-        <ul className={styles.list}>
-          {products.map((p) => (
-            <li key={p.productRef} className={styles.item}>
-              <span className={styles.itemName}>{p.name}</span>
-              <span className={styles.itemPrice}>{formatPrice(p.amount, p.currency)}</span>
-            </li>
-          ))}
+        <ul className={styles.cards}>
+          {products.map((p) => {
+            const a = assetsFor(p.productRef);
+            return (
+              <li key={p.productRef} className={styles.card}>
+                <Link href={`/store/${p.productRef}`} className={styles.cardLink}>
+                  {a && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img className={styles.cover} src={a.cover}
+                         width={a.coverSize.width} height={a.coverSize.height} alt="" />
+                  )}
+                  <span className={styles.cardBody}>
+                    <span className={styles.cardKind}>{KIND_LABEL[p.kind] ?? '디지털 상품'}</span>
+                    <span className={styles.cardName}>{p.name}</span>
+                    {p.description && <span className={styles.cardDesc}>{p.description}</span>}
+                    <span className={styles.cardPrice}>{formatPrice(p.amount, p.currency)}</span>
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       )}
 
       <Link href="/contact" className={styles.back}>상담 문의하기</Link>
+
+      <BusinessInfo />
     </main>
   );
 }

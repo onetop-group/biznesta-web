@@ -96,7 +96,80 @@ export function getPaymentBridge(): PaymentBridge {
 
 /** 설정 여부만 알려 준다. 값은 절대 돌려주지 않는다. */
 export function paymentConfigured() {
-  return Boolean(process.env[DB_URL_ENV]);
+  return paymentReadiness().ready;
+}
+
+/**
+ * 결제를 실제로 받으려면 두 가지가 다 있어야 한다.
+ *   ① STORE_DATABASE_URL  주문을 적을 곳 (CORE 는 트랜잭션이 필요해 pg 직결이다)
+ *   ② Toss 키 4종         PAY_ENV · PAY_METHOD · PAY_SECRET_KEY · PAY_PUBLIC_CLIENT_KEY
+ * ★ 값은 한 글자도 돌려주지 않는다. '있다/없다' 만 말한다.
+ */
+export function paymentReadiness() {
+  const missing: string[] = [];
+  if (!process.env[DB_URL_ENV]) missing.push(DB_URL_ENV);
+  for (const k of ['PAY_ENV', 'PAY_METHOD', 'PAY_SECRET_KEY', 'PAY_PUBLIC_CLIENT_KEY']) {
+    if (!process.env[k]) missing.push(k);
+  }
+  return { ready: missing.length === 0, missing, db: !missing.includes(DB_URL_ENV) };
+}
+
+export type Checkout =
+  | { ready: false; missing: string[]; reason?: string }
+  | { ready: true; flow: CoreFlow; store: BizStore; publicClientKey: string };
+
+/** CORE flow 중 이 앱이 쓰는 만큼만 적는다 */
+type CoreFlow = {
+  createOrder(args: Record<string, unknown>): Promise<Record<string, unknown>>;
+  prepare(args: Record<string, unknown>): Promise<Record<string, unknown>>;
+  confirm(args: Record<string, unknown>): Promise<Record<string, unknown>>;
+};
+
+let checkoutCache: Checkout | undefined;
+
+/**
+ * 결제 가능한 상태면 CORE flow 를 만들어 돌려준다.
+ * ★ 준비가 안 됐으면 만들지 않는다 — 부를 수 없는 결제창을 띄우지 않기 위해서다.
+ *   절대 throw 하지 않는다.
+ */
+export function getCheckout(): Checkout {
+  if (checkoutCache !== undefined) return checkoutCache;
+
+  const r = paymentReadiness();
+  if (!r.ready) {
+    checkoutCache = { ready: false, missing: r.missing };
+    return checkoutCache;
+  }
+
+  const bridge = getPaymentBridge();
+  if (!bridge.configured) {
+    checkoutCache = { ready: false, missing: [DB_URL_ENV], reason: bridge.reason };
+    return checkoutCache;
+  }
+
+  try {
+    /* eslint-disable @typescript-eslint/no-require-imports */
+    const { createPaymentCore } = require('@payment/core/index');
+    const { createFlow } = require('@payment/core/flow/index');
+    /* eslint-enable @typescript-eslint/no-require-imports */
+
+    /* ENV guard 가 키 종류·환경 선언이 어긋나면 여기서 멈춘다 (fail-fast). */
+    const core = createPaymentCore(process.env);
+    const flow = createFlow({
+      provider: core.provider,
+      providerName: core.providerName,
+      db: bridge.db,
+      adapter: bridge.adapter,
+    });
+    checkoutCache = {
+      ready: true, flow, store: bridge.store,
+      publicClientKey: core.publicConfig().clientKey,
+    };
+  } catch (e) {
+    const msg = String((e as Error)?.message ?? e).replace(/postgres(ql)?:\/\/\S+/g, '[REDACTED]');
+    checkoutCache = { ready: false, missing: [], reason: msg.slice(0, 200) };
+  }
+  return checkoutCache;
 }
 
 /**
