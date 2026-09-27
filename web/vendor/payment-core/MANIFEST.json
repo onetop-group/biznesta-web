@@ -2,14 +2,14 @@
   "note": "자동 생성 사본입니다. 여기서 직접 고치지 마십시오 — 원본 저장소를 고치고 다시 sync 하십시오.",
   "source": {
     "repo": "onetop-group/biznesta-payment-core",
-    "commit": "98ca252c6d16a38279bbc36f148a92192571ca71",
+    "commit": "4ea15a3d071f2b0e19d9215d2a7b88e6a75fbea6",
     "tag": "paycore-stepd2a-products"
   },
   "dirs": [
     "core",
     "biznesta"
   ],
-  "generatedAt": "2026-09-26T09:46:31.931Z",
+  "generatedAt": "2026-09-27T19:39:05.816Z",
   "files": {
     "core/adapter/contract.js": "5a0096025940e342d3c3d8f27916f3392bee674c21e768ac947b1918729a8ead",
     "core/db/port.js": "2a77cc34ace84a66663334ed949dbeea0d8dd0069d79cb7b18809f6ca4d58576",
