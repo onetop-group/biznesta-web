@@ -39,6 +39,11 @@ export const NAV: NavItem[] = [
   { en: 'PRICE', ko: '제작 비용', href: '/price' },
   { en: 'PORTFOLIO', ko: '제작 사례', href: '/portfolio' },
   { en: 'JOURNAL', ko: '저널', href: '/journal' },
+  /* 2026-09-28 — BIZNESTA BOOK(전자책 스토어) 추가.
+     ★ 이 목록은 모바일 드로어만 쓴다(components/site/MobileMenu.tsx 한 곳).
+       PC 상단 GNB 는 각 화면 데이터(pc01~16.ts)의 header.nav 7개라서
+       여기에 한 줄을 더해도 PC 시안은 한 픽셀도 바뀌지 않는다. */
+  { en: 'BOOK', ko: 'BIZNESTA BOOK', href: '/book' },
   { en: 'ABOUT', ko: '회사소개', href: '/about' },
   { en: 'CONTACT', ko: '제작 상담', href: '/contact' },
 ];
