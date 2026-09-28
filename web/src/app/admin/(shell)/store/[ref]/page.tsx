@@ -68,7 +68,8 @@ export default async function Page({
               <input type="hidden" name="product_ref" value={p.product_ref} />
               <input type="hidden" name="status" value={s} />
               <button type="submit" className={s === 'selling' ? styles.primary : styles.btn}>
-                {s === 'selling' ? '판매 시작' : s === 'stopped' ? '판매 중지' : '초안으로 되돌리기'}
+                {s === 'selling' ? '판매 시작' : s === 'stopped' ? '판매 중지'
+                  : s === 'coming' ? '출시예정으로' : '초안으로 되돌리기'}
               </button>
             </form>
           ))}

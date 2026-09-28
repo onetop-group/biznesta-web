@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import BusinessInfo from '@/components/site/BusinessInfo';
 import { CONSULT_EMAIL, CONSULT_PHONE } from '@/data/business';
-import { formatPrice, getStoreProduct } from '@/lib/store/catalog';
-import { paymentReadiness } from '@/lib/store/payment';
+import { formatPrice, getBook } from '@/lib/book/catalog';
+import { paymentReadiness } from '@/lib/book/payment';
 import styles from '../checkout.module.css';
 
 /**
@@ -27,7 +27,7 @@ const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v) 
 export default async function Page({ params, searchParams }: Params) {
   const { slug } = await params;
   const orderNo = one((await searchParams).order).slice(0, 40);
-  const p = await getStoreProduct(slug);
+  const p = await getBook(slug);
   if (!p) notFound();
 
   const { ready } = paymentReadiness();
@@ -62,7 +62,7 @@ export default async function Page({ params, searchParams }: Params) {
         </div>
       )}
 
-      <Link href={`/store/${p.productRef}`} className={styles.back}>← 상품 설명으로 돌아가기</Link>
+      <Link href={`/book/${p.productRef}`} className={styles.back}>← 상품 설명으로 돌아가기</Link>
 
       <BusinessInfo />
     </main>

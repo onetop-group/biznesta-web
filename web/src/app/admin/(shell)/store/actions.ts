@@ -78,7 +78,7 @@ export async function saveProductAction(formData: FormData) {
   });
   revalidatePath('/admin/store');
   revalidatePath(`/admin/store/${ref}`);
-  revalidatePath('/store');
+  revalidatePath('/book');
   redirect(`/admin/store/${ref}?${r.ok ? 'saved=info' : 'err=save'}`);
 }
 
@@ -93,6 +93,6 @@ export async function changeProductStatusAction(formData: FormData) {
   revalidatePath('/admin/store');
   revalidatePath(`/admin/store/${ref}`);
   /* 판매상태가 바뀌면 공개 STORE 목록도 달라진다 */
-  revalidatePath('/store');
+  revalidatePath('/book');
   redirect(`/admin/store/${ref}?${r.ok ? 'saved=status' : 'err=status'}`);
 }

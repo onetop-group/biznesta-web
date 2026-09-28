@@ -14,16 +14,17 @@ import { getAdminSupabase } from './supabase';
  * 이 파일이 실수해도 DB 가 막는다.
  */
 
-export const PRODUCT_STATUSES = ['draft', 'selling', 'stopped'] as const;
+export const PRODUCT_STATUSES = ['draft', 'coming', 'selling', 'stopped'] as const;
 export type ProductStatus = (typeof PRODUCT_STATUSES)[number];
 
 /** 운영자에게 보이는 이름 · 배지 색(관리자 UI 의 기존 tone 을 그대로 쓴다) */
 export const PRODUCT_STATUS_LABEL: Record<ProductStatus, {
-  label: string; tone: 'cancelled' | 'done' | 'hold'; help: string; order: number;
+  label: string; tone: 'cancelled' | 'done' | 'hold' | 'new'; help: string; order: number;
 }> = {
-  selling: { label: '판매 중',   tone: 'done',      order: 1, help: '공개 STORE 에 보이고 구매할 수 있습니다.' },
-  draft:   { label: '초안',      tone: 'cancelled', order: 2, help: '작성 중입니다. 공개 STORE 에 보이지 않습니다.' },
-  stopped: { label: '판매 중지', tone: 'hold',      order: 3, help: '공개 STORE 에서 내려갑니다. 기록은 남습니다.' },
+  selling: { label: '판매 중',   tone: 'done',      order: 1, help: 'BIZNESTA BOOK 에 보이고 구매할 수 있습니다.' },
+  coming:  { label: '출시예정',  tone: 'new',       order: 2, help: 'BIZNESTA BOOK 에 표지와 제목은 보이지만 아직 살 수 없습니다.' },
+  draft:   { label: '초안',      tone: 'cancelled', order: 3, help: '작성 중입니다. 손님에게 보이지 않습니다.' },
+  stopped: { label: '판매 중지', tone: 'hold',      order: 4, help: 'BIZNESTA BOOK 에서 내려갑니다. 기록은 남습니다.' },
 };
 
 export const isProductStatus = (v: string): v is ProductStatus =>

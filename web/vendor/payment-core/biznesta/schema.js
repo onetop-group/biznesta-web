@@ -14,8 +14,8 @@ const path = require('path');
 
 const DIR = path.join(__dirname, 'sql');
 
-const FILES = ['30_store.sql', '32_products_ops.sql'];
-const RLS_FILES = ['31_rls.sql', '33_products_rls.sql'];
+const FILES = ['30_store.sql', '32_products_ops.sql', '34_products_coming.sql'];
+const RLS_FILES = ['31_rls.sql', '33_products_rls.sql', '35_products_coming_rls.sql'];
 
 function read(name) { return fs.readFileSync(path.join(DIR, name), 'utf8'); }
 function all(list) { return (list || FILES).map(f => ({ name: f, sql: read(f) })); }

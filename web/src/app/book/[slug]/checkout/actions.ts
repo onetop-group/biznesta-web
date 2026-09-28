@@ -1,8 +1,8 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { getStoreProduct } from '@/lib/store/catalog';
-import { getCheckout } from '@/lib/store/payment';
+import { getBook } from '@/lib/book/catalog';
+import { getCheckout } from '@/lib/book/payment';
 
 /**
  * 비회원 구매 시작.
@@ -22,10 +22,10 @@ export async function startCheckout(formData: FormData) {
   const slug = String(formData.get('slug') ?? '').trim();
   const email = String(formData.get('email') ?? '').trim().slice(0, 254);
   const agreed = formData.get('agree') === 'on';
-  const back = `/store/${encodeURIComponent(slug)}/checkout`;
+  const back = `/book/${encodeURIComponent(slug)}/checkout`;
 
-  const product = await getStoreProduct(slug);
-  if (!product) redirect('/store');
+  const product = await getBook(slug);
+  if (!product) redirect('/book');
 
   if (!EMAIL_RE.test(email)) redirect(`${back}?err=email`);
   if (!agreed) redirect(`${back}?err=agree`);
@@ -45,10 +45,10 @@ export async function startCheckout(formData: FormData) {
   });
 
   if (!r?.ok) {
-    console.error('[store/checkout] 주문 생성 실패:', r?.code ?? 'unknown');
+    console.error('[book/checkout] 주문 생성 실패:', r?.code ?? 'unknown');
     redirect(`${back}?err=order`);
   }
 
   /* 주문이 생겼다. 다음은 결제창이다 — 결제 연결(STEP E)에서 이어진다. */
-  redirect(`/store/${encodeURIComponent(slug)}/checkout/pay?order=${encodeURIComponent(r.order.orderNo)}`);
+  redirect(`/book/${encodeURIComponent(slug)}/checkout/pay?order=${encodeURIComponent(r.order.orderNo)}`);
 }

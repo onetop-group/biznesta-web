@@ -1,7 +1,7 @@
 import { PageHead, Card } from '@/components/admin/ui';
 import { supabaseConfigured } from '@/lib/supabase';
-import { listStoreProducts } from '@/lib/store/catalog';
-import { inspectPaymentCore, paymentConfigured, getPaymentBridge } from '@/lib/store/payment';
+import { listBooks } from '@/lib/book/catalog';
+import { inspectPaymentCore, paymentConfigured, getPaymentBridge } from '@/lib/book/payment';
 import manifest from '@payment/MANIFEST.json';
 import styles from './system.module.css';
 
@@ -43,7 +43,7 @@ export default async function Page() {
     }
   }
 
-  const catalog = await listStoreProducts();
+  const catalog = await listBooks();
   const fileCount = Object.keys(manifest.files ?? {}).length;
 
   return (
@@ -57,9 +57,9 @@ export default async function Page() {
               ? <span className={styles.ok}>설정됨</span>
               : <span className={styles.bad}>미설정</span>}
           </Row>
-          <Row label="STORE 상품 조회">
+          <Row label="BOOK 상품 조회">
             {catalog.ok
-              ? <><span className={styles.ok}>정상</span> · 판매 중 {catalog.products.length}건</>
+              ? <><span className={styles.ok}>정상</span> · 판매 중 {catalog.books.length}건</>
               : <span className={styles.bad}>실패 ({catalog.reason})</span>}
           </Row>
         </dl>

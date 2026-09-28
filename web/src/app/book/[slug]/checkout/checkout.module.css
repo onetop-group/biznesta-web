@@ -6,7 +6,11 @@
   letter-spacing: -0.02em; color: #0d2340; }
 
 .summary { margin: 0 0 24px; padding: 20px; border-radius: 12px;
-  background: #14161a; color: #e8e2d6; }
+  background: #14161a; color: #e8e2d6;
+  display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 18px; align-items: start; }
+.sumCover { display: block; width: 100%; height: auto; border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); }
+.sumBody { min-width: 0; }
 .sumName { margin: 0 0 6px; font-size: 15px; font-weight: 600; line-height: 1.6; }
 .sumKind { margin: 0 0 16px; font-size: 13px; color: #9aa0a8; }
 .sumRow { display: flex; justify-content: space-between; align-items: baseline;
@@ -51,4 +55,10 @@
 .back { display: inline-flex; align-items: center; min-height: 44px; margin-top: 18px;
   font-size: 14px; font-weight: 600; color: #6b7682; text-decoration: none; }
 
-@media (max-width: 520px) { .wrap { padding: 40px 20px 72px; } }
+@media (max-width: 520px) {
+  .wrap { padding: 40px 20px 72px; }
+  /* 모바일에서는 표지 → 상품명 → 저자 → 가격 순으로 자연스럽게 쌓인다 */
+  .summary { grid-template-columns: minmax(0, 1fr); gap: 14px; text-align: center; }
+  .sumCover { max-width: 168px; margin: 0 auto; }
+  .sumRow { justify-content: center; gap: 12px; }
+}
