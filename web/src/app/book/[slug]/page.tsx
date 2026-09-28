@@ -160,7 +160,7 @@ export default async function Page({ params }: Params) {
 
           <p className={styles.links}>
             <Link href="/privacy" className={styles.link}>개인정보처리방침</Link>
-            <Link href="/contact" className={styles.link}>문의하기</Link>
+            <Link href={`/book/contact?product=${b.productRef}`} className={styles.link}>이 책 문의하기</Link>
           </p>
         </section>
 

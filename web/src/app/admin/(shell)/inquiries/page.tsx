@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import {
   INQUIRY_STATUSES, PAGE_SIZE, STATUS_LABEL, countByStatus, distinctServices, isInquiryStatus, listInquiries,
+  INQUIRY_SOURCES, INQUIRY_SOURCE_LABEL, isInquirySource,
 } from '@/lib/admin/inquiries';
 import { PageHead, StatusBadge, fmtDate, screenLabel, sourceLabel } from '@/components/admin/ui';
 import styles from './inquiries.module.css';
@@ -20,10 +21,12 @@ export default async function Page({ searchParams }: { searchParams: Promise<SP>
   const statusRaw = one(sp.status);
   const status = isInquiryStatus(statusRaw) ? statusRaw : '';
   const service = one(sp.service).slice(0, 100);
+  const sourceRaw = one(sp.source);
+  const source = isInquirySource(sourceRaw) ? sourceRaw : '';
   const page = Math.max(1, parseInt(one(sp.page) || '1', 10) || 1);
 
   const [{ rows, total, error }, { counts, total: all }, services] = await Promise.all([
-    listInquiries({ q, status, service, page }),
+    listInquiries({ q, status, service, source, page }),
     countByStatus(),
     distinctServices(),
   ]);
@@ -31,7 +34,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<SP>
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
   const link = (over: Record<string, string | number>) => {
     const p = new URLSearchParams();
-    const merged = { q, status, service, page: 1, ...over };
+    const merged = { q, status, service, source, page: 1, ...over };
     for (const [k, v] of Object.entries(merged)) if (v !== '' && !(k === 'page' && v === 1)) p.set(k, String(v));
     const s = p.toString();
     return '/admin/inquiries' + (s ? '?' + s : '');
@@ -40,6 +43,16 @@ export default async function Page({ searchParams }: { searchParams: Promise<SP>
   return (
     <>
       <PageHead title="문의함" desc={`전체 ${all}건 · 신규 ${counts.NEW}건`} />
+
+      {/* 출처 탭 — 홈페이지 상담과 BIZNESTA BOOK 문의를 갈라 본다 */}
+      <nav className={styles.tabs} aria-label="출처 필터">
+        <Link href={link({ source: '' })} className={`${styles.tab} ${source === '' ? styles.tabOn : ''}`}>모든 문의</Link>
+        {INQUIRY_SOURCES.map((sc) => (
+          <Link key={sc} href={link({ source: sc })} className={`${styles.tab} ${source === sc ? styles.tabOn : ''}`}>
+            {INQUIRY_SOURCE_LABEL[sc]}
+          </Link>
+        ))}
+      </nav>
 
       {/* 상태 탭 */}
       <nav className={styles.tabs} aria-label="상태 필터">
@@ -91,7 +104,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<SP>
                     <td>{r.service}</td>
                     <td>{r.selected_plan ?? '—'}</td>
                     <td className={styles.mute}>
-                      {sourceLabel(r.consultation_source)}
+                      {r.inquiry_source === 'book'
+                        ? 'BIZNESTA BOOK' + (r.product_ref ? ' · ' + r.product_ref : '')
+                        : sourceLabel(r.consultation_source)}
                       {r.selected_design ? ` · ${r.selected_design}` : ''}
                       {r.screen ? ` · ${screenLabel(r.screen)}` : ''}
                     </td>

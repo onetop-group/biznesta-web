@@ -52,7 +52,8 @@ export default async function Page({ params, searchParams }: Params) {
           주문은 정상적으로 접수되었습니다{orderNo ? ` (${orderNo})` : ''}.
           카드 결제창 연결이 열리는 대로 안내드리겠습니다. 급하시면
           {' '}<a href={`tel:${CONSULT_PHONE.replace(/-/g, '')}`}>{CONSULT_PHONE}</a> 또는
-          {' '}<a href={`mailto:${CONSULT_EMAIL}`}>{CONSULT_EMAIL}</a> 로 연락해 주세요.
+          {' '}<a href={`mailto:${CONSULT_EMAIL}`}>{CONSULT_EMAIL}</a> 로 연락하시거나
+          {' '}<Link href={`/book/contact?product=${p.productRef}`}>문의를 남겨</Link> 주세요.
         </p>
       </div>
 

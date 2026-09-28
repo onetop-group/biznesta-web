@@ -55,7 +55,7 @@ export default async function Page() {
               비즈네스타가 만든 전자책을 곧 이곳에서 만나실 수 있습니다.
               준비가 끝나면 이 페이지에서 바로 안내드리겠습니다.
             </p>
-            <Link href="/contact" className={styles.soonLink}>문의 남기기</Link>
+            <Link href="/book/contact" className={styles.soonLink}>문의 남기기</Link>
           </section>
         )}
 
@@ -126,7 +126,7 @@ export default async function Page() {
         )}
 
         <p className={styles.foot}>
-          전자책 관련 문의는 <Link href="/contact" className={styles.footLink}>문의 페이지</Link>로 보내 주세요.
+          전자책 관련 문의는 <Link href="/book/contact" className={styles.footLink}>BIZNESTA BOOK 문의</Link>로 보내 주세요.
         </p>
       </main>
 

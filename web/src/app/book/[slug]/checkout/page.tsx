@@ -90,7 +90,8 @@ export default async function Page({ params, searchParams }: Params) {
             <p>
               카드 결제 연결이 아직 열리지 않았습니다. 지금 구매를 원하시면
               {' '}<a href={`tel:${CONSULT_PHONE.replace(/-/g, '')}`}>{CONSULT_PHONE}</a> 또는
-              {' '}<a href={`mailto:${CONSULT_EMAIL}`}>{CONSULT_EMAIL}</a> 로 연락해 주세요.
+              {' '}<a href={`mailto:${CONSULT_EMAIL}`}>{CONSULT_EMAIL}</a> 로 연락하시거나
+              {' '}<Link href={`/book/contact?product=${b.productRef}`}>문의를 남겨</Link> 주세요.
             </p>
           </div>
         )}
@@ -126,7 +127,11 @@ export default async function Page({ params, searchParams }: Params) {
         <div className={styles.policy}>
           <p>· 배송되는 상품이 아닙니다. 결제 후 이메일로 보내 드리는 링크로 열람합니다.</p>
           <p>· 열람 링크가 발급되기 전에는 전액 환불됩니다.</p>
-          <p>· 환불·취소 문의는 {CONSULT_PHONE} 또는 {CONSULT_EMAIL} 로 접수해 주세요.</p>
+          <p>
+            · 환불·취소 문의는{' '}
+            <Link href={`/book/contact?product=${b.productRef}`}>BIZNESTA BOOK 문의</Link>
+            {' '}또는 {CONSULT_PHONE} · {CONSULT_EMAIL} 로 접수해 주세요.
+          </p>
         </div>
 
         <Link href={`/book/${b.productRef}`} className={styles.back}>← 책 설명으로 돌아가기</Link>

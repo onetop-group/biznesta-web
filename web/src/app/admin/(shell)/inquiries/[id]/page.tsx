@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { INQUIRY_STATUSES, STATUS_LABEL, getInquiry } from '@/lib/admin/inquiries';
+import { INQUIRY_SOURCE_LABEL, INQUIRY_STATUSES, STATUS_LABEL, getInquiry } from '@/lib/admin/inquiries';
 import { projectsForInquiry, serviceLabel } from '@/lib/admin/projects';
 import { Card, PageHead, ProjectStatusBadge, StatusBadge, fmtDate, screenLabel, sourceLabel } from '@/components/admin/ui';
 import { changeStatus, saveNote } from '../actions';
@@ -54,7 +54,17 @@ export default async function Page({
 
           <Card title="문의 정보">
             <dl className={styles.dl}>
-              <dt>문의 서비스</dt><dd>{q.service}</dd>
+              <dt>문의 출처</dt>
+              <dd>{INQUIRY_SOURCE_LABEL[q.inquiry_source] ?? q.inquiry_source}</dd>
+              {q.inquiry_source === 'book' && (
+                <>
+                  <dt>문의 상품</dt>
+                  <dd>{q.product_ref
+                    ? <Link href={`/book/${q.product_ref}`}>{q.product_ref}</Link>
+                    : '— (특정 책 아님)'}</dd>
+                </>
+              )}
+              <dt>{q.inquiry_source === 'book' ? '문의 유형' : '문의 서비스'}</dt><dd>{q.service}</dd>
               <dt>플랜</dt><dd>{q.selected_plan ?? '—'}</dd>
               <dt>유입 경로</dt><dd>{sourceLabel(q.consultation_source)}{q.screen ? ` · ${screenLabel(q.screen)}` : ''}</dd>
               <dt>선택 디자인</dt><dd>{q.selected_design ?? '—'}</dd>

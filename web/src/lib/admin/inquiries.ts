@@ -26,6 +26,21 @@ export const STATUS_LABEL: Record<InquiryStatus, { label: string; tone: 'new' | 
 export const isInquiryStatus = (v: string): v is InquiryStatus =>
   (INQUIRY_STATUSES as readonly string[]).includes(v);
 
+/**
+ * 문의가 어디서 왔는가 (0007_inquiry_source.sql).
+ *   site  홈페이지 제작 상담폼 — 지금까지의 모든 문의
+ *   book  BIZNESTA BOOK 전자책 문의
+ * 둘이 섞이면 둘 다 놓치므로 목록에서 갈라 본다.
+ */
+export const INQUIRY_SOURCES = ['site', 'book'] as const;
+export type InquirySource = (typeof INQUIRY_SOURCES)[number];
+export const INQUIRY_SOURCE_LABEL: Record<InquirySource, string> = {
+  site: '홈페이지 상담',
+  book: 'BIZNESTA BOOK',
+};
+export const isInquirySource = (v: string): v is InquirySource =>
+  (INQUIRY_SOURCES as readonly string[]).includes(v);
+
 export type Inquiry = {
   id: string;
   created_at: string;
@@ -44,18 +59,23 @@ export type Inquiry = {
   submitted_path: string | null;
   status: InquiryStatus;
   admin_note: string | null;
+  /* 2026-09-28 추가 — 0007_inquiry_source.sql */
+  inquiry_source: InquirySource;
+  product_ref: string | null;
 };
 
 const LIST_COLUMNS =
-  'id, created_at, updated_at, name, contact, email, service, selected_plan, selected_design, consultation_source, screen, status';
+  'id, created_at, updated_at, name, contact, email, service, selected_plan, selected_design, consultation_source, screen, status, inquiry_source, product_ref';
 
 export type InquiryRow = Pick<Inquiry,
   'id' | 'created_at' | 'updated_at' | 'name' | 'contact' | 'email' | 'service'
-  | 'selected_plan' | 'selected_design' | 'consultation_source' | 'screen' | 'status'>;
+  | 'selected_plan' | 'selected_design' | 'consultation_source' | 'screen' | 'status'
+  | 'inquiry_source' | 'product_ref'>;
 
 export type ListFilter = {
   q?: string;
   status?: InquiryStatus | '';
+  source?: InquirySource | '';
   service?: string;
   page?: number;
 };
@@ -77,6 +97,7 @@ export async function listInquiries(f: ListFilter = {}) {
     .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
   if (f.status && isInquiryStatus(f.status)) query = query.eq('status', f.status);
+  if (f.source && isInquirySource(f.source)) query = query.eq('inquiry_source', f.source);
   if (f.service) query = query.eq('service', f.service.slice(0, 100));
   const q = f.q ? cleanQuery(f.q) : '';
   if (q) {

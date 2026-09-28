@@ -1,0 +1,58 @@
+/* BIZNESTA BOOK 문의 — /book 과 같은 톤을 이어간다. */
+.wrap { max-width: 620px; margin: 0 auto; padding: 20px 24px 88px; color: #333333; }
+.eyebrow { margin: 0 0 10px; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.34em; color: #c9a77a; }
+.title { margin: 0 0 12px; font-size: 27px; font-weight: 800;
+  letter-spacing: -0.02em; color: #0d2340; }
+.lead { margin: 0 0 30px; font-size: 14.5px; line-height: 1.8; color: #5d6874; }
+
+/* 어떤 책에 대한 문의인지 — 사용자가 다시 적지 않아도 된다 */
+.product { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 16px;
+  align-items: center; margin: 0 0 26px; padding: 16px 18px; border-radius: 12px;
+  background: #14161a; }
+.productCover { display: block; width: 100%; height: auto; border-radius: 4px; }
+.productLabel { margin: 0 0 4px; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.06em; color: #c9a77a; }
+.productName { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.55; color: #e8e2d6; }
+.productChange { display: inline-block; margin: 8px 0 0; font-size: 12.5px;
+  color: #9aa0a8; text-decoration: none; border-bottom: 1px solid rgba(154, 160, 168, 0.5); }
+.productNone { margin: 0 0 26px; padding: 14px 16px; border-radius: 10px;
+  background: #f6f7f8; font-size: 14px; line-height: 1.7; color: #5d6874; }
+
+.field { display: flex; flex-direction: column; gap: 7px; margin: 0 0 18px; }
+.label { font-size: 14px; font-weight: 600; color: #2f3a47; }
+.req { color: #b3261e; }
+.input, .select, .textarea { width: 100%; min-height: 50px; padding: 12px 14px;
+  border-radius: 10px; border: 1px solid rgba(20, 30, 45, 0.2); background: #ffffff;
+  font: inherit; font-size: 16px; color: #2f3a47; }
+.textarea { min-height: 150px; resize: vertical; line-height: 1.7; }
+.input:focus, .select:focus, .textarea:focus { outline: 2px solid #c9a77a; outline-offset: 1px; }
+.hint { font-size: 12.5px; line-height: 1.65; color: #8b95a1; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.agree { display: flex; align-items: flex-start; gap: 10px; margin: 4px 0 22px;
+  font-size: 14px; line-height: 1.7; color: #46525e; }
+.agree input { width: 20px; height: 20px; margin-top: 2px; flex: 0 0 auto; }
+.agree a { color: #8a5427; text-decoration: none; border-bottom: 1px solid rgba(138, 84, 39, 0.4); }
+
+.cta { display: inline-flex; align-items: center; justify-content: center;
+  width: 100%; min-height: 58px; padding: 0 24px; border: 0; border-radius: 10px;
+  cursor: pointer; background: linear-gradient(180deg, #e0bd7c 0%, #c79a4e 100%);
+  color: #1a1204; font-size: 17px; font-weight: 800; letter-spacing: -0.01em;
+  box-shadow: 0 6px 18px rgba(199, 154, 78, 0.28); }
+.cta:hover { background: linear-gradient(180deg, #e8c98d 0%, #d0a557 100%); }
+
+.warn { margin: 0 0 20px; padding: 13px 16px; border-radius: 10px;
+  background: #fdecea; border: 1px solid #f5c6c2; font-size: 14px; line-height: 1.7; color: #8c2f26; }
+.done { margin: 0 0 24px; padding: 20px; border-radius: 12px;
+  background: #e9f5ec; border: 1px solid #c5e2cc; }
+.doneTitle { margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #2f6b3f; }
+.doneBody { margin: 0; font-size: 14px; line-height: 1.75; color: #35704a; }
+
+.direct { margin: 26px 0 0; padding: 16px; border-radius: 10px;
+  background: #f7f8f9; font-size: 13px; line-height: 1.85; color: #5d6874; }
+.direct a { color: #8a5427; text-decoration: none; }
+.back { display: inline-flex; align-items: center; min-height: 44px; margin-top: 16px;
+  font-size: 14px; font-weight: 600; color: #6b7682; text-decoration: none; }
+
+@media (max-width: 520px) { .wrap { padding: 14px 20px 72px; } .title { font-size: 23px; } }
