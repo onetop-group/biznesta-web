@@ -62,3 +62,15 @@
   .sumCover { max-width: 168px; margin: 0 auto; }
   .sumRow { justify-content: center; gap: 12px; }
 }
+
+/* 결제 전 고지 — 약관 안쪽이 아니라 여기서 보여야 한다 */
+.notice2 { margin: 4px 0 20px; padding: 16px 18px; border-radius: 10px;
+  background: #fdf6ee; border: 1px solid rgba(201, 167, 122, 0.55); }
+.notice2Title { margin: 0 0 10px; font-size: 14px; font-weight: 700; color: #6d4a24; }
+.notice2List { margin: 0; padding-left: 18px; }
+.notice2List li { margin: 0 0 6px; font-size: 13.5px; line-height: 1.75;
+  letter-spacing: -0.01em; color: #6d4a24; }
+.notice2List li:last-child { margin: 0; }
+.notice2Links { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 12px 0 0; }
+.notice2Links a { font-size: 13px; font-weight: 600; color: #8a5427;
+  text-decoration: none; border-bottom: 1px solid rgba(138, 84, 39, 0.4); }

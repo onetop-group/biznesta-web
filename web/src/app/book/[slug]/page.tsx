@@ -158,7 +158,11 @@ export default async function Page({ params }: Params) {
             </div>
           </dl>
 
+          {/* 정책은 상품정보 바로 아래에서 찾을 수 있어야 한다.
+              ★ 확정된 상세페이지 이미지에는 글자를 더하지 않는다 — 이미지 바깥이다. */}
           <p className={styles.links}>
+            <Link href="/book/terms" className={styles.link}>BIZNESTA BOOK 이용약관</Link>
+            <Link href="/book/refund" className={styles.link}>환불·취소·청약철회 정책</Link>
             <Link href="/privacy" className={styles.link}>개인정보처리방침</Link>
             <Link href={`/book/contact?product=${b.productRef}`} className={styles.link}>이 책 문의하기</Link>
           </p>

@@ -125,6 +125,13 @@ export default async function Page() {
           </ul>
         )}
 
+        <p className={styles.footLinks}>
+          <Link href="/book/terms" className={styles.footLink}>이용약관</Link>
+          <Link href="/book/refund" className={styles.footLink}>환불·취소·청약철회 정책</Link>
+          <Link href="/privacy" className={styles.footLink}>개인정보처리방침</Link>
+          <Link href="/book/contact" className={styles.footLink}>BIZNESTA BOOK 문의</Link>
+        </p>
+
         <p className={styles.foot}>
           전자책 관련 문의는 <Link href="/book/contact" className={styles.footLink}>BIZNESTA BOOK 문의</Link>로 보내 주세요.
         </p>

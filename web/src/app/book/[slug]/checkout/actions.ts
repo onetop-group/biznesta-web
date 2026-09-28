@@ -21,14 +21,20 @@ const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 export async function startCheckout(formData: FormData) {
   const slug = String(formData.get('slug') ?? '').trim();
   const email = String(formData.get('email') ?? '').trim().slice(0, 254);
-  const agreed = formData.get('agree') === 'on';
+  /* 두 가지를 따로 받는다.
+       confirm  청약철회 제한 등 '고지를 확인했다' — 법률상 동의가 아니다
+       privacy  개인정보 수집·이용 '동의'  — 법률상 동의가 필요한 사항
+     한 칸으로 묶으면 확인과 동의가 구분되지 않는다. */
+  const confirmed = formData.get('confirm') === 'on';
+  const privacyAgreed = formData.get('privacy') === 'on';
   const back = `/book/${encodeURIComponent(slug)}/checkout`;
 
   const product = await getBook(slug);
   if (!product) redirect('/book');
 
   if (!EMAIL_RE.test(email)) redirect(`${back}?err=email`);
-  if (!agreed) redirect(`${back}?err=agree`);
+  if (!confirmed) redirect(`${back}?err=confirm`);
+  if (!privacyAgreed) redirect(`${back}?err=privacy`);
 
   const checkout = getCheckout();
   if (!checkout.ready) redirect(`${back}?err=not_ready`);

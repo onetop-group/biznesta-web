@@ -73,3 +73,7 @@
   .soon { padding: 38px 20px; }
   .soonTitle { font-size: 21px; }
 }
+
+/* 정책 줄 — 목록 맨 아래 */
+.footLinks { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 44px 0 0;
+  padding-top: 20px; border-top: 1px solid rgba(20, 30, 45, 0.1); }

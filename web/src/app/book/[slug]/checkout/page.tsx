@@ -4,6 +4,7 @@ import { notFound, redirect } from 'next/navigation';
 import BusinessInfo from '@/components/site/BusinessInfo';
 import Breadcrumb from '@/components/book/Breadcrumb';
 import { CONSULT_EMAIL, CONSULT_PHONE } from '@/data/business';
+import { CHECKOUT_NOTICE } from '@/data/book-policy';
 import { assetsFor } from '@/lib/book/assets';
 import { AUTHOR, KIND_LABEL, formatPrice, getBook } from '@/lib/book/catalog';
 import { bookStoreMode, canCheckout, canShowBuy } from '@/lib/book/store-state';
@@ -34,7 +35,8 @@ const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v) 
 
 const ERR: Record<string, string> = {
   email: '이메일 주소를 다시 확인해 주세요. 결제 후 이 주소로 열람 링크를 보내 드립니다.',
-  agree: '구매 조건에 동의해 주셔야 결제를 진행할 수 있습니다.',
+  confirm: '결제 전 확인 사항을 확인해 주셔야 결제를 진행할 수 있습니다.',
+  privacy: '개인정보 수집 및 이용에 동의해 주셔야 결제를 진행할 수 있습니다.',
   not_ready: '지금은 결제를 받을 수 없습니다. 잠시 후 다시 시도해 주세요.',
   order: '주문을 만들지 못했습니다. 잠시 후 다시 시도해 주세요.',
 };
@@ -111,11 +113,30 @@ export default async function Page({ params, searchParams }: Params) {
             </span>
           </div>
 
+          {/* ★ 청약철회 제한 고지는 약관 깊숙한 곳이 아니라 결제 직전에 보여야 한다. */}
+          <section className={styles.notice2} aria-label="결제 전 확인">
+            <p className={styles.notice2Title}>{CHECKOUT_NOTICE.title}</p>
+            <ul className={styles.notice2List}>
+              {CHECKOUT_NOTICE.lines.map((l) => <li key={l}>{l}</li>)}
+            </ul>
+            <p className={styles.notice2Links}>
+              <Link href="/book/terms">이용약관</Link>
+              <Link href="/book/refund">환불·취소·청약철회 정책</Link>
+              <Link href="/privacy">개인정보처리방침</Link>
+            </p>
+          </section>
+
+          {/* 법률상 '동의' 가 필요한 것과 '고지 확인' 은 다른 일이다. 한 칸으로 묶지 않는다. */}
           <label className={styles.agree}>
-            <input type="checkbox" name="agree" disabled={!ready} />
+            <input type="checkbox" name="confirm" disabled={!ready} />
+            <span>{CHECKOUT_NOTICE.confirmLabel}</span>
+          </label>
+
+          <label className={styles.agree}>
+            <input type="checkbox" name="privacy" disabled={!ready} />
             <span>
-              디지털 콘텐츠 상품이며, 열람 링크가 발급되면 청약철회가 제한될 수 있다는 점과
-              {' '}<Link href="/privacy">개인정보처리방침</Link>에 동의합니다.
+              주문 처리와 전자책 전달을 위한 개인정보(이메일) 수집 및 이용에 동의합니다.
+              {' '}<Link href="/privacy">개인정보처리방침</Link>
             </span>
           </label>
 
@@ -125,12 +146,15 @@ export default async function Page({ params, searchParams }: Params) {
         </form>
 
         <div className={styles.policy}>
-          <p>· 배송되는 상품이 아닙니다. 결제 후 이메일로 보내 드리는 링크로 열람합니다.</p>
-          <p>· 열람 링크가 발급되기 전에는 전액 환불됩니다.</p>
           <p>
             · 환불·취소 문의는{' '}
             <Link href={`/book/contact?product=${b.productRef}`}>BIZNESTA BOOK 문의</Link>
             {' '}또는 {CONSULT_PHONE} · {CONSULT_EMAIL} 로 접수해 주세요.
+          </p>
+          <p>
+            · 자세한 내용은{' '}
+            <Link href="/book/refund">환불·취소·청약철회 정책</Link>과{' '}
+            <Link href="/book/terms">이용약관</Link>을 확인해 주세요.
           </p>
         </div>
 
