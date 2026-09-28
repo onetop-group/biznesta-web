@@ -14,7 +14,7 @@ import 'server-only';
 export const BOOK_INQUIRY_TYPES = [
   { value: 'product', label: '상품 내용 문의' },
   { value: 'purchase', label: '구매/결제 문의' },
-  { value: 'access', label: '열람 링크 문의' },
+  { value: 'access', label: '다운로드 문의' },
   { value: 'refund', label: '환불/취소 문의' },
   { value: 'etc', label: '기타 문의' },
 ] as const;

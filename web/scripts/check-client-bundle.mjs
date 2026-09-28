@@ -63,6 +63,9 @@ if (fs.existsSync(envFile)) {
 const FORBIDDEN = [
   ['PostgreSQL 연결 문자열', /postgres(ql)?:\/\/[^\s"'`]+/],
   ['service_role 키 이름', /service_role/],
+  ['service_role ENV 이름', /SUPABASE_SERVICE_ROLE_KEY/],
+  ['Storage 비공개 버킷 관리', /biznesta-book-private/],
+  ['다운로드 인가 함수', /biz_download_authorize/],
   ['결제 DB 연결 ENV 이름', /STORE_DATABASE_URL/],
   ['CORE DB Port 내부', /createPostgresPort|pay_set_actor|withActor/],
   ['STORE 쓰기 진입점', /biz_entitlement_grant|biz_buyer_upsert/],

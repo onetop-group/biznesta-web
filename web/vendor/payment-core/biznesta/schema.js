@@ -14,8 +14,11 @@ const path = require('path');
 
 const DIR = path.join(__dirname, 'sql');
 
-const FILES = ['30_store.sql', '32_products_ops.sql', '34_products_coming.sql'];
-const RLS_FILES = ['31_rls.sql', '33_products_rls.sql', '35_products_coming_rls.sql'];
+const FILES = ['30_store.sql', '32_products_ops.sql', '34_products_coming.sql', '36_product_files.sql'];
+/* storage 스키마를 건드리는 유일한 파일 — 따로 둡니다 */
+const STORAGE_FILES = ['38_storage_bucket.sql'];
+
+const RLS_FILES = ['31_rls.sql', '33_products_rls.sql', '35_products_coming_rls.sql', '37_product_files_rls.sql'];
 
 function read(name) { return fs.readFileSync(path.join(DIR, name), 'utf8'); }
 function all(list) { return (list || FILES).map(f => ({ name: f, sql: read(f) })); }
@@ -40,8 +43,9 @@ async function apply(exec, list) {
 
 /* 이 도메인이 쓰는 이름 — rollback · 스냅샷 도구가 씁니다 */
 const PREFIX = 'biz_';
-const TABLES = ['biz_products', 'biz_buyers', 'biz_entitlements'];
+const TABLES = ['biz_products', 'biz_buyers', 'biz_entitlements', 'biz_product_files'];
 const FUNCTIONS = ['biz_set_updated_at', 'biz_products_ref_immutable', 'biz_buyer_upsert', 'biz_entitlement_grant',
-  'biz_entitlement_revoke', 'biz_entitlement_by_token'];
+  'biz_entitlement_revoke', 'biz_entitlement_by_token',
+  'biz_download_authorize', 'biz_product_file_ready'];
 
-module.exports = { DIR, FILES, RLS_FILES, PREFIX, TABLES, FUNCTIONS, read, all, apply };
+module.exports = { DIR, FILES, RLS_FILES, STORAGE_FILES, PREFIX, TABLES, FUNCTIONS, read, all, apply };

@@ -2,14 +2,14 @@
   "note": "자동 생성 사본입니다. 여기서 직접 고치지 마십시오 — 원본 저장소를 고치고 다시 sync 하십시오.",
   "source": {
     "repo": "onetop-group/biznesta-payment-core",
-    "commit": "5d78869fd62c285653c16d18e2838a5da3898eb9",
-    "tag": "paycore-book-coming"
+    "commit": "f45e990c203f1fba24e92f8cf0fd871abd6cb3ef",
+    "tag": "paycore-book-download"
   },
   "dirs": [
     "core",
     "biznesta"
   ],
-  "generatedAt": "2026-09-28T00:39:43.065Z",
+  "generatedAt": "2026-09-28T02:41:25.231Z",
   "files": {
     "core/adapter/contract.js": "5a0096025940e342d3c3d8f27916f3392bee674c21e768ac947b1918729a8ead",
     "core/db/port.js": "2a77cc34ace84a66663334ed949dbeea0d8dd0069d79cb7b18809f6ca4d58576",
@@ -46,7 +46,7 @@
     "biznesta/README.md": "98094f98287cc194cc0140fdc18e7b7938d38bba0175d3799a8e26e07dd7c5a6",
     "biznesta/adapter.js": "806d08620a293f3b08826b01bbcfb5d8fc2c4fe83928de14b3d624c4dc7d8d88",
     "biznesta/index.js": "3dd45b024dcfffb823248aaf373654fb848119c66b2448649234c0c84de0e0cb",
-    "biznesta/schema.js": "3604265f7fe82094f9872ddecc342f0b9bcd690a6f4ae02ea89c97caa6fcc26b",
+    "biznesta/schema.js": "e777baea1a6a4d3a4844891cbfefe4c034f356844ecb838f1c1eb6ebafa4c7ae",
     "biznesta/sql-store.js": "24570b45a95e93a3865694ed8e4e3908136ff54ba0854a2f5410725334d768d4",
     "biznesta/sql/30_store.sql": "568634a67a125727776d76821aa40971a3ce7201e1b106958c66b8d4730af2aa",
     "biznesta/sql/31_rls.sql": "17a3e63ee0df910a3b5ee43687bd65124e532628ed55f17563fae93a642621f7",
@@ -54,6 +54,9 @@
     "biznesta/sql/33_products_rls.sql": "3b5818c9d53fa58045d23351e908594623509503469935a057abd39ff535c6cf",
     "biznesta/sql/34_products_coming.sql": "1c1ae0fd9eb08b10307f84d8146aee7565e66bc24a1c0f1c85ed53c573ecddb4",
     "biznesta/sql/35_products_coming_rls.sql": "aea464e48e8daf69fb4018b5803c659e6f42b43176c5dcac9bf8ad363f47421a",
+    "biznesta/sql/36_product_files.sql": "455e4f0a49310aa4dad246417561cd596b91facc96c03f377e441dc1d153f551",
+    "biznesta/sql/37_product_files_rls.sql": "b187cc2112d1d00b9c275f5594ee86891cfcd738ede95338922fe680d89c60f1",
+    "biznesta/sql/38_storage_bucket.sql": "365b37aa2d62dd597ff01cac5760c55d51cb57bb39d184c83901be0b04fb6da5",
     "biznesta/store-port.js": "70dfb219b6c1e2a7300e4f354aadc6b9ad01cfc83dcb168272b9e2a366fd69b0",
     "biznesta/token.js": "6bc70dcc01441575e0cd8b4f206b37bd7f3bcb36221ac3c3202d9ed60364e31b"
   }

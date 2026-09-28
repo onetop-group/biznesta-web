@@ -68,7 +68,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<SP>
         <p className={styles.eyebrow}>BIZNESTA BOOK</p>
         <h1 className={styles.title}>전자책 문의</h1>
         <p className={styles.lead}>
-          상품 내용, 구매·결제, 열람 링크, 환불·취소까지 전자책에 관한 문의를 남겨 주세요.
+          상품 내용, 구매·결제, 다운로드, 환불·취소까지 전자책에 관한 문의를 남겨 주세요.
           홈페이지 제작 상담은 <Link href="/contact">제작 상담</Link>으로 보내 주시면 더 빠릅니다.
         </p>
 

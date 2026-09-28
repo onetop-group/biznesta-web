@@ -119,13 +119,13 @@ export default async function Page({ params }: Params) {
             </dl>
 
             <p className={styles.note}>
-              결제 후 이메일로 전달되는 열람 링크를 통해 이용하는 디지털 상품입니다. 배송은 없습니다.
+              결제 완료 후 구매 완료 화면에서 바로 내려받아 이용하는 디지털 상품입니다. 배송은 없습니다.
             </p>
 
             <BuyButton buyable={buyable} href={checkoutHref} priceText={priceText} />
 
             {buyable && (canCheckout(mode)
-              ? <p className={styles.ctaNote}>결제 후 이메일로 열람 링크를 보내 드립니다.</p>
+              ? <p className={styles.ctaNote}>결제가 완료되면 바로 내려받으실 수 있습니다.</p>
               : <p className={styles.ctaWarn}>
                   결제 연결을 준비하고 있습니다. 구매 화면까지는 지금도 확인하실 수 있습니다.
                 </p>)}
@@ -154,7 +154,7 @@ export default async function Page({ params }: Params) {
             <div className={styles.row}><dt className={styles.dt}>판매자</dt><dd className={styles.dd}>{COMPANY_NAME}</dd></div>
             <div className={styles.row}>
               <dt className={styles.dt}>이용 방법</dt>
-              <dd className={styles.dd}>결제 후 이메일로 보내 드리는 열람 링크로 받아 보시는 디지털 상품입니다. 배송은 없습니다.</dd>
+              <dd className={styles.dd}>결제 완료 후 구매 완료 화면에서 바로 내려받는 디지털 상품입니다. 배송은 없습니다.</dd>
             </div>
           </dl>
 

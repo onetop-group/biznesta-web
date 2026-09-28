@@ -185,5 +185,49 @@ async function patch(ref: string, values: Record<string, unknown>, what: string)
   return { ok: true };
 }
 
+/**
+ * 상품에 연결된 전자책 파일. 관리자만 본다(RLS 가 is_admin() 으로 막는다).
+ * ★ 경로가 보이는 곳은 여기뿐이다. 공개 카탈로그(biz_products)에는 없다.
+ */
+export type ProductFile = {
+  product_ref: string;
+  bucket: string;
+  object_path: string;
+  content_type: string;
+  byte_size: number | null;
+  note: string | null;
+  updated_at: string;
+};
+
+export async function getProductFile(ref: string): Promise<ProductFile | null> {
+  const db = await getAdminSupabase();
+  if (!db || !PRODUCT_REF_RE.test(ref)) return null;
+  const { data, error } = await db
+    .from('biz_product_files')
+    .select('product_ref, bucket, object_path, content_type, byte_size, note, updated_at')
+    .eq('product_ref', ref)
+    .maybeSingle();
+  if (error) {
+    console.error('[admin/store-products] 파일 조회 실패:', error.code);
+    return null;
+  }
+  return (data as unknown as ProductFile | null) ?? null;
+}
+
+/** 경로를 연결하거나 바꾼다. 파일 자체를 올리지는 않는다(Storage 대시보드에서 올린다). */
+export async function linkProductFile(ref: string, objectPath: string, note: string | null): Promise<SaveResult> {
+  const db = await getAdminSupabase();
+  if (!db) return { ok: false, reason: 'unavailable' };
+  if (!PRODUCT_REF_RE.test(ref)) return { ok: false, reason: 'ref' };
+  const { error } = await db
+    .from('biz_product_files')
+    .upsert({ product_ref: ref, object_path: objectPath, note }, { onConflict: 'product_ref' });
+  if (error) {
+    console.error('[admin/store-products] 파일 연결 실패:', error.code);
+    return { ok: false, reason: error.code ?? 'error' };
+  }
+  return { ok: true };
+}
+
 export const formatPrice = (amount: number, currency: string) =>
   currency === 'KRW' ? `${amount.toLocaleString('ko-KR')}원` : `${amount.toLocaleString('ko-KR')} ${currency}`;

@@ -34,7 +34,7 @@ export const dynamic = 'force-dynamic';
 const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v) ?? '';
 
 const ERR: Record<string, string> = {
-  email: '이메일 주소를 다시 확인해 주세요. 결제 후 이 주소로 열람 링크를 보내 드립니다.',
+  email: '이메일 주소를 다시 확인해 주세요. 주문 확인과 구매 내역 조회에 사용합니다.',
   confirm: '결제 전 확인 사항을 확인해 주셔야 결제를 진행할 수 있습니다.',
   privacy: '개인정보 수집 및 이용에 동의해 주셔야 결제를 진행할 수 있습니다.',
   not_ready: '지금은 결제를 받을 수 없습니다. 잠시 후 다시 시도해 주세요.',
@@ -109,7 +109,7 @@ export default async function Page({ params, searchParams }: Params) {
                    inputMode="email" autoComplete="email" maxLength={254}
                    placeholder="name@example.com" required disabled={!ready} />
             <span className={styles.hint}>
-              결제가 끝나면 이 주소로 열람 링크를 보내 드립니다. 주소가 틀리면 받아 보실 수 없습니다.
+              주문 확인과 구매 내역 조회에 사용합니다. 전자책은 결제 후 구매 완료 화면에서 바로 받으실 수 있습니다.
             </span>
           </div>
 
@@ -135,7 +135,7 @@ export default async function Page({ params, searchParams }: Params) {
           <label className={styles.agree}>
             <input type="checkbox" name="privacy" disabled={!ready} />
             <span>
-              주문 처리와 전자책 전달을 위한 개인정보(이메일) 수집 및 이용에 동의합니다.
+              주문 처리와 구매 내역 확인을 위한 개인정보(이메일) 수집 및 이용에 동의합니다.
               {' '}<Link href="/privacy">개인정보처리방침</Link>
             </span>
           </label>

@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { currentAdmin } from '@/lib/admin/auth';
 import {
   PRODUCT_REF_RE, createProduct, isProductKind, isProductStatus,
-  updateProduct, updateProductStatus,
+  linkProductFile, updateProduct, updateProductStatus,
 } from '@/lib/admin/store-products';
 
 /**
@@ -80,6 +80,26 @@ export async function saveProductAction(formData: FormData) {
   revalidatePath(`/admin/store/${ref}`);
   revalidatePath('/book');
   redirect(`/admin/store/${ref}?${r.ok ? 'saved=info' : 'err=save'}`);
+}
+
+/**
+ * 상품에 전자책 파일을 연결한다.
+ * ★ 파일 자체를 여기서 올리지 않는다 — Supabase Storage 의 비공개 버킷에 올린 뒤
+ *   그 경로를 적어 넣는 방식이다. 업로드 UI 가 필요한지는 별도 판단 사항이다.
+ */
+export async function linkProductFileAction(formData: FormData) {
+  if (!(await currentAdmin())) redirect('/admin/login?reason=denied');
+
+  const ref = str(formData, 'product_ref', 64);
+  const objectPath = str(formData, 'object_path', 250);
+  if (!PRODUCT_REF_RE.test(ref)) redirect('/admin/store');
+  if (!/^[A-Za-z0-9가-힣][A-Za-z0-9가-힣 ._/-]{0,250}$/.test(objectPath)) {
+    redirect(`/admin/store/${ref}?err=file_path`);
+  }
+
+  const r = await linkProductFile(ref, objectPath, orNull(str(formData, 'file_note', 200)));
+  revalidatePath(`/admin/store/${ref}`);
+  redirect(`/admin/store/${ref}?${r.ok ? 'saved=file' : 'err=file'}`);
 }
 
 export async function changeProductStatusAction(formData: FormData) {

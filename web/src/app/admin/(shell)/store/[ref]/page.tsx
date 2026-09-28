@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation';
 import { PageHead, ProductStatusBadge, fmtDate } from '@/components/admin/ui';
 import {
   PRODUCT_KINDS, PRODUCT_STATUSES, PRODUCT_STATUS_LABEL,
-  countOrdersFor, formatPrice, getProduct,
+  countOrdersFor, formatPrice, getProduct, getProductFile,
 } from '@/lib/admin/store-products';
-import { changeProductStatusAction, saveProductAction } from '../actions';
+import { changeProductStatusAction, linkProductFileAction, saveProductAction } from '../actions';
 import styles from '../store.module.css';
 
 type SP = Record<string, string | string[] | undefined>;
@@ -18,10 +18,13 @@ const ERR: Record<string, string> = {
   currency: '지금은 원화(KRW)만 판매할 수 있습니다.',
   save: '저장하지 못했습니다. 잠시 후 다시 시도해 주세요.',
   status: '판매상태를 바꾸지 못했습니다.',
+  file: '전자책 파일을 연결하지 못했습니다.',
+  file_path: '파일 경로 형식이 올바르지 않습니다. 버킷 안의 경로를 적어 주세요.',
 };
 const OKMSG: Record<string, string> = {
   info: '상품 정보를 저장했습니다.',
   status: '판매상태를 바꿨습니다.',
+  file: '전자책 파일을 연결했습니다.',
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ ref: string }> }) {
@@ -41,6 +44,7 @@ export default async function Page({
   if (!p) notFound();
 
   const orders = await countOrdersFor(ref);
+  const file = await getProductFile(ref);
   const err = one(sp.err);
   const saved = one(sp.saved);
   const created = one(sp.created) === '1';
@@ -130,6 +134,35 @@ export default async function Page({
         </form>
       </section>
 
+      {/* ── 전자책 파일 연결 ────────────────────────────────── */}
+      <section className={styles.card}>
+        <h2 className={styles.cardTitle}>전자책 파일</h2>
+        <p className={styles.note}>
+          전자책 PDF 는 <b>비공개 버킷 biznesta-book-private</b> 에 보관합니다.
+          Supabase 대시보드에서 파일을 올린 뒤, 버킷 안의 경로를 여기에 적어 연결합니다.
+          손님에게는 경로가 보이지 않으며, 구매 권한이 확인된 경우에만 잠시 유효한 주소가 발급됩니다.
+        </p>
+        <form action={linkProductFileAction}>
+          <input type="hidden" name="product_ref" value={p.product_ref} />
+          <div className={styles.fields}>
+            <div className={`${styles.field} ${styles.fieldWide}`}>
+              <label className={styles.label} htmlFor="object_path">버킷 안의 경로</label>
+              <input id="object_path" name="object_path" className={styles.input} maxLength={250}
+                     defaultValue={file?.object_path ?? ''} placeholder="ebook-customer-db/v1.pdf" />
+              <span className={styles.hint}>앞에 / 를 붙이지 않습니다. 예: ebook-customer-db/v1.pdf</span>
+            </div>
+            <div className={`${styles.field} ${styles.fieldWide}`}>
+              <label className={styles.label} htmlFor="file_note">메모</label>
+              <input id="file_note" name="file_note" className={styles.input} maxLength={200}
+                     defaultValue={file?.note ?? ''} placeholder="판본·갱신일 등" />
+            </div>
+          </div>
+          <div className={styles.actions}>
+            <button type="submit" className={styles.primary}>{file ? '연결 바꾸기' : '파일 연결'}</button>
+          </div>
+        </form>
+      </section>
+
       {/* ── 기록 · 앞으로 연결될 것 ──────────────────────────── */}
       <section className={styles.card}>
         <h2 className={styles.cardTitle}>기록</h2>
@@ -161,7 +194,9 @@ export default async function Page({
           <div className={styles.dlRow}>
             <dt className={styles.dt}>전자책 파일</dt>
             <dd className={styles.dd}>
-              <span className={styles.mute}>아직 연결되지 않았습니다. 원고가 완성된 뒤 연결합니다.</span>
+              {file
+                ? <>연결됨 · {file.bucket} / {file.object_path}</>
+                : <span className={styles.mute}>아직 연결되지 않았습니다.</span>}
             </dd>
           </div>
         </dl>
