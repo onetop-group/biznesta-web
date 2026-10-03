@@ -11,7 +11,8 @@
     "vendor:check": "node scripts/payment-core-vendor.mjs check",
     "vendor:sync": "node scripts/payment-core-vendor.mjs sync",
     "verify:bundle": "node scripts/check-client-bundle.mjs",
-    "verify:core": "node scripts/check-payment-core.mjs"
+    "verify:core": "node scripts/check-payment-core.mjs",
+    "book:upload": "node scripts/upload-book-file.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",
