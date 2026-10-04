@@ -1,5 +1,7 @@
 import 'server-only';
 
+import { createTokenHandoff } from './token-handoff';
+
 /**
  * WEB ↔ PAYMENT CORE 연결 지점.
  *
@@ -24,6 +26,9 @@ import 'server-only';
 
 const DB_URL_ENV = 'STORE_DATABASE_URL';
 
+/** 승인 hook → 라우트 사이에서 접근 토큰을 한 번만 중계한다 (token-handoff.ts) */
+const handoff = createTokenHandoff();
+
 export type PaymentBridge =
   | { configured: false; reason: string }
   | { configured: true; db: PaymentPort; store: BizStore; adapter: BizAdapter };
@@ -33,7 +38,15 @@ export type PaymentBridge =
 type PaymentPort = {
   health(): Promise<{ ok: boolean; code?: string; message?: string; version?: string }>;
   end(): Promise<void>;
-  getOrder(tenant: string, orderId: string): Promise<Record<string, unknown> | null>;
+  getOrder(tenant: string, orderId: string): Promise<CoreOrder | null>;
+  getOpenIntent(tenant: string, orderId: string): Promise<CoreIntent | null>;
+};
+export type CoreOrder = {
+  id: string; order_no: string; status: string; amount: number | string;
+  currency: string; product_ref: string | null; user_ref: string;
+};
+export type CoreIntent = {
+  id: string; status: string; provider_order_id: string; amount: number | string; currency: string;
 };
 type BizStore = {
   getProduct(productRef: string): Promise<{
@@ -82,8 +95,12 @@ export function getPaymentBridge(): PaymentBridge {
       query: (sql: string, params?: unknown[]) => db.__pool.query(sql, params ?? []),
       coreDb: db,
       baseUrl: process.env.SITE_URL ?? 'https://www.biznesta.com',
-      /* deliverAccess 는 주지 않는다 — 이메일 발송이 아직 없다.
-         주지 않으면 토큰 원문은 만들어진 자리에서 버려지고 해시만 남는다. */
+      /* 승인 hook 이 새 권한을 만들면 그 토큰이 여기로 온다.
+         ★ 저장하지 않는다 — 같은 요청 안에서 꺼내 httpOnly 쿠키로 옮기고 지운다.
+           꺼내 가지 않으면 1분 뒤 메모리에서 사라진다(해시만 DB 에 남는다). */
+      deliverAccess: async (x: { orderId: string; token: string }) => {
+        handoff.put(x.orderId, x.token);
+      },
     });
     cached = { configured: true, db, store: built.store, adapter: built.adapter };
   } catch (e) {
@@ -116,13 +133,34 @@ export function paymentReadiness() {
 
 export type Checkout =
   | { ready: false; missing: string[]; reason?: string }
-  | { ready: true; flow: CoreFlow; store: BizStore; publicClientKey: string };
+  | {
+      ready: true; flow: CoreFlow; store: BizStore; db: PaymentPort; publicClientKey: string;
+      /** 승인 직후 발급된 접근 토큰을 **한 번만** 꺼낸다. 꺼내면 메모리에서 지운다. */
+      takeAccessToken: (orderId: string) => string | null;
+    };
 
 /** CORE flow 중 이 앱이 쓰는 만큼만 적는다 */
+export type PreparedIntent = {
+  ok: boolean;
+  code?: string;
+  orderName?: string | null;
+  order?: { id: string; orderNo: string; status: string; amount: number; currency: string };
+  intent?: { id: string; providerOrderId: string; amount: number; currency: string; status: string };
+};
+export type ConfirmResult = {
+  ok: boolean;
+  code?: string;
+  idempotent?: boolean;
+  orderStatus?: string;
+  orderId?: string;
+  amount?: number;
+  currency?: string;
+};
 type CoreFlow = {
   createOrder(args: Record<string, unknown>): Promise<Record<string, unknown>>;
-  prepare(args: Record<string, unknown>): Promise<Record<string, unknown>>;
-  confirm(args: Record<string, unknown>): Promise<Record<string, unknown>>;
+  prepare(args: Record<string, unknown>): Promise<PreparedIntent>;
+  confirm(args: Record<string, unknown>): Promise<ConfirmResult>;
+  fail(args: Record<string, unknown>): Promise<Record<string, unknown>>;
 };
 
 let checkoutCache: Checkout | undefined;
@@ -162,8 +200,9 @@ export function getCheckout(): Checkout {
       adapter: bridge.adapter,
     });
     checkoutCache = {
-      ready: true, flow, store: bridge.store,
+      ready: true, flow, store: bridge.store, db: bridge.db,
       publicClientKey: core.publicConfig().clientKey,
+      takeAccessToken: (orderId: string) => handoff.take(orderId),
     };
   } catch (e) {
     const msg = String((e as Error)?.message ?? e).replace(/postgres(ql)?:\/\/\S+/g, '[REDACTED]');

@@ -17,6 +17,7 @@ import { getCheckout } from '@/lib/book/payment';
  */
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const TENANT = 'biznesta';
 
 export async function startCheckout(formData: FormData) {
   const slug = String(formData.get('slug') ?? '').trim();
@@ -55,6 +56,16 @@ export async function startCheckout(formData: FormData) {
     redirect(`${back}?err=order`);
   }
 
-  /* 주문이 생겼다. 다음은 결제창이다 — 결제 연결(STEP E)에서 이어진다. */
-  redirect(`/book/${encodeURIComponent(slug)}/checkout/pay?order=${encodeURIComponent(r.order.orderNo)}`);
+  /* 주문이 생겼다. 이제 결제 시도를 연다 —
+     CORE 가 사업자에게 보낼 주문번호(providerOrderId)를 여기서 만든다.
+     ★ 금액은 여기서도 넘기지 않는다. CORE 가 주문에 박힌 값을 그대로 쓴다. */
+  const prep = await checkout.flow.prepare({ tenant: TENANT, orderId: r.order.id });
+  if (!prep?.ok) {
+    console.error('[book/checkout] 결제 시도 실패:', prep?.code ?? 'unknown');
+    redirect(`${back}?err=order`);
+  }
+
+  /* 결제창으로. 주문 id 는 uuid 라 추측할 수 없고, 이것만으로는 아무것도 못 한다 —
+     승인에는 Toss 가 준 paymentKey 가 있어야 하고 금액은 서버가 다시 본다. */
+  redirect(`/book/${encodeURIComponent(slug)}/pay?o=${encodeURIComponent(r.order.id)}`);
 }
