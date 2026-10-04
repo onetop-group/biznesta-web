@@ -47,8 +47,10 @@ const BUCKET = 'biznesta-book-private';
 const OBJECT = 'ebook-customer-db/v1.pdf';
 const FIX_EMAIL = 'vfy-dl-buyer@example.invalid';
 const COOKIE = 'bn_book_access';
-const SOURCE_PDF = 'C:/Users/원미희/OneDrive/문서/바이브코딩/전자책/전자책 1권 마케팅비용없이/'
-  + 'BIZNESTA_BOOK_마케팅비용없이_홈페이지하나로_고객DB_완성본.pdf';
+/* 원본 PDF. 파일 이름이 바뀌어도 되도록 **내용(sha256)으로** 찾는다 —
+   이름으로 찾으면 엉뚱한 PDF 를 원본이라 부르며 통과할 수 있다. */
+const SOURCE_DIR = 'C:/Users/원미희/OneDrive/문서/바이브코딩/전자책/전자책 1권 마케팅비용없이';
+const SOURCE_SHA256 = '327bb911aa7ec90fafaff61d2060a5e6def61ae0995dab8d11899217faa59906';
 
 /* ── 보고 ──────────────────────────────────────────────────── */
 const R = [];
@@ -124,8 +126,21 @@ async function main() {
 
   let order = null;
   let signed = null;
-  const source = fs.readFileSync(SOURCE_PDF);
-  const sourceHash = sha256(source);
+
+  /* 폴더에서 sha256 이 맞는 PDF 를 찾는다. 없으면 원본이 없는 것이므로 멈춘다. */
+  let source = null;
+  let sourceName = null;
+  for (const n of fs.readdirSync(SOURCE_DIR)) {
+    if (!n.toLowerCase().endsWith('.pdf')) continue;
+    const buf = fs.readFileSync(path.join(SOURCE_DIR, n));
+    if (sha256(buf) === SOURCE_SHA256) { source = buf; sourceName = n; break; }
+  }
+  if (!source) {
+    console.error('원본 PDF 를 찾지 못했습니다 (sha256 ' + SOURCE_SHA256.slice(0, 16) + '…).');
+    await db.end();
+    process.exit(2);
+  }
+  const sourceHash = SOURCE_SHA256;
 
   try {
     /* ═══ 1. 올라간 파일 ═════════════════════════════════════ */
@@ -327,7 +342,7 @@ async function main() {
 
   const good = report();
   console.log('');
-  console.log('원본 PDF  : ' + source.length + '바이트 · sha256 ' + sourceHash.slice(0, 16) + '…');
+  console.log('원본 PDF  : ' + sourceName + ' · ' + source.length + '바이트 · sha256 ' + sourceHash.slice(0, 16) + '…');
   console.log('실제 Toss 호출 : 0 (fake provider)');
   console.log('검증용 주문 : ' + (KEEP ? '--keep 으로 남겼습니다' : '지웠습니다'));
   process.exit(good ? 0 : 1);

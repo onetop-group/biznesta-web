@@ -56,8 +56,12 @@ export type DownloadResult =
   | { ok: false; reason: 'not_configured' | 'denied' | 'file_missing' | 'error' };
 
 function env() {
-  const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env[SERVICE_KEY_ENV];
+  /* ★ 대시보드에서 붙여 넣은 값에는 줄바꿈이 섞이기 쉽다. 실제로 이 프로젝트의
+     키는 JWT 세 조각이 줄바꿈으로 갈라진 채 저장돼 있었다. 그대로 HTTP 헤더에
+     넣으면 TypeError 가 나고, 그 오류 메시지에 키가 통째로 실려 나간다.
+     API 키에는 공백이 들어갈 일이 없으므로 읽는 자리에서 전부 털어 낸다. */
+  const url = (process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL ?? '').trim();
+  const key = (process.env[SERVICE_KEY_ENV] ?? '').replace(/\s+/g, '');
   if (!url || !key) return null;
   return { url, key };
 }
@@ -86,6 +90,23 @@ export const hashAccessToken = (token: string) =>
   createHash('sha256').update(token, 'utf8').digest('hex');
 
 /**
+ * 오류를 짧게 한 줄로.
+ *
+ * ★ 오류 메시지에 우리 비밀값이 들어 있을 수 있다. 실제로 그런 일이 있었다 —
+ *   키 끝에 줄바꿈이 섞여 있었더니 fetch 가 `Headers.set: "<키 전체>"` 라는
+ *   TypeError 를 던졌고, 그 메시지를 그대로 찍는 바람에 키가 로그에 남았다.
+ *   그래서 남기기 전에 **토큰처럼 생긴 것은 전부 지운다.** 지우고 나면 남는
+ *   정보가 줄지만, 비밀값이 로그에 남는 것보다는 낫다.
+ */
+const TOKENISH = /[A-Za-z0-9_-]{20,}(?:\.[A-Za-z0-9_-]+)*/g;
+
+export function scrubError(e: unknown): string {
+  const o = (e ?? {}) as { code?: string; message?: string; name?: string; hint?: string | null };
+  const raw = [o.name, o.code, o.message, o.hint].filter(Boolean).join(' · ');
+  return (raw.replace(TOKENISH, '[REDACTED]').slice(0, 200)) || '(내용 없음)';
+}
+
+/**
  * 접근 토큰 하나로 다운로드 URL 을 얻는다.
  * 권한이 없으면 'denied' 다 — 왜 거부됐는지는 밖으로 알려 주지 않는다
  * (없는 권한인지, 환불된 권한인지 구별해 주면 탐색의 실마리가 된다).
@@ -100,7 +121,9 @@ export async function createDownloadUrl(accessToken: string): Promise<DownloadRe
     p_token_hash: hashAccessToken(accessToken),
   });
   if (error) {
-    console.error('[book/download] 인가 조회 실패:', error.code);
+    /* ★ code 만 남기면 '키가 거절됐다' 처럼 code 가 비어 오는 실패에서 아무것도
+       알 수 없다. 사업자가 주는 message 에는 우리 비밀값이 들어가지 않는다. */
+    console.error('[book/download] 인가 조회 실패:', scrubError(error));
     return { ok: false, reason: 'error' };
   }
   const row = Array.isArray(data) ? data[0] : null;
@@ -134,6 +157,10 @@ export async function productFileReady(productRef: string): Promise<boolean> {
   const db = admin();
   if (!db) return false;
   const { data, error } = await db.rpc('biz_product_file_ready', { p_product_ref: productRef });
-  if (error) return false;
+  if (error) {
+    /* 조용히 false 를 돌려주면 '파일이 아직 없다' 와 '물어보지 못했다' 가 섞인다 */
+    console.error('[book/download] 준비 여부 조회 실패:', scrubError(error));
+    return false;
+  }
   return data === true;
 }
