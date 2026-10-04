@@ -13,6 +13,7 @@
     "verify:bundle": "node scripts/check-client-bundle.mjs",
     "verify:core": "node scripts/check-payment-core.mjs",
     "verify:book": "node scripts/verify-book-flow.mjs",
+    "verify:download": "node scripts/verify-book-download.mjs",
     "book:upload": "node scripts/upload-book-file.mjs"
   },
   "dependencies": {
