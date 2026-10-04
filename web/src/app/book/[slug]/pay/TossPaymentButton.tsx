@@ -82,36 +82,70 @@ async function renderAgreement(w: Widgets, selector: string) {
   }
 }
 
+/** 지난 번에 그린 iframe 이 남아 있으면 지우고 시작한다 (다시 붙었을 때의 잔해) */
+function clear(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.replaceChildren();
+}
+
+const MAX_TRIES = 3;
+
 export default function TossPaymentButton(p: Props) {
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const widgets = useRef<Widgets | null>(null);
-  /* 위젯은 같은 자리에 두 번 그릴 수 없다. StrictMode 의 이중 실행을 막는다. */
-  const started = useRef(false);
 
   useEffect(() => {
-    if (started.current) return;
-    started.current = true;
+    let cancelled = false;
+    let tries = 0;
 
-    (async () => {
+    /**
+     * ★ 한 번 실패했다고 포기하지 않는다.
+     *   주문 화면에서 이 화면으로 넘어오는 길은 화면 전환(클라이언트 이동)이라,
+     *   그리는 도중에 컴포넌트가 다시 붙으면 그리던 위젯이 통째로 날아간다.
+     *   그때 손님에게 남는 것은 눌리지 않는 결제 버튼뿐이다 —
+     *   그래서 새 인스턴스로 다시 그린다.
+     */
+    async function init() {
+      tries += 1;
       try {
         const TossPayments = await loadSdk();
+        if (cancelled) return;
+
+        clear(METHODS_ID);
+        clear(AGREEMENT_ID);
+
         const w = TossPayments(p.clientKey).widgets({ customerKey: ANONYMOUS });
 
         /* ★ 금액을 먼저 못 박고 그린다. 순서를 바꾸면 위젯이 금액을 모른 채 뜬다. */
         await w.setAmount({ currency: 'KRW', value: p.amount });
-        await w.renderPaymentMethods({ selector: '#' + METHODS_ID, variantKey: 'DEFAULT' });
-        await renderAgreement(w, '#' + AGREEMENT_ID);
+        if (cancelled) return;
+
+        /* 두 영역은 서로를 기다릴 이유가 없다. 차례로 그리면 각각의 대기가 그대로
+           더해져서(실측 4.8s + 2.2s) 손님은 그동안 눌리지 않는 버튼을 본다. */
+        await Promise.all([
+          w.renderPaymentMethods({ selector: '#' + METHODS_ID, variantKey: 'DEFAULT' }),
+          renderAgreement(w, '#' + AGREEMENT_ID),
+        ]);
+        if (cancelled) return;
 
         widgets.current = w;
         setReady(true);
       } catch (e) {
+        if (cancelled) return;
         const msg = String((e as { message?: string })?.message ?? '');
-        console.error('[book/pay] 결제위젯 준비 실패:', msg.slice(0, 200));
-        setError('결제 화면을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
+        console.error(`[book/pay] 결제위젯 준비 실패(${tries}/${MAX_TRIES}):`, msg.slice(0, 200));
+        if (tries < MAX_TRIES) {
+          setTimeout(() => { if (!cancelled) init(); }, 600 * tries);
+          return;
+        }
+        setError('결제 화면을 불러오지 못했습니다. 화면을 새로고침해 주세요.');
       }
-    })();
+    }
+
+    init();
+    return () => { cancelled = true; };
   }, [p.clientKey, p.amount]);
 
   async function pay() {
