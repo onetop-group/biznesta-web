@@ -94,16 +94,35 @@ export default async function Page({ params, searchParams }: Params) {
           </>
         ) : (
           <>
-            <span className={styles.ctaOff}>전자책 파일 준비 중</span>
+            {/* ★ 못 받는 이유가 셋인데 한 문구로 뭉뚱그리면 안 된다.
+                특히 '구매 확인이 안 되는' 사람에게 "잠시 후 받으실 수 있습니다" 라고
+                하면 영원히 기다리게 된다. 각자 할 수 있는 일을 말해 준다. */}
+            <span className={styles.ctaOff}>
+              {fileReady ? '전자책 다운로드' : '전자책 파일 준비 중'}
+            </span>
             <div className={styles.notice} role="note">
-              <p className={styles.noticeTitle}>
-                {fileReady ? '다운로드를 준비하고 있습니다' : '전자책 파일 준비 중입니다'}
-              </p>
-              <p>
-                {fileReady
-                  ? '잠시 후 이 화면에서 바로 받아 보실 수 있습니다.'
-                  : '전자책 파일은 정식 판매 시작 전에 연결됩니다. 연결되면 이 화면에서 바로 받아 보실 수 있습니다.'}
-              </p>
+              {!fileReady ? (
+                <>
+                  <p className={styles.noticeTitle}>전자책 파일 준비 중입니다</p>
+                  <p>전자책 파일은 정식 판매 시작 전에 연결됩니다. 연결되면 이 화면에서 바로 받아 보실 수 있습니다.</p>
+                </>
+              ) : !hasAccess ? (
+                <>
+                  <p className={styles.noticeTitle}>이 브라우저에서는 구매 내역을 확인할 수 없습니다</p>
+                  <p>
+                    결제하신 브라우저에서 이 화면을 열면 바로 받으실 수 있습니다.
+                    기기를 바꾸셨거나 브라우저 기록을 지우셨다면{' '}
+                    <Link href={`/book/contact?product=${b.productRef}`}>BIZNESTA BOOK 문의</Link>
+                    {' '}또는 {CONSULT_PHONE} · {CONSULT_EMAIL} 로 주문번호와 함께 알려 주세요.
+                    확인 후 다시 받으실 수 있도록 도와드립니다.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className={styles.noticeTitle}>다운로드를 준비하고 있습니다</p>
+                  <p>잠시 후 이 화면에서 바로 받아 보실 수 있습니다.</p>
+                </>
+              )}
             </div>
           </>
         )}

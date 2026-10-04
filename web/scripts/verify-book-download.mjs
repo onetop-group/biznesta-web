@@ -197,6 +197,23 @@ async function main() {
       ok(token, '접근 토큰을 받지 못했다');
     });
 
+    /* ═══ 3-b. 구매 완료 화면 ════════════════════════════════ */
+    suite('3-b · 구매자가 보는 완료 화면');
+    await t('★ 구매자에게는 다운로드 버튼이 보인다', async () => {
+      const r = await fetch(`${BASE}/book/${PRODUCT}/complete`, { headers: { cookie: `${COOKIE}=${token}` } });
+      const html = await r.text();
+      ok(html.includes(`/book/${PRODUCT}/download`), '다운로드 링크가 없다');
+      ok(html.includes('전자책 다운로드'), '버튼 문구가 없다');
+      ok(!html.includes('준비 중'), '아직 준비 중이라고 말하고 있다');
+    });
+    await t('★ 권한이 없으면 버튼이 없고, 기다리라고 하지 않는다', async () => {
+      const r = await fetch(`${BASE}/book/${PRODUCT}/complete`);
+      const html = await r.text();
+      ok(!html.includes(`href="/book/${PRODUCT}/download"`), '권한 없이 다운로드 링크가 나온다');
+      ok(html.includes('구매 내역을 확인할 수 없습니다'), '할 수 있는 일을 알려 주지 않는다');
+      ok(!html.includes('잠시 후 이 화면에서'), '영원히 기다리라고 말하고 있다');
+    });
+
     /* ═══ 4. 실제 다운로드 ═══════════════════════════════════ */
     suite('4 · 실제 다운로드 (배포된 경로 그대로)');
     await t('구매자는 만료형 주소로 넘겨받는다', async () => {
