@@ -4,7 +4,7 @@ import { notFound, redirect } from 'next/navigation';
 import BusinessInfo from '@/components/site/BusinessInfo';
 import Breadcrumb from '@/components/book/Breadcrumb';
 import { CONSULT_EMAIL, CONSULT_PHONE } from '@/data/business';
-import { SITE_URL } from '@/lib/site';
+import { RETURN_BASE } from '@/lib/site';
 import { assetsFor } from '@/lib/book/assets';
 import { AUTHOR, KIND_LABEL, formatPrice, getBook } from '@/lib/book/catalog';
 import { getCheckout } from '@/lib/book/payment';
@@ -61,7 +61,8 @@ export default async function Page({ params, searchParams }: Params) {
 
   const a = assetsFor(b.productRef);
   const amount = Number(order.amount);
-  const base = SITE_URL.replace(/\/+$/, '');
+  /* ★ 결제 후 돌아올 곳은 '지금 이 배포' 다 (lib/site.ts 의 RETURN_BASE 주석 참고) */
+  const base = RETURN_BASE;
 
   return (
     <>
