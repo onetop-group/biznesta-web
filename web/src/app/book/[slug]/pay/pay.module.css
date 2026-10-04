@@ -20,6 +20,11 @@
 .rowLabel { font-size: 14px; color: #9aa0a8; }
 .price { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: #e3bf7a; }
 
+/* 토스가 그리는 영역. 우리 스타일을 안쪽에 강요하지 않는다 —
+   결제수단 UI 는 사업자가 관리하는 화면이고, 손대면 결제수단이 늘 때 깨진다. */
+.widget { margin: 0 0 8px; }
+.loading { margin: 8px 0 16px; font-size: 14px; color: #7d8894; text-align: center; }
+
 .cta { display: inline-flex; align-items: center; justify-content: center;
   width: 100%; min-height: 60px; padding: 0 24px; border: 0; border-radius: 10px;
   cursor: pointer; background: linear-gradient(180deg, #e0bd7c 0%, #c79a4e 100%);

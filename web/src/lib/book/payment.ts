@@ -181,6 +181,7 @@ export function getCheckout(): Checkout {
 
   const bridge = getPaymentBridge();
   if (!bridge.configured) {
+    console.error('[payment] CORE 연결 실패 :', bridge.reason);
     checkoutCache = { ready: false, missing: [DB_URL_ENV], reason: bridge.reason };
     return checkoutCache;
   }
@@ -206,6 +207,10 @@ export function getCheckout(): Checkout {
     };
   } catch (e) {
     const msg = String((e as Error)?.message ?? e).replace(/postgres(ql)?:\/\/\S+/g, '[REDACTED]');
+    /* ★ 왜 결제를 못 받는지는 반드시 남긴다. 남기지 않으면 손님 화면의
+         '지금은 결제를 받을 수 없습니다' 만 보이고 원인을 찾을 길이 없다.
+         키 원문은 CORE 의 log.register 가 이미 치환 대상으로 잡아 둔 뒤다. */
+    console.error('[payment] CORE 조립 실패 :', msg.slice(0, 200));
     checkoutCache = { ready: false, missing: [], reason: msg.slice(0, 200) };
   }
   return checkoutCache;
