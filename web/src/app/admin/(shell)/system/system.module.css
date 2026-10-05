@@ -1,0 +1,20 @@
+/* 시스템 상태 — 관리자 UI 토큰만 쓴다 (ui.module.css 와 같은 체계) */
+.rows { margin: 0; padding: 0; }
+.row { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 11px 2px;
+  border-bottom: 1px solid rgba(20, 30, 45, 0.08); }
+.row:last-child { border-bottom: 0; }
+.dt { flex: 0 0 200px; margin: 0; font-size: 13px; font-weight: 600;
+  letter-spacing: -0.01em; color: #2f3a47; }
+.dd { flex: 1 1 200px; margin: 0; font-size: 14px; line-height: 1.6;
+  letter-spacing: -0.01em; color: #46525e; word-break: break-all; }
+
+.ok { color: #1f7a4d; font-weight: 700; }
+.wait { color: #a4713a; font-weight: 700; }
+.bad { color: #b3261e; font-weight: 700; }
+
+.note { margin: 10px 0 0; font-size: 13px; line-height: 1.7;
+  letter-spacing: -0.01em; color: #7d8894; }
+
+@media (max-width: 720px) {
+  .dt { flex-basis: 100%; }
+}

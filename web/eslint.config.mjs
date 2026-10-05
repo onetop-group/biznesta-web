@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // PAYMENT CORE 사본. 우리 소스가 아니고 여기서 고치면 안 된다
+    // (원본을 고치고 npm run vendor:sync). 원본은 CommonJS 라 규칙이 다르다.
+    "vendor/**",
   ]),
 ]);
 

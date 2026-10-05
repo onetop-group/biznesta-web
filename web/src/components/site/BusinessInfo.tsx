@@ -35,7 +35,12 @@ export default function BusinessInfo() {
             <span className={styles.eyebrow}>BUSINESS INFO</span>
             <span className={styles.mark}>{BRAND}</span>
           </p>
-          <Link href="/privacy" className={styles.link}>개인정보처리방침</Link>
+          {/* 2026-09-28 — BIZNESTA BOOK 으로 가는 길. 이 띠는 32개 시안 바깥이라
+              시안의 배치·높이에 영향이 없다(이 파일 맨 위 설명 참고). */}
+          <p className={styles.links}>
+            <Link href="/book" className={styles.link}>BIZNESTA BOOK</Link>
+            <Link href="/privacy" className={styles.link}>개인정보처리방침</Link>
+          </p>
         </div>
 
         <dl className={styles.rows}>

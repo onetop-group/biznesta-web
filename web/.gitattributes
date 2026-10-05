@@ -1,0 +1,6 @@
+# PAYMENT CORE 사본은 '바이트 그대로' 보관한다.
+#
+# 이유: MANIFEST.json 에 파일별 sha256 이 적혀 있고 빌드 전마다(prebuild) 대조한다.
+#   git 이 줄바꿈을 CRLF 로 바꿔 체크아웃하면 같은 파일인데 해시가 달라져
+#   Windows 에서 다시 clone 했을 때 빌드가 막힌다. 변환을 아예 끈다.
+vendor/payment-core/** -text

@@ -1,0 +1,16 @@
+/* 현재 위치 — 조용하게. 본문보다 앞서지 않는다. */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 22px 24px 0; }
+.list { display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  margin: 0; padding: 0; list-style: none; }
+.item { display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; line-height: 1.6; min-width: 0; }
+.link { color: #7d8894; text-decoration: none; }
+.link:hover { color: #8a5427; text-decoration: underline; }
+.current { color: #2f3a47; font-weight: 600; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; max-width: 60vw; }
+.sep { color: #c3c9d0; }
+
+@media (max-width: 520px) {
+  .wrap { padding: 16px 20px 0; }
+  .item { font-size: 12px; }
+}

@@ -23,6 +23,23 @@ export const SITE_URL =
       ? `https://${process.env.VERCEL_URL}`
       : 'http://localhost:3000');
 
+/**
+ * 결제 사업자가 **돌아올** 주소의 앞부분.
+ *
+ * 돌아오는 곳은 '정식 도메인' 이 아니라 '지금 이 배포' 여야 한다.
+ * Preview 에서 결제를 걸었는데 Production 주소로 돌아오면, 그 배포에는
+ * 결제 설정이 없으므로 승인(confirm)이 일어나지 않는다 — 결제창은 통과했는데
+ * 주문은 PENDING 으로 남는 가장 나쁜 모양이 된다. 그래서 Production 에서만
+ * 정식 도메인을 쓰고, 그 밖에서는 이 배포의 고유 주소를 쓴다.
+ */
+export const RETURN_BASE = (
+  IS_PRODUCTION
+    ? SITE_URL
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : SITE_URL
+).replace(/\/+$/, '');
+
 export const SITE_NAME = 'BIZNESTA';
 
 /** 검색 결과에 그대로 보이는 문장. 과장된 보장 표현은 쓰지 않는다. */
