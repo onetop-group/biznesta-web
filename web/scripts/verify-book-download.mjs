@@ -44,7 +44,9 @@ const KEEP = ARG.includes('--keep');
 const TENANT = 'biznesta';
 const PRODUCT = 'ebook-customer-db';
 const BUCKET = 'biznesta-book-private';
-const OBJECT = 'ebook-customer-db/v1.pdf';
+/** 실제 판매본. 심사 기간에는 연결이 SAMPLE 로 바뀌지만 이 파일은 그대로 있어야 한다. */
+const REAL_OBJECT = 'ebook-customer-db/v1.pdf';
+const REAL_SIZE = 6242744;
 const FIX_EMAIL = 'vfy-dl-buyer@example.invalid';
 const COOKIE = 'bn_book_access';
 /* 원본 PDF. 파일 이름이 바뀌어도 되도록 **내용(sha256)으로** 찾는다 —
@@ -79,6 +81,17 @@ function readUrl() {
 }
 
 const sha256 = (buf) => crypto.createHash('sha256').update(buf).digest('hex');
+
+/**
+ * Supabase Storage 가 돌려주는 ETag 는 S3 멀티파트 형식이다.
+ * 한 조각으로 올라간 파일(`-1`)이면 md5(md5(파일전체)) + '-1' 이므로
+ * **원본을 손에 들고 있지 않아도** 받은 바이트가 저장된 객체와 같은지 확인할 수 있다.
+ * 심사용 SAMPLE 처럼 로컬에 사본이 없는 파일을 검증할 때 쓴다.
+ */
+function singlePartETag(buf) {
+  const md5 = crypto.createHash('md5').update(buf).digest();
+  return crypto.createHash('md5').update(md5).digest('hex') + '-1';
+}
 
 /** 따라가지 않는 fetch — 303 의 Location 을 눈으로 보기 위해서다 */
 const hop = (url, opts) => fetch(url, { redirect: 'manual', ...(opts || {}) });
@@ -135,27 +148,49 @@ async function main() {
     const buf = fs.readFileSync(path.join(SOURCE_DIR, n));
     if (sha256(buf) === SOURCE_SHA256) { source = buf; sourceName = n; break; }
   }
-  if (!source) {
-    console.error('원본 PDF 를 찾지 못했습니다 (sha256 ' + SOURCE_SHA256.slice(0, 16) + '…).');
-    await db.end();
-    process.exit(2);
-  }
+  /* 원본이 없어도 검증은 계속한다 — 심사용 SAMPLE 은 애초에 로컬에 사본이 없다.
+     다만 '실제 판매본이 연결된 경우' 에는 원본이 반드시 있어야 하므로 아래에서 막는다. */
   const sourceHash = SOURCE_SHA256;
 
   try {
     /* ═══ 1. 올라간 파일 ═════════════════════════════════════ */
     suite('1 · 올라간 파일');
+
+    /* 지금 상품에 연결된 것이 무엇인지 먼저 읽는다. 심사 기간에는 SAMPLE 이고
+       평소에는 실제 판매본이다. 어느 쪽이든 같은 기준으로 검증한다. */
+    const [link] = await q('select * from biz_product_files where product_ref = $1', [PRODUCT]);
+    const OBJECT = link ? link.object_path : REAL_OBJECT;
+    const isReal = OBJECT === REAL_OBJECT;
+
     const [obj] = await q(
-      `select name, (metadata->>'size')::bigint size, metadata->>'mimetype' mime
+      `select name, (metadata->>'size')::bigint size, metadata->>'mimetype' mime, metadata->>'eTag' etag
          from storage.objects where bucket_id = $1 and name = $2`, [BUCKET, OBJECT]);
 
-    await t('비공개 버킷에 파일이 올라가 있다', () => {
+    await t(`비공개 버킷에 연결된 파일이 있다 (${OBJECT})`, () => {
+      ok(link, '상품에 연결된 파일이 없다');
       ok(obj, `${BUCKET}/${OBJECT} 가 없다`);
     });
     if (!obj) { report(); process.exit(1); }
 
-    await t('크기가 원본과 같다', () => eq(Number(obj.size), source.length, '바이트'));
+    await t('연결에 적힌 크기와 실제 객체 크기가 같다', () => {
+      eq(Number(obj.size), Number(link.byte_size), '바이트');
+    });
+    await t('실제 판매본이 연결된 경우 원본 PDF 를 손에 들고 검증한다', () => {
+      if (!isReal) return;   /* SAMPLE 이면 ETag 로만 본다 — 로컬 사본이 없다 */
+      ok(source, '원본 PDF 를 찾지 못해 sha256 대조를 할 수 없다');
+      eq(Number(obj.size), source.length, '원본과 크기');
+    });
     await t('형식이 application/pdf 다', () => eq(obj.mime, 'application/pdf', 'mimetype'));
+
+    /* ★ 심사용 SAMPLE 로 바꿔 두어도 실제 판매본은 버킷에 그대로 있어야 한다.
+       '바꿨다' 와 '지웠다' 는 완전히 다른 일이다. */
+    await t('★ 실제 판매본 v1.pdf 가 그대로 남아 있다', async () => {
+      const [real] = await q(
+        `select (metadata->>'size')::bigint size from storage.objects
+          where bucket_id = $1 and name = $2`, [BUCKET, REAL_OBJECT]);
+      ok(real, 'v1.pdf 가 사라졌다');
+      eq(Number(real.size), REAL_SIZE, 'v1.pdf 크기');
+    });
     await t('★ 버킷이 여전히 비공개다', async () => {
       const [b] = await q('select public from storage.buckets where id = $1', [BUCKET]);
       eq(b.public, false, '버킷이 공개로 바뀌었다');
@@ -232,12 +267,23 @@ async function main() {
       eq(r.headers.get('referrer-policy'), 'no-referrer', 'Referrer-Policy');
     });
 
-    await t('★★ 받은 파일이 원본과 한 바이트도 다르지 않다', async () => {
+    await t('★★ 받은 파일이 저장된 파일과 한 바이트도 다르지 않다', async () => {
       const r = await fetch(signed);
       eq(r.status, 200, '다운로드 HTTP 상태');
       const got = Buffer.from(await r.arrayBuffer());
-      eq(got.length, source.length, '바이트 수');
-      eq(sha256(got), sourceHash, 'sha256');
+      eq(got.length, Number(obj.size), '바이트 수');
+      /* 원본 사본이 없어도 검증되게 ETag 로 맞춰 본다 */
+      eq(singlePartETag(got), String(obj.etag || '').replace(/"/g, ''), 'ETag');
+      /* 실제 판매본이 연결된 경우에는 원본 PDF 와 sha256 까지 맞춘다 (가장 센 검사) */
+      if (isReal) eq(sha256(got), sourceHash, 'sha256');
+    });
+
+    await t(isReal
+      ? '실제 판매본이 연결돼 있다'
+      : '★ 지금은 심사용 SAMPLE 이 연결돼 있고, 복구 경로가 기록돼 있다', () => {
+      if (isReal) { eq(OBJECT, REAL_OBJECT, '연결된 파일'); return; }
+      ok(String(link.note || '').includes(REAL_OBJECT),
+        '복구 대상이 note 에 적혀 있지 않다 — 되돌릴 근거가 없다');
     });
 
     await t('내려받는 파일 형식이 PDF 다', async () => {
@@ -359,7 +405,7 @@ async function main() {
 
   const good = report();
   console.log('');
-  console.log('원본 PDF  : ' + sourceName + ' · ' + source.length + '바이트 · sha256 ' + sourceHash.slice(0, 16) + '…');
+  console.log('원본 PDF  : ' + (source ? `${sourceName} · ${source.length}바이트 · sha256 ${sourceHash.slice(0, 16)}…` : '(로컬에 없음)'));
   console.log('실제 Toss 호출 : 0 (fake provider)');
   console.log('검증용 주문 : ' + (KEEP ? '--keep 으로 남겼습니다' : '지웠습니다'));
   process.exit(good ? 0 : 1);

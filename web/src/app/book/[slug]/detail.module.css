@@ -28,6 +28,11 @@
 .price { margin: 6px 0 4px; font-size: 34px; font-weight: 800;
   letter-spacing: -0.025em; color: #0d2340; }
 .priceSoon { margin: 6px 0 4px; font-size: 22px; font-weight: 700; color: #8b95a1; }
+/* 상품 한 줄 설명 — 상세 이미지를 읽지 못해도 이 책이 무엇인지 알 수 있어야 한다.
+   본문보다 조금 크고 진하게 두되, 가격보다 눈에 띄지는 않게 한다. */
+.summary { margin: 0 0 16px; font-size: 15px; line-height: 1.8;
+  letter-spacing: -0.01em; color: #2f3a47; }
+
 .note { margin: 0 0 22px; font-size: 13.5px; line-height: 1.75; color: #5d6874; }
 
 .cta { display: inline-flex; align-items: center; justify-content: center;

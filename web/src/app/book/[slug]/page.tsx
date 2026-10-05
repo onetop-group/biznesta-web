@@ -4,6 +4,7 @@ import { notFound, redirect } from 'next/navigation';
 import BusinessInfo from '@/components/site/BusinessInfo';
 import Breadcrumb from '@/components/book/Breadcrumb';
 import { COMPANY_NAME } from '@/data/business';
+import { SERVICE } from '@/data/book-policy';
 import { assetsFor } from '@/lib/book/assets';
 import { AUTHOR, KIND_LABEL, STATUS_LABEL, formatPrice, getBook } from '@/lib/book/catalog';
 import { bookStoreMode, canCheckout, canShowBuy } from '@/lib/book/store-state';
@@ -118,8 +119,14 @@ export default async function Page({ params }: Params) {
               </div>
             </dl>
 
+            {/* 상세 안내는 아래 이미지 한 장에 담겨 있다. 이미지를 읽지 못하는
+                사람(스크린리더·검색엔진·심사 담당자)에게도 이 책이 무엇인지
+                한 문장으로는 전해져야 한다. 문구는 상품표의 설명을 그대로 쓴다. */}
+            {b.description && <p className={styles.summary}>{b.description}</p>}
+
             <p className={styles.note}>
-              결제 완료 후 구매 완료 화면에서 바로 내려받아 이용하는 디지털 상품입니다. 배송은 없습니다.
+              {SERVICE.startsAt} 제공되며, {SERVICE.methodSentence}. 배송은 없습니다.
+              {' '}내려받기는 {SERVICE.periodLabel}까지 가능합니다.
             </p>
 
             <BuyButton buyable={buyable} href={checkoutHref} priceText={priceText} />
@@ -152,9 +159,24 @@ export default async function Page({ params }: Params) {
             <div className={styles.row}><dt className={styles.dt}>형태</dt><dd className={styles.dd}>{KIND_LABEL[b.kind] ?? '디지털 상품'}</dd></div>
             <div className={styles.row}><dt className={styles.dt}>판매가</dt><dd className={styles.dd}>{priceText}</dd></div>
             <div className={styles.row}><dt className={styles.dt}>판매자</dt><dd className={styles.dd}>{COMPANY_NAME}</dd></div>
+            {b.description && (
+              <div className={styles.row}>
+                <dt className={styles.dt}>상품 설명</dt><dd className={styles.dd}>{b.description}</dd>
+              </div>
+            )}
+            {/* ★ 제공 시점 · 제공 방식 · 최대 제공기간은 따로 적는다.
+                한 줄로 뭉쳐 두면 "언제까지 받을 수 있는가" 가 묻혀서, 구매자도
+                심사 담당자도 찾지 못한다. 값은 전부 book-policy 의 SERVICE 에서 온다. */}
             <div className={styles.row}>
-              <dt className={styles.dt}>이용 방법</dt>
-              <dd className={styles.dd}>결제 완료 후 구매 완료 화면에서 바로 내려받는 디지털 상품입니다. 배송은 없습니다.</dd>
+              <dt className={styles.dt}>제공 시점</dt><dd className={styles.dd}>{SERVICE.startsAt}</dd>
+            </div>
+            <div className={styles.row}>
+              <dt className={styles.dt}>제공 방식</dt>
+              <dd className={styles.dd}>{SERVICE.method} (배송 없음)</dd>
+            </div>
+            <div className={styles.row}>
+              <dt className={styles.dt}>다운로드 이용기간</dt>
+              <dd className={styles.dd}>{SERVICE.periodLabel}</dd>
             </div>
           </dl>
 
